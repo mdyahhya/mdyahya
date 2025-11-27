@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Full Stack Developer</title>
     <style>
-        * {
+                * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
+            --bg-primary: #000000;
+            --bg-secondary: #0f0f0f;
+            --bg-tertiary: #1a1a1a;
             --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --accent-purple: #a855f7;
-            --accent-purple-dim: rgba(168, 85, 247, 0.1);
-            --accent-purple-hover: #9333ea;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #707070;
+            --accent-purple: #8b5cf6;
+            --accent-purple-dim: rgba(139, 92, 246, 0.08);
+            --accent-purple-hover: #7c3aed;
+            --border-color: #2a2a2a;
+            --border-hover: #3a3a3a;
         }
 
         body {
@@ -35,7 +39,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(26, 26, 26, 0.95);
+            background: rgba(15, 15, 15, 0.98);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             display: flex;
@@ -43,33 +47,35 @@
             gap: 1rem;
             flex-wrap: wrap;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1);
-            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .nav-btn {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
-            color: var(--text-primary);
-            border: 2px solid var(--accent-purple);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
             padding: 0.75rem 2rem;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .nav-btn:hover {
-            background: var(--accent-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
         }
 
         .nav-btn.active {
-            background: var(--accent-purple);
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 1px var(--accent-purple);
         }
 
         /* Main Container */
@@ -84,7 +90,7 @@
 
         .section {
             display: none;
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.4s ease-in;
         }
 
         .section.active {
@@ -94,7 +100,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -105,22 +111,21 @@
         /* Profile Section */
         .profile-header {
             text-align: center;
-            padding: 2rem 0;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
-            border-radius: 16px;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 3rem 2rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
             margin-bottom: 2rem;
         }
 
         .profile-image-container {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             margin: 0 auto 1.5rem;
             border-radius: 50%;
-            border: 4px solid var(--accent-purple);
-            padding: 4px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-hover));
-            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+            border: 2px solid var(--border-hover);
+            padding: 3px;
+            background: var(--bg-tertiary);
         }
 
         .profile-image {
@@ -128,7 +133,7 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            background: var(--bg-secondary);
+            background: var(--bg-tertiary);
         }
 
         .profile-svg {
@@ -137,53 +142,58 @@
         }
 
         h1 {
-            color: var(--accent-purple);
+            color: var(--text-primary);
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         h2 {
-            color: var(--accent-purple);
-            font-size: 2rem;
+            color: var(--text-primary);
+            font-size: 1.75rem;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-purple);
-            display: inline-block;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            letter-spacing: -0.3px;
         }
 
         h3 {
-            color: var(--accent-purple);
-            font-size: 1.5rem;
+            color: var(--text-primary);
+            font-size: 1.25rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1rem;
             margin: 1.5rem 0;
             flex-wrap: wrap;
         }
 
         .social-btn {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 0.65rem 1.25rem;
+            border-radius: 6px;
             text-decoration: none;
-            border: 2px solid var(--accent-purple);
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 0.95rem;
         }
 
         .social-btn:hover {
-            background: var(--accent-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
         }
 
         .contact-grid {
@@ -195,82 +205,83 @@
 
         .contact-item {
             background: var(--bg-secondary);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 1.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
 
         .contact-item:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
         }
 
         .contact-item strong {
-            color: var(--accent-purple);
+            color: var(--text-secondary);
             display: block;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .contact-item span {
+            color: var(--text-primary);
+            font-size: 1rem;
         }
 
         /* Skills Section */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 2rem;
         }
 
         .skill-card {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            background: var(--bg-secondary);
             padding: 1.5rem;
-            border-radius: 12px;
-            border: 2px solid rgba(168, 85, 247, 0.2);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-purple-hover));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .skill-card:hover::before {
-            transform: scaleX(1);
         }
 
         .skill-card:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
         }
 
         .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
             display: block;
+            opacity: 0.9;
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
         /* Projects Section */
         .projects-grid {
             display: grid;
-            gap: 2rem;
+            gap: 1.5rem;
             margin-top: 2rem;
         }
 
         .project-card {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            background: var(--bg-secondary);
             padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid rgba(168, 85, 247, 0.2);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             display: grid;
             grid-template-columns: auto 1fr;
@@ -279,17 +290,17 @@
         }
 
         .project-card:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
         }
 
         .project-image-container {
             width: 200px;
             height: 200px;
-            border-radius: 12px;
+            border-radius: 6px;
             overflow: hidden;
-            border: 2px solid var(--accent-purple);
+            border: 1px solid var(--border-color);
             background: var(--bg-primary);
             flex-shrink: 0;
         }
@@ -319,27 +330,30 @@
         }
 
         .visit-btn {
-            background: var(--accent-purple);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 0.65rem 1.5rem;
+            border-radius: 6px;
             text-decoration: none;
-            border: none;
+            border: 1px solid var(--border-hover);
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s ease;
             display: inline-block;
+            font-size: 0.9rem;
         }
 
         .visit-btn:hover {
-            background: var(--accent-purple-hover);
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+            background: var(--bg-tertiary);
+            border-color: var(--accent-purple);
+            color: var(--text-primary);
+            transform: translateX(2px);
         }
 
         .project-description {
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .project-description ul {
@@ -355,47 +369,30 @@
         .languages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 2rem;
         }
 
         .language-card {
             background: var(--bg-secondary);
             padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid rgba(168, 85, 247, 0.2);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .language-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--accent-purple);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .language-card:hover::after {
-            transform: scaleX(1);
         }
 
         .language-card:hover {
-            border-color: var(--accent-purple);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
         }
 
         .language-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent-purple);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 0.5rem;
         }
 
         /* Responsive Design */
@@ -425,6 +422,7 @@
             .project-card {
                 grid-template-columns: 1fr;
                 gap: 1rem;
+                padding: 1.5rem;
             }
 
             .project-image-container {
@@ -439,19 +437,6 @@
 
             .languages-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-        }
-
-        .glow-text {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-            }
-            to {
-                text-shadow: 0 0 20px rgba(168, 85, 247, 0.8), 0 0 30px rgba(168, 85, 247, 0.6);
             }
         }
     </style>
@@ -500,7 +485,7 @@
                     <a href="https://www.linkedin.com/in/yahya-m-05b3191b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn">
                         <span>💼</span> LinkedIn
                     </a>
-                    <a href="yahyabuilds@gmail.com" class="social-btn">
+                    <a href="mailto:yahyabuilds@gmail.com" class="social-btn">
                         <span>📧</span> Email
                     </a>
                     <a href="https://wa.me/919307426215" target="_blank" class="social-btn">
@@ -633,6 +618,28 @@
                     </div>
                 </div>
 
+                <!-- Project 15 - AI Chatbot -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="AI Chatbot" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#8b5cf6" text-anchor="middle" dy=".3em">🤖</text>
+                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">AI Chatbot</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>AI Chatbot for College Website</h3>
+                            <a href="https://vvpengineering.org" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            ChatGPT-style AI chatbot for college website supporting English, Hindi, and Marathi. Provides instant information about college placements, fee structure, branches, faculties, and more. (Accessible via red chat box on bottom right corner of website).
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Project 2 -->
                 <div class="project-card">
                     <div class="project-image-container">
@@ -713,7 +720,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Online Turf Booking System</h3>
-                            <a href="turfbook.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://turfbook.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Complete booking platform with web app and 2 mobile apps (user & turf admin). Features live database for turf availability and instant booking notifications to owners.
@@ -735,7 +742,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>WhatsApp-Style Chat Application</h3>
-                            <a href="safechats.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://safechats.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Web-based messaging app with live message delivery and offline notifications. Real-time chat experience similar to WhatsApp.
@@ -757,7 +764,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>FaceAttend AI - Attendance System</h3>
-                            <a href="facetech.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://facetech.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             AI-powered attendance software that stores student facial data and automatically detects attendance using facial recognition AI model.
@@ -779,7 +786,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Heart AI - Disease Prediction</h3>
-                            <a href="heartai.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://heartai.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Healthcare app providing heart disease information, symptom-based disease prediction, health tips, and doctor directories with location and contact details.
@@ -801,7 +808,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>SmileUp - Smile Reward App</h3>
-                            <a href="smilegift.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://smilegift.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Innovative app rewarding users with points and gifts for smiling. Uses AI model to capture and verify smiles without storing images, promoting mental wellness.
@@ -823,7 +830,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Coderverse - Coding Learning Platform</h3>
-                            <a href="coderverse.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://coderverse.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Educational platform for learning programming languages with MCQ tests, AI-powered analytics of user study patterns, and personalized growth tracking.
@@ -845,7 +852,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Maidly - Maid Booking System</h3>
-                            <a href="maidly.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://maidly.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Online maid booking platform with live availability tracking and instant booking confirmations. Streamlines household service hiring.
@@ -867,7 +874,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>VVPIET Staff Profile Site</h3>
-                            <a href="vvpstaff.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://vvpstaff.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Professional photo app and profile website for VVPIET Solapur staff members. Centralized staff information management system.
@@ -889,7 +896,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Training & Placement Data System</h3>
-                            <a href="vvpdrives.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://vvpdrives.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Website and app for VVPIET managing training and placement data. Tracks student placements, company visits, and training sessions.
@@ -911,7 +918,7 @@
                     <div class="project-content">
                         <div class="project-title">
                             <h3>Student Profile & CV Creation System</h3>
-                            <a href="vvpstudents.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                            <a href="https://vvpstudents.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
                         </div>
                         <div class="project-description">
                             Automated CV and profile creation platform for VVPIET students. Helps students build professional resumes and manage academic portfolios.
