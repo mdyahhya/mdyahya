@@ -3,1522 +3,1007 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Yahya Mundewadi - Full Stack Developer</title>
-    <meta name="description" content="Founder of Continental Group. Full Stack Developer specializing in PWA apps, SQL, and enterprise solutions.">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#0f1419">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiWWFoeWEgTXVuZGV3YWRpIC0gUG9ydGZvbGlvIiwic2hvcnRfbmFtZSI6IllhaHlhIFBvcnRmb2xpbyIsImRlc2NyaXB0aW9uIjoiRnVsbCBTdGFjayBEZXZlbG9wZXIgUG9ydGZvbGlvIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjE0MTkiLCJ0aGVtZV9jb2xvciI6IiMwZjE0MTkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTVRFeUlpQm9aV2xuYUhROUlqRXhNaUlnZG1sbGQwSnZlRDBpTUNBd0lERXhNaUF4TVRJSUR6cERVeUlnZUcxc2JuTTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JajROQ2lBZ1BISmxZM1FnZUQwaU1DSWdlVDBpTUNJZ2QybGtkR2c5SWpFeE1pSWdhR1ZwWjJoMFBTSXhNVElpSUdacGJHdzlJaU14TURBeU4yRWlMejROQ2lBZ1BIUmxlSFFnZUQwaU5UWWlJSGs5SWpVNElpQm1hV3hzUFNJalptWm1JaUJtYjI1MExYTnBlbVU5SWpJMElpQjBaWGgwTFdGdVkyaHZjajFpYldsa1pHeGxJajVaUEM5MFpYaDBQZzA4TDNOMlp6ND0iLCJzaXplcyI6IjExMngxMTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS Animation -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    
+    <title>Portfolio - Full Stack Developer</title>
     <style>
-        :root {
-            --primary-bg: #0f1419;
-            --secondary-bg: #1a1f2e;
-            --accent-bg: #2a3441;
-            --primary-text: #ffffff;
-            --secondary-text: #b0b8c5;
-            --accent-color: #64ffda;
-            --highlight-color: #00d9ff;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-accent: linear-gradient(135deg, #64ffda 0%, #00d9ff 100%);
-            --glass-bg: rgba(42, 52, 65, 0.3);
-            --border-color: rgba(100, 255, 218, 0.2);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-purple: #a855f7;
+            --accent-purple-dim: rgba(168, 85, 247, 0.1);
+            --accent-purple-hover: #9333ea;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--primary-bg);
-            color: var(--primary-text);
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Background Animation */
-        .bg-animation {
+        /* Navigation */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 20, 25, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav {
+            right: 0;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--secondary-text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient-accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--accent-color);
-            transition: all 0.3s ease;
-        }
-
-        /* Main Content */
-        main {
-            margin-top: 80px;
-        }
-
-        .section {
-            padding: 5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-content {
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .subtitle {
-            font-size: 1.2rem;
-            color: var(--secondary-text);
-            margin-bottom: 2rem;
-        }
-
-        .hero .intro {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            color: var(--primary-text);
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
+            gap: 1rem;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.1);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
 
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--secondary-text);
-            font-size: 0.9rem;
-        }
-
-        .contact-item i {
-            color: var(--accent-color);
-        }
-
-        /* Animation Canvas */
- /* Horizontal Slideshow Container - Mobile Responsive */
-.animation-container {
-    width: 100%;
-    max-width: 500px;
-    height: 80px;
-    margin: 2rem auto;
-    background: var(--glass-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: 0 20px;
-}
-
-.slideshow-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.slideshow-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    position: relative;
-}
-
-.slideshow-icon {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    opacity: 0.3;
-    transform: scale(0.7) translateX(0);
-    position: relative;
-    z-index: 1;
-    flex-shrink: 0;
-}
-
-.slideshow-icon.active {
-    font-size: 2.5rem;
-    opacity: 1;
-    transform: scale(1) translateX(0);
-    color: var(--primary-color);
-    font-weight: bold;
-    filter: drop-shadow(0 0 15px var(--primary-color));
-    z-index: 3;
-}
-
-.slideshow-icon.prev {
-    opacity: 0.5;
-    transform: scale(0.8) translateX(-10px);
-    z-index: 2;
-}
-
-.slideshow-icon.next {
-    opacity: 0.5;
-    transform: scale(0.8) translateX(10px);
-    z-index: 2;
-}
-
-/* Sliding Animation Classes */
-.slideshow-icon.slide-left {
-    animation: slideToLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.slideshow-icon.slide-right {
-    animation: slideToRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.slideshow-icon.slide-to-center {
-    animation: slideToCenter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@keyframes slideToLeft {
-    0% { transform: scale(1) translateX(0); opacity: 1; }
-    100% { transform: scale(0.8) translateX(-40px); opacity: 0.5; }
-}
-
-@keyframes slideToRight {
-    0% { transform: scale(0.8) translateX(-10px); opacity: 0.5; }
-    100% { transform: scale(0.7) translateX(40px); opacity: 0.3; }
-}
-
-@keyframes slideToCenter {
-    0% { transform: scale(0.8) translateX(10px); opacity: 0.5; }
-    100% { transform: scale(1) translateX(0); opacity: 1; }
-}
-
-/* Navigation Buttons - Mobile Optimized */
-.nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--glass-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    z-index: 10;
-    touch-action: manipulation;
-}
-
-.nav-button:hover,
-.nav-button:active {
-    background: var(--primary-color);
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-}
-
-.nav-button.prev-btn {
-    left: 5px;
-}
-
-.nav-button.next-btn {
-    right: 5px;
-}
-
-/* Horizontal divider lines */
-.animation-container::before,
-.animation-container::after {
-    content: '';
-    position: absolute;
-    width: calc(100% - 40px);
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--border-color) 20%, var(--border-color) 80%, transparent 100%);
-    left: 20px;
-}
-
-.animation-container::before {
-    top: 0;
-}
-
-.animation-container::after {
-    bottom: 0;
-}
-
-/* Mobile Responsive Adjustments */
-@media (max-width: 768px) {
-    .animation-container {
-        height: 70px;
-        padding: 0 15px;
-        margin: 1.5rem auto;
-    }
-    
-    .slideshow-wrapper {
-        gap: 15px;
-    }
-    
-    .slideshow-icon {
-        font-size: 1.2rem;
-    }
-    
-    .slideshow-icon.active {
-        font-size: 2rem;
-    }
-    
-    .nav-button {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
-    
-    .nav-button.prev-btn {
-        left: 3px;
-    }
-    
-    .nav-button.next-btn {
-        right: 3px;
-    }
-}
-
-@media (max-width: 480px) {
-    .animation-container {
-        height: 60px;
-        padding: 0 10px;
-    }
-    
-    .slideshow-wrapper {
-        gap: 10px;
-    }
-    
-    .slideshow-icon {
-        font-size: 1rem;
-    }
-    
-    .slideshow-icon.active {
-        font-size: 1.8rem;
-    }
-    
-    .nav-button {
-        width: 25px;
-        height: 25px;
-        font-size: 0.7rem;
-    }
-}
-
-/* Touch-friendly interactions */
-@media (hover: none) and (pointer: coarse) {
-    .nav-button:hover {
-        background: var(--glass-bg);
-        color: var(--text-color);
-        transform: translateY(-50%) scale(1);
-    }
-    
-    .nav-button:active {
-        background: var(--primary-color);
-        color: white;
-        transform: translateY(-50%) scale(0.95);
-    }
-}
-
-
-        /* Section Styles */
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .intro-section {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            backdrop-filter: blur(20px);
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--secondary-text);
-            text-align: center;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .project-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
+        .nav-btn {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            color: var(--text-primary);
+            border: 2px solid var(--accent-purple);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
             transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
         }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.1), transparent);
-            transition: left 0.5s ease;
+        .nav-btn:hover {
+            background: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
         }
 
-        .project-card:hover::before {
-            left: 100%;
+        .nav-btn.active {
+            background: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-            box-shadow: 0 20px 40px rgba(100, 255, 218, 0.1);
+        /* Main Container */
+        .container {
+            margin-top: 100px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: calc(100vh - 100px);
         }
 
-        .project-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
         }
 
-        .project-logo {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-primary);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            font-weight: 600;
+        .section.active {
+            display: block;
         }
 
-        .project-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-text);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .project-description {
-            color: var(--secondary-text);
-            line-height: 1.6;
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border-radius: 16px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
             margin-bottom: 2rem;
         }
 
-        .project-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+        .profile-image-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            border: 4px solid var(--accent-purple);
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-purple-hover));
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
         }
 
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-secondary);
         }
 
-        .btn-primary {
-            background: var(--gradient-accent);
-            color: var(--primary-bg);
+        .profile-svg {
+            width: 100%;
+            height: 100%;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .skill-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
-        }
-
-        .skill-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-        }
-
-        .skill-icon {
+        h1 {
+            color: var(--accent-purple);
             font-size: 2.5rem;
-            color: var(--accent-color);
             margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
         }
 
-        .skill-name {
-            font-weight: 500;
-            color: var(--primary-text);
+        h2 {
+            color: var(--accent-purple);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-purple);
+            display: inline-block;
         }
 
-        /* Footer */
-        footer {
-            background: var(--secondary-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 5%;
-            text-align: center;
+        h3 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
-        .social-link {
-            width: 60px;
-            height: 60px;
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
+        .social-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 2px solid var(--accent-purple);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            text-decoration: none;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .social-btn:hover {
+            background: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
             transition: all 0.3s ease;
         }
 
-        .social-link:hover {
+        .contact-item:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .contact-item strong {
+            color: var(--accent-purple);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-purple-hover));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-purple);
             transform: translateY(-5px);
-            background: var(--accent-color);
-            color: var(--primary-bg);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
         }
 
-        /* PWA Install Button */
-        .install-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--gradient-accent);
-            color: var(--primary-bg);
-            border: none;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            display: none;
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .project-image-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--accent-purple);
+            background: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Uncomment and add your image URL below */
+        /* .project-image {
+            content: url('YOUR_SUPABASE_IMAGE_URL_HERE');
+        } */
+
+        .project-content {
+            flex: 1;
+        }
+
+        .project-title {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
-            z-index: 1000;
-            animation: bounce 2s infinite;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .visit-btn {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
 
-        /* Mobile Styles */
+        .visit-btn:hover {
+            background: var(--accent-purple-hover);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .project-description ul {
+            margin-top: 0.5rem;
+            margin-left: 1.5rem;
+        }
+
+        .project-description li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Languages Section */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .language-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-purple);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .language-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .language-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .language-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background: rgba(15, 20, 25, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding-top: 3rem;
-                transition: left 0.3s ease;
+            .navbar {
+                padding: 0.75rem 1rem;
             }
 
-            .nav-links.active {
-                left: 0;
+            .nav-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
             }
 
-            .menu-toggle {
-                display: flex;
+            .container {
+                margin-top: 140px;
+                padding: 1rem;
             }
 
-            .menu-toggle.active span:nth-child(1) {
-                transform: rotate(-45deg) translate(-5px, 6px);
+            h1 {
+                font-size: 2rem;
             }
 
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
+            h2 {
+                font-size: 1.5rem;
             }
 
-            .menu-toggle.active span:nth-child(3) {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-
-            .section {
-                padding: 3rem 5%;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .projects-grid {
+            .project-card {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
-            .project-buttons {
-                justify-content: center;
+            .project-image-container {
+                width: 100%;
+                height: 250px;
+                margin: 0 auto;
             }
 
             .skills-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: 1fr;
             }
 
-            .social-links {
-                gap: 1rem;
+            .languages-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
 
-        /* Smooth scroll */
-        html {
-            scroll-behavior: smooth;
+        .glow-text {
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-
-        /* Programming Languages Section */
-.languages-grid {
-   display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-   gap: 1.5rem;
-   margin-top: 3rem;
-}
-
-.language-item {
-   background: var(--glass-bg);
-   border: 1px solid var(--border-color);
-   border-radius: 15px;
-   padding: 1.5rem;
-   text-align: center;
-   transition: all 0.3s ease;
-   backdrop-filter: blur(20px);
-}
-
-.language-item:hover {
-   transform: translateY(-5px);
-   border-color: var(--accent-color);
-}
-
-.language-flag {
-   font-size: 2.5rem;
-   color: var(--accent-color);
-   margin-bottom: 1rem;
-}
-
-.language-name {
-   font-weight: 500;
-   color: var(--primary-text);
-}
-
-
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(168, 85, 247, 0.8), 0 0 30px rgba(168, 85, 247, 0.6);
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Background Animation -->
-    <div class="bg-animation" id="bgAnimation"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <button class="nav-btn active" onclick="showSection('profile')">Profile & Contact</button>
+        <button class="nav-btn" onclick="showSection('skills')">Skills</button>
+        <button class="nav-btn" onclick="showSection('projects')">Projects</button>
+        <button class="nav-btn" onclick="showSection('languages')">Languages</button>
+    </nav>
 
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">YM</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#projects">My Projects</a></li>
-                <li><a href="#client-projects">Client Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#languages">Languages</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+    <!-- Main Container -->
+    <div class="container">
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero section" id="home">
-            <div class="hero-content" data-aos="fade-up">
-                <h1>Md. Yahya Mundewadi</h1>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>mdyahyamundewadi@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>+91 9307426215</span>
-                    </div>
+        <!-- Profile & Contact Section -->
+        <section id="profile" class="section active">
+            <div class="profile-header">
+                <div class="profile-image-container">
+                    <!-- Uncomment below and add your image URL -->
+                    <!-- <img src="YOUR_SUPABASE_IMAGE_URL_HERE" alt="Profile" class="profile-image"> -->
+
+                    <!-- SVG Placeholder -->
+                    <svg class="profile-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="70" r="40" fill="url(#grad1)"/>
+                        <ellipse cx="100" cy="160" rx="60" ry="50" fill="url(#grad1)"/>
+                    </svg>
                 </div>
-                <div class="intro">
-                    <strong>Founder of Continental Group.</strong><br>
-                    I am a full stack developer who builds PWA apps, knows SQL, and has worked with Private Limited companies and local businesses.
-                </div>
-                
-                <div class="animation-container" data-aos-delay="500">
-    <div class="slideshow-container">
-        <!-- Optional Navigation Buttons -->
-        <button class="nav-button prev-btn" onclick="previousSlide()">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        
-        <div class="slideshow-wrapper">
-            <i class="fas fa-database slideshow-icon prev"></i>
-            <i class="fas fa-code slideshow-icon active"></i>
-            <i class="fas fa-mobile-alt slideshow-icon next"></i>
-        </div>
-        
-        <!-- Optional Navigation Buttons -->
-        <button class="nav-button next-btn" onclick="nextSlide()">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-    </div>
-</div>
 
-
-            </div>
-        </section>
-
-        <!-- Introduction Section -->
-        <section class="section" id="about">
-            <div class="intro-section" data-aos="fade-up">
-                <h2 class="section-title">Introduction</h2>
-                <p class="intro-text">
-                    Welcome to my digital portfolio. This is a placeholder introduction section where you can add your detailed background, 
-                    experience, and professional journey. Feel free to customize this content to reflect your unique story, 
-                    achievements, and vision for the future. This space is designed to give visitors a comprehensive understanding 
-                    of who you are as a professional and what drives your passion for technology and innovation.
+                <h1 class="glow-text">Yahya Mundewadi </h1>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Full Stack Developer | Android Dev Expert <br>| AI Engineer | Python Developer
                 </p>
-            </div>
-        </section>
 
-        <!-- Projects Section -->
-        <section class="section" id="projects">
-            <h2 class="section-title" data-aos="fade-up">My Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-header">
-                        <div class="project-logo">YB</div>
-                        <h3 class="project-title">YouBuddy AI</h3>
-                    </div>
-                    <p class="project-description">
-                        A comprehensive educational platform for engineering students featuring an AI-powered chatbot for academic assistance, 
-                        a social tech feed, gamified learning experiences, and organized study materials across all academic years.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-external-link-alt"></i> View Live
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-header">
-                        <div class="project-logo">JC</div>
-                        <h3 class="project-title">JobCenter</h3>
-                    </div>
-                    <p class="project-description">
-                        A comprehensive job portal solution for Jobcenter Pvt. Ltd., featuring resume building tools, 
-                        job application tracking, and separate portals for HR professionals and job seekers.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://jobcenter.netlify.app" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-external-link-alt"></i> View Live
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="project-header">
-                        <div class="project-logo">TB</div>
-                        <h3 class="project-title">TurfBook</h3>
-                    </div>
-                    <p class="project-description">
-                        An online turf booking system for sports facilities, developed for Solapur Railway Turf. 
-                        Features real-time slot management, user bookings, and comprehensive admin dashboard.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://solapurturfs.netlify.app" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-external-link-alt"></i> View Live
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="project-header">
-                        <div class="project-logo">CV</div>
-                        <h3 class="project-title">CoderVerse</h3>
-                    </div>
-                    <p class="project-description">
-                        A gamified programming education platform featuring interactive MCQ quizzes, 
-                        problem-solving challenges, and comprehensive testing modules to enhance coding skills.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://coderverse.netlify.app" class="btn btn-primary">
-                            <i class="fas fa-eye"></i> View Project
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="project-header">
-                        <div class="project-logo">PS</div>
-                        <h3 class="project-title">Photography Shop</h3>
-                    </div>
-                    <p class="project-description">
-                        A custom business website for local photography services featuring service portfolios, 
-                        direct WhatsApp integration for seamless client communication and booking inquiries.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://sharpkolors.netlify.app" class="btn btn-primary">
-                            <i class="fas fa-eye"></i> View Project
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="project-header">
-                        <div class="project-logo">FA</div>
-                        <h3 class="project-title">FaceAttend</h3>
-                    </div>
-                    <p class="project-description">
-                        An AI-powered attendance management system utilizing advanced face recognition technology 
-                        for secure, automated attendance tracking with comprehensive data management.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://facetech.netlify.app" class="btn btn-primary">
-                            <i class="fas fa-eye"></i> View Project
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="700">
-                    <div class="project-header">
-                        <div class="project-logo">AI</div>
-                        <h3 class="project-title">VVPIET AI Chatbot</h3>
-                    </div>
-                    <p class="project-description">
-                        An intelligent chatbot solution for VVPIET College designed to handle student and parent queries 
-                        automatically, providing instant responses and improving institutional communication efficiency.
-                    </p>
-                    <div class="project-buttons">
-                        <a href="https://vvpengineering.org" class="btn btn-primary">
-                            <i class="fas fa-eye"></i> View Project
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            <i class="fas fa-download"></i> Download App
-                        </a>
-                    </div>
+                <div class="social-links">
+                    <a href="https://github.com/mdyahhya" target="_blank" class="social-btn">
+                        <span>🔗</span> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/yahya-m-05b3191b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn">
+                        <span>💼</span> LinkedIn
+                    </a>
+                    <a href="yahyabuilds@gmail.com" class="social-btn">
+                        <span>📧</span> Email
+                    </a>
+                    <a href="https://wa.me/9307426215" target="_blank" class="social-btn">
+                        <span>💬</span> WhatsApp
+                    </a>
                 </div>
             </div>
-        </section>
 
-        <!-- Client Projects Section -->
-        <section class="section" id="client-projects">
-            <h2 class="section-title" data-aos="fade-up">Client Projects</h2>
-            <div class="intro-section" data-aos="fade-up" data-aos-delay="200">
-                <p class="intro-text">
-                    This section showcases projects developed for various clients including Private Limited companies and local businesses. 
-                    Each project represents a unique solution tailored to specific business requirements and challenges.
-                </p>
+            <h2>Contact Information</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <strong>📱 Phone</strong>
+                    <span>91 9307426215</span>
+                </div>
+                <div class="contact-item">
+                    <strong>📧 Email</strong>
+                    <span>yahyabuilds@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <strong>🏠 Address</strong>
+                    <span>Pachcha Peth Jail Road, Solapur 413005</span>
+                </div>
+                <div class="contact-item">
+                    <strong>🌆 City</strong>
+                    <span>Solapur</span>
+                </div>
+                <div class="contact-item">
+                    <strong>📍 State</strong>
+                    <span>Maharashtra</span>
+                </div>
             </div>
         </section>
 
         <!-- Skills Section -->
         <section id="skills" class="section">
-            <h2 class="section-title" data-aos="fade-up">Technical Skills</h2>
+            <h2>Professional Skills</h2>
             <div class="skills-grid">
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="250">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <div class="skill-name">SQL</div>
+                <div class="skill-card">
+                    <span class="skill-icon">📱</span>
+                    <h3>Android App Development</h3>
+                    <p>Kotlin, Java</p>
                 </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="skill-name">PWA</div>
+                <div class="skill-card">
+                    <span class="skill-icon">🐍</span>
+                    <h3>Python Development</h3>
+                    <p>Advanced Python programming</p>
                 </div>
-                <!-- <div class="skill-item" data-aos="fade-up" data-aos-delay="350">
-                    <div class="skill-icon"><i class="fas fa-fire"></i></div>
-                    <div class="skill-name">Firebase</div>
-                </div> -->
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="350">
-                    <div class="skill-icon"><i class="fas fa-server"></i></div>
-                    <div class="skill-name">Supabase</div>
+                <div class="skill-card">
+                    <span class="skill-icon">🗄️</span>
+                    <h3>SQL Database</h3>
+                    <p>Database design & optimization</p>
                 </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="400">
-    <div class="skill-icon"><i class="fas fa-globe-americas"></i></div>
-    <div class="skill-name">Web Development</div>
-</div>
-<div class="skill-item" data-aos="fade-up" data-aos-delay="450">
-    <div class="skill-icon"><i class="fas fa-tasks"></i></div>
-    <div class="skill-name">Project Management</div>
-</div>
-<div class="skill-item" data-aos="fade-up" data-aos-delay="500">
-    <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
-    <div class="skill-name">Business Development</div>
-</div>
-<div class="skill-item" data-aos="fade-up" data-aos-delay="550">
-    <div class="skill-icon"><i class="fas fa-palette"></i></div>
-    <div class="skill-name">Brand Development</div>
-</div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="600">
-                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
-                    <div class="skill-name">Node.js</div>
+                <div class="skill-card">
+                    <span class="skill-icon">🌐</span>
+                    <h3>Web Development</h3>
+                    <p>Full-stack web applications</p>
                 </div>
-                <div class="skill-item" data-aos="fade-up" data-aos-delay="650">
-                    <div class="skill-icon"><i class="fas fa-bolt"></i></div>
-                    <div class="skill-name">Express.js</div>
+                <div class="skill-card">
+                    <span class="skill-icon">🎨</span>
+                    <h3>Frontend Development</h3>
+                    <p>Amazing UI/UX design</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">⚡</span>
+                    <h3>Fullstack Development</h3>
+                    <p>End-to-end solutions</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">📲</span>
+                    <h3>Progressive Web Apps</h3>
+                    <p>PWA development expert</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">🚀</span>
+                    <h3>Startup Founder</h3>
+                    <p>Company management</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">👥</span>
+                    <h3>Team Leadership</h3>
+                    <p>Leading development teams</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">🤖</span>
+                    <h3>AI Prompt Expert</h3>
+                    <p>Advanced AI prompting</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">🧠</span>
+                    <h3>AI Engineer</h3>
+                    <p>AI model development</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">📊</span>
+                    <h3>AI Analysis</h3>
+                    <p>Data analysis with AI</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">💬</span>
+                    <h3>Communication Skills</h3>
+                    <p>Fluent English speaker</p>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Programming Languages Section -->
-<section class="section" id="languages">
-   <h2 class="section-title" data-aos="fade-up">Programming Languages</h2>
-   <div class="languages-grid">
-       <div class="language-item" data-aos="fade-up" data-aos-delay="100">
-           <div class="language-flag"><i class="fab fa-html5"></i></div>
-           <div class="language-info">
-               <h3 class="language-name">HTML5</h3>
-               <div class="proficiency-bar">
-                   <div class="proficiency-fill" data-level="95"></div>
-               </div>
-               <span class="proficiency-text">Expert</span>
-           </div>
-       </div>
-       <div class="language-item" data-aos="fade-up" data-aos-delay="200">
-           <div class="language-flag"><i class="fab fa-css3-alt"></i></div>
-           <div class="language-info">
-               <h3 class="language-name">CSS3</h3>
-               <div class="proficiency-bar">
-                   <div class="proficiency-fill" data-level="90"></div>
-               </div>
-               <span class="proficiency-text">Expert</span>
-           </div>
-       </div>
-       <div class="language-item" data-aos="fade-up" data-aos-delay="300">
-           <div class="language-flag"><i class="fab fa-js-square"></i></div>
-           <div class="language-info">
-               <h3 class="language-name">JavaScript</h3>
-               <div class="proficiency-bar">
-                   <div class="proficiency-fill" data-level="85"></div>
-               </div>
-               <span class="proficiency-text">Advanced</span>
-           </div>
-       </div>
-       <div class="language-item" data-aos="fade-up" data-aos-delay="400">
-           <div class="language-flag"><i class="fas fa-database"></i></div>
-           <div class="language-info">
-               <h3 class="language-name">SQL</h3>
-               <div class="proficiency-bar">
-                   <div class="proficiency-fill" data-level="80"></div>
-               </div>
-               <span class="proficiency-text">Advanced</span>
-           </div>
-       </div>
-   </div>
-</section>
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="social-links">
-            <a href="#" class="social-link" title="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" class="social-link" title="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="mailto:mdyahyamundewadi@gmail.com" class="social-link" title="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-        </div>
-        <p>&copy; 2024 Md. Yahya Mundewadi. All rights reserved.</p>
-    </footer>
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="pydefine" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🐍</text>
+                            <text x="100" y="150" font-size="20" fill="#ffffff" text-anchor="middle">pydefine</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>pydefine - Python Library</h3>
+                            <a href="https://pypi.org/project/pydefine" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Own Python library that converts raw Python errors into easy-to-understand explanations with emojis and quick solutions. Makes debugging more intuitive and beginner-friendly.
+                        </div>
+                    </div>
+                </div>
 
-    <!-- PWA Install Button -->
-    <button class="install-btn" id="installBtn">
-        <i class="fas fa-download"></i>
-        Install App
-    </button>
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="JobCenter" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">💼</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">JobCenter</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>JobCenter - Job Application Platform</h3>
+                            <a href="YOUR_PROJECT_URL" target="_blank" class="visit-btn">No Site(APK Available)</a>
+                        </div>
+                        <div class="project-description">
+                            Android job application app for client @JobCenter Pvt. Ltd. Solapur with live backend integration. Features real-time job postings and application tracking.
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="YouBuddy" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🎓</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">YouBuddy AI</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>YouBuddy AI - All-in-One Engineering App</h3>
+                            <a href="YOUR_PROJECT_URL" target="_blank" class="visit-btn">No site(APK Available)</a>
+                        </div>
+                        <div class="project-description">
+                            All-in-One app for Engineering students featuring notes, Instagram-style feed, AI chatbot for doubts, mini games, and coding language tutorials.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Dominal Browser" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🔒</text>
+                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">Dominal Browser</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Dominal Browser - Privacy-First Browser</h3>
+                            <a href="YOUR_PROJECT_URL" target="_blank" class="visit-btn">No site(App Available)</a>
+                        </div>
+                        <div class="project-description">
+                            Secure Android browser that saves no browsing history, blocks user data sharing, and filters harmful external sites for maximum privacy protection.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Turf Booking" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">⚽</text>
+                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">Turf Booking</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Online Turf Booking System</h3>
+                            <a href="turfbook.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Complete booking platform with web app and 2 mobile apps (user & turf admin). Features live database for turf availability and instant booking notifications to owners.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Chat App" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">💬</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Chat App</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>WhatsApp-Style Chat Application</h3>
+                            <a href="safechats.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Web-based messaging app with live message delivery and offline notifications. Real-time chat experience similar to WhatsApp.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="FaceAttend" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">👤</text>
+                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">FaceAttend AI</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>FaceAttend AI - Attendance System</h3>
+                            <a href="facetech.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            AI-powered attendance software that stores student facial data and automatically detects attendance using facial recognition AI model.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Heart AI" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">❤️</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Heart AI</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Heart AI - Disease Prediction</h3>
+                            <a href="heartai.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Healthcare app providing heart disease information, symptom-based disease prediction, health tips, and doctor directories with location and contact details.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="SmileUp" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">😊</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">SmileUp</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>SmileUp - Smile Reward App</h3>
+                            <a href="smilegift.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Innovative app rewarding users with points and gifts for smiling. Uses AI model to capture and verify smiles without storing images, promoting mental wellness.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 10 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Coderverse" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">💻</text>
+                            <text x="100" y="150" font-size="17" fill="#ffffff" text-anchor="middle">Coderverse</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Coderverse - Coding Learning Platform</h3>
+                            <a href="coderverse.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Educational platform for learning programming languages with MCQ tests, AI-powered analytics of user study patterns, and personalized growth tracking.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 11 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Maidly" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🏡</text>
+                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Maidly</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Maidly - Maid Booking System</h3>
+                            <a href="maidly.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Online maid booking platform with live availability tracking and instant booking confirmations. Streamlines household service hiring.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 12 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="VVPIET Staff" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📸</text>
+                            <text x="100" y="150" font-size="15" fill="#ffffff" text-anchor="middle">Staff Profiles</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>VVPIET Staff Profile Site</h3>
+                            <a href="vvpstaff.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Professional photo app and profile website for VVPIET Solapur staff members. Centralized staff information management system.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 13 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="T&P System" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📊</text>
+                            <text x="100" y="150" font-size="17" fill="#ffffff" text-anchor="middle">T&P System</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Training & Placement Data System</h3>
+                            <a href="vvpdrives.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Website and app for VVPIET managing training and placement data. Tracks student placements, company visits, and training sessions.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 14 -->
+                <div class="project-card">
+                    <div class="project-image-container">
+                        <!-- Uncomment and add your image URL -->
+                        <!-- <img src="YOUR_SUPABASE_IMAGE_URL" alt="Student CV" class="project-image"> -->
+                        <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="200" fill="#1a1a1a"/>
+                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📄</text>
+                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">Student CV</text>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <h3>Student Profile & CV Creation System</h3>
+                            <a href="vvpstudents.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
+                        </div>
+                        <div class="project-description">
+                            Automated CV and profile creation platform for VVPIET students. Helps students build professional resumes and manage academic portfolios.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Languages Section -->
+        <section id="languages" class="section">
+            <h2>Programming Languages</h2>
+            <div class="languages-grid">
+                <div class="language-card">
+                    <span class="skill-icon">📱</span>
+                    <div class="language-name">Kotlin</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">🐍</span>
+                    <div class="language-name">Python</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">🗄️</span>
+                    <div class="language-name">SQL</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">🌐</span>
+                    <div class="language-name">HTML</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">🎨</span>
+                    <div class="language-name">CSS</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">⚡</span>
+                    <div class="language-name">JavaScript</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">⚛️</span>
+                    <div class="language-name">React</div>
+                </div>
+                <div class="language-card">
+                    <span class="skill-icon">🦋</span>
+                    <div class="language-name">Flutter</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
 
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
 
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
 
-        // Close mobile menu when clicking on a link
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
+            // Add active class to clicked button
+            event.target.classList.add('active');
 
-
-
-
-        const icons = [
-    'fas fa-code',
-    'fas fa-cloud', 
-    'fas fa-fingerprint',
-    'fas fa-user-shield',
-    'fas fa-brain',
-    'fas fa-chart-pie',
-    'fas fa-palette',
-    'fas fa-tools'
-];
-
-
-
-let currentIndex = 0;
-let autoRotateInterval;
-let isAnimating = false;
-
-function updateSlideshow(direction = 'next') {
-    if (isAnimating) return;
-    
-    isAnimating = true;
-    const wrapper = document.querySelector('.slideshow-wrapper');
-    const iconElements = wrapper.querySelectorAll('.slideshow-icon');
-    
-    // Add sliding animation classes
-    iconElements.forEach((icon, index) => {
-        icon.classList.remove('slide-left', 'slide-right', 'slide-to-center');
-        
-        if (direction === 'next') {
-            if (icon.classList.contains('active')) {
-                icon.classList.add('slide-left');
-            } else if (icon.classList.contains('next')) {
-                icon.classList.add('slide-to-center');
-            } else if (icon.classList.contains('prev')) {
-                icon.classList.add('slide-right');
-            }
-        } else {
-            if (icon.classList.contains('active')) {
-                icon.classList.add('slide-right');
-            } else if (icon.classList.contains('prev')) {
-                icon.classList.add('slide-to-center');
-            } else if (icon.classList.contains('next')) {
-                icon.classList.add('slide-left');
-            }
-        }
-    });
-    
-    // Update positions after animation
-    setTimeout(() => {
-        const prevIndex = (currentIndex - 1 + icons.length) % icons.length;
-        const nextIndex = (currentIndex + 1) % icons.length;
-        
-        // Clear existing icons
-        wrapper.innerHTML = '';
-        
-        // Create and append new icons
-        const prevIcon = document.createElement('i');
-        prevIcon.className = `${icons[prevIndex]} slideshow-icon prev`;
-        
-        const currentIcon = document.createElement('i');
-        currentIcon.className = `${icons[currentIndex]} slideshow-icon active`;
-        
-        const nextIcon = document.createElement('i');
-        nextIcon.className = `${icons[nextIndex]} slideshow-icon next`;
-        
-        wrapper.appendChild(prevIcon);
-        wrapper.appendChild(currentIcon);
-        wrapper.appendChild(nextIcon);
-        
-        isAnimating = false;
-    }, 300);
-}
-
-function nextSlide() {
-    if (isAnimating) return;
-    currentIndex = (currentIndex + 1) % icons.length;
-    updateSlideshow('next');
-}
-
-function previousSlide() {
-    if (isAnimating) return;
-    currentIndex = (currentIndex - 1 + icons.length) % icons.length;
-    updateSlideshow('prev');
-}
-
-function startAutoRotate() {
-    autoRotateInterval = setInterval(nextSlide, 2000);
-}
-
-function stopAutoRotate() {
-    if (autoRotateInterval) {
-        clearInterval(autoRotateInterval);
-    }
-}
-
-// Touch/Swipe support for mobile
-let startX = 0;
-let startY = 0;
-
-function handleTouchStart(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-}
-
-function handleTouchEnd(e) {
-    if (!startX || !startY) return;
-    
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    
-    const diffX = startX - endX;
-    const diffY = startY - endY;
-    
-    // Check if horizontal swipe is more significant than vertical
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-            nextSlide(); // Swipe left -> next
-        } else {
-            previousSlide(); // Swipe right -> previous
-        }
-    }
-    
-    startX = 0;
-    startY = 0;
-}
-
-// Initialize slideshow
-document.addEventListener('DOMContentLoaded', function() {
-    updateSlideshow();
-    startAutoRotate();
-    
-    const container = document.querySelector('.animation-container');
-    
-    // Mouse events
-    container.addEventListener('mouseenter', stopAutoRotate);
-    container.addEventListener('mouseleave', startAutoRotate);
-    
-    // Touch events for mobile
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    container.addEventListener('touchstart', stopAutoRotate);
-    container.addEventListener('touchend', () => {
-        setTimeout(startAutoRotate, 3000); // Resume after 3 seconds
-    });
-});
-
-
-        // Background particles animation
-        function createParticles() {
-            const bgAnimation = document.getElementById('bgAnimation');
-            const particleCount = 50;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                bgAnimation.appendChild(particle);
-            }
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(15, 20, 25, 0.98)';
-            } else {
-                header.style.background = 'rgba(15, 20, 25, 0.95)';
-            }
-        });
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add entrance animation
+            const cards = document.querySelectorAll('.skill-card, .project-card, .language-card');
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // PWA Install functionality
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'flex';
-        });
-
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    installBtn.style.display = 'none';
-                }
-                deferredPrompt = null;
-            }
-        });
-
-        window.addEventListener('appinstalled', () => {
-            installBtn.style.display = 'none';
-        });
-
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swScript = `
-                    const CACHE_NAME = 'yahya-portfolio-v1';
-                    const urlsToCache = [
-                        '/',
-                        '/styles.css',
-                        '/script.js',
-                        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap',
-                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-                        'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css',
-                        'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js'
-                    ];
-
-                    self.addEventListener('install', (event) => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then((cache) => cache.addAll(urlsToCache))
-                        );
-                    });
-
-                    self.addEventListener('fetch', (event) => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then((response) => {
-                                    if (response) {
-                                        return response;
-                                    }
-                                    return fetch(event.request);
-                                })
-                        );
-                    });
-                `;
-
-                const blob = new Blob([swScript], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(blob);
-
-                navigator.serviceWorker.register(swUrl)
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-
-        // Initialize particles on load
-        window.addEventListener('load', () => {
-            createParticles();
-        });
-
-        // Add hover effects to project cards
-        document.addEventListener('DOMContentLoaded', () => {
-            const projectCards = document.querySelectorAll('.project-card');
-            
-            projectCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-10px) scale(1.02)';
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '0';
+                        entry.target.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            entry.target.style.transition = 'all 0.5s ease';
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, 100);
+                    }
                 });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) scale(1)';
-                });
-            });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => observer.observe(card));
         });
-
-        // Add typing animation to hero text
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize typing animation on load
-        window.addEventListener('load', () => {
-            const heroTitle = document.querySelector('.hero h1');
-            if (heroTitle) {
-                const originalText = heroTitle.textContent;
-                setTimeout(() => {
-                    typeWriter(heroTitle, originalText, 100);
-                }, 1000);
-            }
-        });
-
-        // Add parallax effect to hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero');
-            const speed = scrolled * 0.5;
-            
-            if (parallax) {
-                parallax.style.transform = `translateY(${speed}px)`;
-            }
-        });
-
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.project-card, .skill-item').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add dynamic gradient background
-        function updateGradient() {
-            const time = Date.now() * 0.0005;
-            const x = Math.sin(time) * 0.5 + 0.5;
-            const y = Math.cos(time * 0.7) * 0.5 + 0.5;
-            
-            document.documentElement.style.setProperty(
-                '--gradient-primary', 
-                `linear-gradient(${135 + x * 90}deg, hsl(${220 + x * 40}, 70%, 60%) 0%, hsl(${280 + y * 40}, 70%, 70%) 100%)`
-            );
-        }
-
-        setInterval(updateGradient, 100);
     </script>
 </body>
 </html>
-
