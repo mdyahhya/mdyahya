@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Full Stack Developer</title>
+    <title>Yahya Mundewadi – Full Stack & AI Engineer</title>
+    <meta name="description"
+        content="Portfolio of Yahya Mundewadi – BTech CSE'26 @ VVPIET Solapur, Full Stack Developer, Android Dev Expert, AI Agents & RAG Engineer, Python & MERN Developer.">
     <style>
-                * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -13,1029 +16,2176 @@
 
         :root {
             --bg-primary: #000000;
-            --bg-secondary: #0f0f0f;
-            --bg-tertiary: #1a1a1a;
+            --bg-secondary: #0b0b0b;
+            --bg-tertiary: #141414;
             --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-tertiary: #707070;
-            --accent-purple: #8b5cf6;
-            --accent-purple-dim: rgba(139, 92, 246, 0.08);
-            --accent-purple-hover: #7c3aed;
-            --border-color: #2a2a2a;
-            --border-hover: #3a3a3a;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #7a7a7a;
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.09);
+            --border-color: #252525;
+            --border-strong: #333333;
+            --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.85);
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --transition-fast: 0.18s ease-out;
+            --transition-med: 0.28s ease-out;
+            --max-width: 1240px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Top Nav */
+
         .navbar {
             position: fixed;
+            inset-inline: 0;
             top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 15, 15, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
             z-index: 1000;
-            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(18px);
+            background: radial-gradient(circle at top, rgba(139, 92, 246, 0.22), transparent 55%), rgba(0, 0, 0, 0.94);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9);
+        }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.7), transparent 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .nav-logo svg {
+            width: 18px;
+            height: 18px;
+            color: #ffffff;
+        }
+
+        .nav-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.05rem;
+        }
+
+        .nav-title-main {
+            font-size: 0.96rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-title-sub {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 0.35rem;
         }
 
         .nav-btn {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
             position: relative;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            padding: 0.35rem 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 60%), #050505;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+            transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform 0.14s ease-out,
+                box-shadow var(--transition-fast);
+        }
+
+        .nav-btn-icon {
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn-icon svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-secondary);
         }
 
         .nav-btn:hover {
-            background: var(--bg-tertiary);
             color: var(--text-primary);
-            border-color: var(--border-hover);
+            border-color: rgba(139, 92, 246, 0.4);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.22), transparent 60%), #060606;
             transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
         }
 
         .nav-btn.active {
-            background: var(--bg-tertiary);
             color: var(--text-primary);
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 1px var(--accent-purple);
+            border-color: var(--accent);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.55), transparent 70%), #050505;
+            box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5),
+                0 16px 35px rgba(0, 0, 0, 0.9);
         }
 
-        /* Main Container */
-        .container {
-            margin-top: 100px;
-            padding: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-            min-height: calc(100vh - 100px);
+        /* Page Layout */
+
+        .page {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 96px 1rem 3rem;
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) minmax(0, 2.2fr);
+            gap: 1.75rem;
         }
+
+        @media (max-width: 960px) {
+            .page {
+                grid-template-columns: minmax(0, 1fr);
+                padding-top: 96px;
+            }
+        }
+
+        /* Sections */
 
         .section {
             display: none;
-            animation: fadeIn 0.4s ease-in;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .section.active {
             display: block;
         }
 
+        .section-full {
+            grid-column: 1 / -1;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(8px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* Profile Section */
-        .profile-header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
+        /* Hero / Profile */
+
+        .hero-card {
+            background: radial-gradient(circle at top, rgba(139, 92, 246, 0.24), transparent 55%), var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.6rem 1.5rem 1.7rem;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 120% -20%, rgba(139, 92, 246, 0.4), transparent 70%);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .hero-main {
+            position: relative;
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
         }
 
         .profile-image-container {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            border: 2px solid var(--border-hover);
+            width: 110px;
+            height: 110px;
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             padding: 3px;
-            background: var(--bg-tertiary);
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.15), transparent 70%), #050505;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
         }
 
         .profile-image {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
+            border-radius: 28px;
             object-fit: cover;
-            background: var(--bg-tertiary);
+            display: block;
         }
 
-        .profile-svg {
-            width: 100%;
-            height: 100%;
+        .hero-text {
+            flex: 1;
+            min-width: 0;
         }
 
-        h1 {
-            color: var(--text-primary);
-            font-size: 2.5rem;
+        .hero-name {
+            font-size: 1.5rem;
+            font-weight: 650;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.1rem;
+        }
+
+        .hero-title {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
         }
 
-        h2 {
-            color: var(--text-primary);
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-            font-weight: 600;
-            letter-spacing: -0.3px;
-        }
-
-        h3 {
-            color: var(--text-primary);
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .social-links {
+        .hero-tags {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
             flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.35rem;
+        }
+
+        .hero-tag {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.18rem 0.55rem;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+        }
+
+        .hero-summary {
+            margin-top: 1.1rem;
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            max-width: 36rem;
+        }
+
+        .hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.85rem;
+        }
+
+        .hero-pill {
+            border-radius: 999px;
+            padding: 0.18rem 0.6rem;
+            font-size: 0.74rem;
+            background: #050505;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-tertiary);
+        }
+
+        /* Social row */
+
+        .social-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 1.35rem;
         }
 
         .social-btn {
-            background: var(--bg-tertiary);
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #050505;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            padding: 0.65rem 1.25rem;
-            border-radius: 6px;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            font-size: 0.95rem;
+            gap: 0.45rem;
+            cursor: pointer;
+            transition: background var(--transition-med),
+                border-color var(--transition-med),
+                transform 0.15s ease-out,
+                box-shadow var(--transition-med),
+                color var(--transition-med);
+        }
+
+        .social-btn-icon {
+            width: 15px;
+            height: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn-icon svg {
+            width: 15px;
+            height: 15px;
+            color: var(--text-secondary);
         }
 
         .social-btn:hover {
-            background: var(--bg-secondary);
             color: var(--text-primary);
-            border-color: var(--border-hover);
+            border-color: rgba(139, 92, 246, 0.7);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.24), transparent 70%), #050505;
             transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
         }
+
+        .social-btn.primary {
+            border-color: var(--accent);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.4), transparent 70%), #050505;
+            color: var(--text-primary);
+        }
+
+        /* Section headers */
+
+        .section-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.4rem 1.3rem 1.5rem;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 72%);
+            opacity: 0.6;
+        }
+
+        .section-card-inner {
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        .section-title span {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+        }
+
+        .section-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.8), transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-dot-inner {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #ffffff;
+        }
+
+        .section-sub {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Contact grid */
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.8rem;
         }
 
         .contact-item {
-            background: var(--bg-secondary);
-            padding: 1.25rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.75rem 0.8rem;
+            background: #050505;
+            transition: border-color var(--transition-fast),
+                transform 0.14s ease-out,
+                background var(--transition-fast);
+            font-size: 0.8rem;
         }
 
         .contact-item:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-tertiary);
+            border-color: rgba(139, 92, 246, 0.7);
+            transform: translateY(-1px);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 70%), #050505;
         }
 
-        .contact-item strong {
-            color: var(--text-secondary);
-            display: block;
-            margin-bottom: 0.4rem;
-            font-size: 0.85rem;
+        .contact-label {
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
+            letter-spacing: 0.08em;
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.25rem;
         }
 
-        .contact-item span {
+        .contact-value {
+            font-size: 0.84rem;
             color: var(--text-primary);
-            font-size: 1rem;
+            word-break: break-word;
         }
 
-        /* Skills Section */
+        .contact-label-icon {
+            width: 13px;
+            height: 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-label-icon svg {
+            width: 13px;
+            height: 13px;
+            color: var(--text-tertiary);
+        }
+
+        /* About / Who Is */
+
+        .about-text {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .about-highlight {
+            color: var(--text-primary);
+        }
+
+        .about-inline-link {
+            color: var(--accent);
+            border-bottom: 1px dotted rgba(139, 92, 246, 0.6);
+        }
+
+        /* Skills */
+
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
         }
 
         .skill-card {
-            background: var(--bg-secondary);
-            padding: 1.5rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #050505;
+            padding: 0.75rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            transition: border-color var(--transition-fast),
+                transform 0.14s ease-out,
+                background var(--transition-fast);
+            font-size: 0.84rem;
         }
 
         .skill-card:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-tertiary);
-            transform: translateY(-2px);
+            border-color: rgba(139, 92, 246, 0.7);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.15), transparent 70%), #050505;
+            transform: translateY(-1px);
+        }
+
+        .skill-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.45rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .skill-left {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .skill-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-            display: block;
-            opacity: 0.9;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.7), transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .skill-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+        .skill-icon svg {
+            width: 11px;
+            height: 11px;
+            color: #ffffff;
         }
 
-        .skill-card p {
+        .skill-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .skill-tag {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+
+        .skill-detail {
+            font-size: 0.78rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
         }
 
-        /* Projects Section */
-        .projects-grid {
+        /* Languages */
+
+        .languages-grid {
             display: grid;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.7rem;
+            margin-top: 0.6rem;
+        }
+
+        .language-card {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.4rem 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            background: #050505;
+            transition: border-color var(--transition-fast),
+                transform 0.14s ease-out,
+                background var(--transition-fast);
+        }
+
+        .language-card:hover {
+            border-color: rgba(139, 92, 246, 0.7);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 70%), #050505;
+            transform: translateY(-1px);
+        }
+
+        .language-left {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .language-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.7), transparent 70%);
+        }
+
+        .language-name {
+            font-size: 0.82rem;
+        }
+
+        .language-level {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Projects */
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-top: 0.4rem;
         }
 
         .project-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #050505;
             display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 2rem;
-            align-items: start;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.7fr);
+            gap: 0.9rem;
+            padding: 0.85rem;
+            transition: border-color var(--transition-med),
+                transform 0.18s ease-out,
+                background var(--transition-med),
+                box-shadow var(--transition-med);
         }
 
         .project-card:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-tertiary);
+            border-color: rgba(139, 92, 246, 0.9);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 70%), #050505;
             transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
         }
 
         .project-image-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 6px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--bg-primary);
-            flex-shrink: 0;
+            background: #020202;
+            min-height: 120px;
+            max-height: 180px;
         }
 
         .project-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
-        /* Uncomment and add your image URL below */
-        /* .project-image {
-            content: url('YOUR_SUPABASE_IMAGE_URL_HERE');
-        } */
-
         .project-content {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.38rem;
+            font-size: 0.82rem;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.7rem;
         }
 
         .project-title {
+            font-size: 0.9rem;
+            font-weight: 520;
+        }
+
+        .project-meta {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .project-tags {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.35rem;
+            margin-top: 0.15rem;
+        }
+
+        .project-tag {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.16rem 0.5rem;
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         .visit-btn {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            padding: 0.65rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            border: 1px solid var(--border-hover);
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            padding: 0.28rem 0.7rem;
+            font-size: 0.74rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #050505;
+            color: var(--text-secondary);
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-block;
-            font-size: 0.9rem;
+            transition: border-color var(--transition-fast),
+                background var(--transition-fast),
+                color var(--transition-fast),
+                transform 0.14s ease-out,
+                box-shadow var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .visit-btn svg {
+            width: 12px;
+            height: 12px;
         }
 
         .visit-btn:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--accent-purple);
+            border-color: rgba(139, 92, 246, 0.8);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.35), transparent 70%), #050505;
             color: var(--text-primary);
-            transform: translateX(2px);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85);
         }
 
-        .project-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        .project-description ul {
-            margin-top: 0.5rem;
-            margin-left: 1.5rem;
-        }
-
-        .project-description li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Languages Section */
-        .languages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .language-card {
-            background: var(--bg-secondary);
-            padding: 2rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .language-card:hover {
-            border-color: var(--border-hover);
-            background: var(--bg-tertiary);
-            transform: translateY(-2px);
-        }
-
-        .language-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 0.5rem;
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0.75rem 1rem;
-            }
-
-            .nav-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .container {
-                margin-top: 140px;
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
             .project-card {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1.5rem;
+                grid-template-columns: minmax(0, 1fr);
             }
 
             .project-image-container {
-                width: 100%;
-                height: 250px;
-                margin: 0 auto;
+                max-height: 190px;
+            }
+        }
+
+        /* Achievements */
+
+        .achievement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+        }
+
+        .achievement-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: #050505;
+            padding: 0.65rem 0.8rem;
+            display: flex;
+            gap: 0.6rem;
+            transition: border-color var(--transition-fast),
+                transform 0.14s ease-out,
+                background var(--transition-fast);
+        }
+
+        .achievement-item:hover {
+            border-color: rgba(139, 92, 246, 0.8);
+            transform: translateY(-1px);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.15), transparent 70%), #050505;
+        }
+
+        .achievement-badge {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: radial-gradient(circle at 0 0, rgba(139, 92, 246, 0.75), transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .achievement-badge svg {
+            width: 13px;
+            height: 13px;
+            color: #ffffff;
+        }
+
+        .achievement-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.12rem;
+        }
+
+        .achievement-title {
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+
+        .achievement-meta {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .achievement-desc {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        /* Blogs */
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-top: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .blog-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: #050505;
+            padding: 0.65rem 0.8rem;
+            transition: border-color var(--transition-fast),
+                transform 0.14s ease-out,
+                background var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            gap: 0.18rem;
+        }
+
+        .blog-item:hover {
+            border-color: rgba(139, 92, 246, 0.9);
+            transform: translateY(-1px);
+            background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.16), transparent 70%), #050505;
+        }
+
+        .blog-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+        }
+
+        .blog-title {
+            font-size: 0.84rem;
+            font-weight: 500;
+        }
+
+        .blog-meta {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+        }
+
+        .blog-link {
+            margin-top: 0.08rem;
+            font-size: 0.76rem;
+            color: var(--accent);
+        }
+
+        /* Footer */
+
+        .footer {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0.75rem 1rem 1.5rem;
+            font-size: 0.74rem;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: -0.5rem;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .footer-pill {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.18rem 0.55rem;
+            background: #050505;
+        }
+
+        @media (max-width: 640px) {
+            .nav-inner {
+                padding-inline: 0.8rem;
             }
 
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .hero-card {
+                padding: 1.3rem 1.15rem 1.4rem;
             }
 
-            .languages-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            .hero-main {
+                align-items: flex-start;
+            }
+
+            .profile-image-container {
+                width: 92px;
+                height: 92px;
+            }
+
+            .hero-name {
+                font-size: 1.35rem;
+            }
+
+            .page {
+                padding-inline: 0.9rem;
+            }
+
+            .footer {
+                padding-inline: 0.9rem;
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <button class="nav-btn active" onclick="showSection('profile')">Profile & Contact</button>
-        <button class="nav-btn" onclick="showSection('skills')">Skills</button>
-        <button class="nav-btn" onclick="showSection('projects')">Projects</button>
-        <button class="nav-btn" onclick="showSection('languages')">Languages</button>
-    </nav>
-
-    <!-- Main Container -->
-    <div class="container">
-
-        <!-- Profile & Contact Section -->
-        <section id="profile" class="section active">
-            <div class="profile-header">
-                <div class="profile-image-container">
-                    <!-- Uncomment below and add your image URL -->
-                     <img src="Yahya_Mundewadi.jpg" alt="Profile" class="profile-image">
-
-                    <!-- SVG Placeholder -->
-                    
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <div class="nav-logo">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                                <stop offset="0" stop-color="#a855f7" />
+                                <stop offset="1" stop-color="#6366f1" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#g1)"
+                            d="M5 4h7.2c3.1 0 5.8 2.3 6.1 5.4C18.7 13.1 16 16 12.8 16H9.2V20H5V4Zm4.2 4v4h3.6c1.1 0 2-0.9 2-2s-0.9-2-2-2H9.2Z" />
+                    </svg>
                 </div>
+                <div class="nav-title">
+                    <div class="nav-title-main">Yahya Mundewadi</div>
+                    <div class="nav-title-sub">Full Stack · Android · AI Agents</div>
+                </div>
+            </div>
+            <nav class="nav-buttons">
+                <button class="nav-btn active" data-section="profile">
+                    <span class="nav-btn-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M12 12.7a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Zm0 2c-3.1 0-6.2 1.6-6.2 3.7V20h12.4v-1.6c0-2.1-3.1-3.7-6.2-3.7Z" />
+                        </svg>
+                    </span>
+                    Profile
+                </button>
+                <button class="nav-btn" data-section="skills">
+                    <span class="nav-btn-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor" d="M6 4h12v4H6V4Zm0 6h5v10H6V10Zm7 0h5v6h-5v-6Z" />
+                        </svg>
+                    </span>
+                    Skills
+                </button>
+                <button class="nav-btn" data-section="projects">
+                    <span class="nav-btn-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M4 5.5 12 3l8 2.5V19l-8 2-8-2V5.5Zm4 2.2v9.1l4 1 4-1V7.7L12 6.4 8 7.7Z" />
+                        </svg>
+                    </span>
+                    Projects
+                </button>
+                <button class="nav-btn" data-section="achievements">
+                    <span class="nav-btn-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="m12 2 2.2 4.5 5 0.7-3.6 3.6 0.8 5-4.4-2.3-4.4 2.3 0.8-5L4.8 7.2l5-0.7L12 2Z" />
+                        </svg>
+                    </span>
+                    Achievements
+                </button>
+                <button class="nav-btn" data-section="blog">
+                    <span class="nav-btn-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M6 4h9l3 3v13H6V4Zm8 1.5V8h2.5L14 5.5ZM8 10h8v1.5H8V10Zm0 3h6v1.5H8V13Zm0 3h4v1.5H8V16Z" />
+                        </svg>
+                    </span>
+                    Blog
+                </button>
+            </nav>
+        </div>
+    </header>
 
-                <h1 class="glow-text">Yahya Mundewadi </h1>
-                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                    BTech CSE'26 @VVPIET, Solapur <br>
-                    Full Stack Developer | Android Dev Expert | Python Developer
+    <!-- PAGE GRID -->
+    <main class="page">
+
+        <!-- PROFILE / ABOUT / CONTACT -->
+        <section id="profile" class="section active section-full">
+            <div class="hero-card">
+                <div class="hero-main">
+                    <div class="profile-image-container">
+                        <!-- keep your own image / or supabase URL if you switch -->
+                        <img src="Yahya_Mundewadi.jpg" alt="Yahya Mundewadi" class="profile-image">
+                    </div>
+                    <div class="hero-text">
+                        <div class="hero-name">Yahya Mundewadi</div>
+                        <div class="hero-title">
+                            BTech CSE'26 · VVPIET, Solapur · Full Stack & Android Developer · AI Agents & RAG Engineer
+                        </div>
+                        <div class="hero-tags">
+                            <span class="hero-tag">Founder, Dominal Tech Pvt Ltd</span>
+                            <span class="hero-tag">Training & Placement Co‑Ordinator, VVPIET</span>
+                            <span class="hero-tag">Author of pyDefine (PyPI)</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="hero-summary">
+                    I design, build, and ship production‑ready software across Android, web, and AI – from
+                    privacy‑first browsers and AI agents to college‑scale portals and internal tools.
+                    Focused on reliable shipping, clean architecture, and solving real problems for students,
+                    institutions, and businesses.
                 </p>
-
-                <div class="social-links">
-                    <a href="https://github.com/mdyahhya" target="_blank" class="social-btn">
-                        <span>🔗</span> GitHub
+                <div class="hero-pills">
+                    <span class="hero-pill">Android (Kotlin, Java)</span>
+                    <span class="hero-pill">MERN & Full Stack</span>
+                    <span class="hero-pill">Python & AI</span>
+                    <span class="hero-pill">RAG · AI Agents</span>
+                    <span class="hero-pill">Supabase · Firebase · SQL</span>
+                </div>
+                <div class="social-row">
+                    <a href="https://github.com/mdyahhya" target="_blank" class="social-btn primary">
+                        <span class="social-btn-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor"
+                                    d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6 0.5 0.1 0.7-0.2 0.7-0.5v-1.8c-2.8 0.6-3.4-1.4-3.4-1.4-0.4-1.1-1-1.4-1-1.4-0.8-0.6 0.1-0.6 0.1-0.6 0.9 0.1 1.4 1 1.4 1 0.8 1.4 2.1 1 2.6 0.8 0.1-0.6 0.3-1 0.6-1.2-2.2-0.3-4.5-1.1-4.5-5 0-1.1 0.4-2 1-2.7-0.1-0.3-0.4-1.3 0.1-2.6 0 0 0.8-0.3 2.8 1 0.8-0.2 1.6-0.3 2.4-0.3s1.6 0.1 2.4 0.3c2-1.3 2.8-1 2.8-1 0.5 1.3 0.2 2.3 0.1 2.6 0.6 0.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.5 5 0.4 0.4 0.7 1 0.7 2.1v3.1c0 0.3 0.2 0.6 0.7 0.5 4-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2Z" />
+                            </svg>
+                        </span>
+                        GitHub
                     </a>
-                    <a href="https://www.linkedin.com/in/yahya-m-05b3191b9?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn">
-                        <span>💼</span> LinkedIn
+                    <a href="https://www.linkedin.com/in/yahyamundewadi" target="_blank" class="social-btn">
+                        <span class="social-btn-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor"
+                                    d="M5.1 4.3a2 2 0 1 1 0 4.1 2 2 0 0 1 0-4.1ZM4 9.1h2.2V20H4V9.1Zm5.2 0h2.1v1.5h0.1c0.3-0.6 1.2-1.6 2.8-1.6 3 0 3.6 2 3.6 4.6V20h-2.2v-5.2c0-1.2 0-2.8-1.7-2.8-1.7 0-1.9 1.3-1.9 2.7V20H9.2V9.1Z" />
+                            </svg>
+                        </span>
+                        LinkedIn
                     </a>
                     <a href="mailto:yahyabuilds@gmail.com" class="social-btn">
-                        <span>📧</span> Email
+                        <span class="social-btn-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor"
+                                    d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 7 7-4.7V7l-7 4.7L5 7v0.3L12 12Z" />
+                            </svg>
+                        </span>
+                        Email
                     </a>
                     <a href="https://wa.me/919307426215" target="_blank" class="social-btn">
-                        <span>💬</span> WhatsApp
+                        <span class="social-btn-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor"
+                                    d="M12 2a9.7 9.7 0 0 0-8.4 14.6L2 22l5.5-1.5A9.7 9.7 0 1 0 12 2Zm0 2.1a7.5 7.5 0 0 1 6.3 11.7l-0.2 0.3a7.5 7.5 0 0 1-10.5 1.5l-0.3-0.3-3.3 0.9 0.9-3.2-0.3-0.4A7.5 7.5 0 0 1 12 4.1Zm-3.4 3.5c-0.2 0-0.5 0-0.8 0.4-0.3 0.3-1 1-1 2.4s1 2.8 1.2 3 2 3.1 4.8 4.1c2.4 0.9 2.9 0.7 3.4 0.7s1.7-0.7 1.9-1.4 0.2-1.2 0.1-1.4c-0.1-0.3-0.4-0.4-0.8-0.6s-2-1-2.3-1.1-0.5-0.2-0.8 0.2c-0.2 0.4-0.9 1.1-1.1 1.3s-0.4 0.2-0.8 0-1.5-0.6-2.9-1.9c-1.1-1-1.9-2.3-2.1-2.7s0-0.6 0.2-0.8c0.2-0.2 0.4-0.4 0.5-0.6s0.2-0.3 0.3-0.5 0-0.4-0.1-0.6-0.8-2-1.1-2.7c-0.2-0.6-0.5-0.6-0.7-0.7Z" />
+                            </svg>
+                        </span>
+                        WhatsApp
                     </a>
                 </div>
             </div>
 
-            <h2>Contact Information</h2>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <strong>📱 Phone</strong>
-                    <span>91 9307426215</span>
-                </div>
-                <div class="contact-item">
-                    <strong>📧 Email</strong>
-                    <span>yahyabuilds@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <strong>🏠 Address</strong>
-                    <span>Pachcha Peth Jail Road, Solapur 413005</span>
-                </div>
-                <div class="contact-item">
-                    <strong>🌆 City</strong>
-                    <span>Solapur</span>
-                </div>
-                <div class="contact-item">
-                    <strong>📍 State</strong>
-                    <span>Maharashtra</span>
+            <div class="section-card" style="margin-top:1.2rem;">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Who is Yahya Mundewadi?</span>
+                        </div>
+                        <div class="section-sub">
+                            Dominal Tech · VVPIET · hccsolapur.in
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p>
+                            I am a <span class="about-highlight">Full Stack and Android developer from Solapur</span>,
+                            currently pursuing BTech CSE'26 at VVPIET. I founded Dominal Tech Pvt Ltd to build
+                            real-world AI,
+                            web, and mobile solutions for colleges, shops, and startups.
+                        </p>
+                        <p>
+                            My work spans <span class="about-highlight">AI chatbots, RAG‑based agents, internal tools,
+                                and
+                                high‑traffic college portals</span> – including the AI assistant on
+                            <a href="https://vvpengineering.org" target="_blank"
+                                class="about-inline-link">vvpengineering.org</a>
+                            and student/placement platforms for VVPIET. I also built products like
+                            Dominal AI, Shadow Browser, Heart AI, SmileUp, and PythonBuddy.
+                        </p>
+                        <p>
+                            I write and maintain <span class="about-highlight">pyDefine</span> on PyPI, a Python library
+                            that turns raw
+                            tracebacks into beginner‑friendly explanations to speed up debugging for new developers.
+                        </p>
+                    </div>
+
+                    <div class="contact-grid" style="margin-top:1rem;">
+                        <div class="contact-item">
+                            <div class="contact-label">
+                                <span class="contact-label-icon">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M6.6 3h10.8C18.3 3 19 3.7 19 4.6v14.8c0 0.9-0.7 1.6-1.6 1.6H6.6C5.7 21 5 20.3 5 19.4V4.6C5 3.7 5.7 3 6.6 3Zm5.4 15.5a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6Z" />
+                                    </svg>
+                                </span>
+                                Phone
+                            </div>
+                            <div class="contact-value">+91 9307426215</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">
+                                <span class="contact-label-icon">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 7 7-4.7V7l-7 4.7L5 7v0.3L12 12Z" />
+                                    </svg>
+                                </span>
+                                Email
+                            </div>
+                            <div class="contact-value">yahyabuilds@gmail.com</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">
+                                <span class="contact-label-icon">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor"
+                                            d="M12 2a7 7 0 0 1 7 7c0 4.8-5.2 9.5-6.5 10.6a1 1 0 0 1-1 0C10.2 18.5 5 13.8 5 9a7 7 0 0 1 7-7Zm0 3a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" />
+                                    </svg>
+                                </span>
+                                Location
+                            </div>
+                            <div class="contact-value">
+                                Pachcha Peth Jail Road, Solapur, Maharashtra 413005
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-label">
+                                <span class="contact-label-icon">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path fill="currentColor" d="M5 4h9l5 5v11H5V4Zm9 0v5h5" />
+                                    </svg>
+                                </span>
+                                Current Focus
+                            </div>
+                            <div class="contact-value">
+                                AI Agents, production‑grade apps, and scalable tools for students & companies.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
+        <!-- SKILLS & LANGUAGES -->
         <section id="skills" class="section">
-            <h2>Professional Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <span class="skill-icon">📱</span>
-                    <h3>Android App Development</h3>
-                    <p>Kotlin, Java</p>
+            <div class="section-card">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Core Skills</span>
+                        </div>
+                        <div class="section-sub">What I actually ship with</div>
+                    </div>
+
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M7 2h10l3 5v13H4V7l3-5Zm0 5h10V4.7L15.8 3H8.2L7 4.7V7Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">Android App Development</div>
+                                </div>
+                                <div class="skill-tag">Kotlin · Java</div>
+                            </div>
+                            <div class="skill-detail">
+                                Native Android apps with clean architecture, offline‑first behavior, and
+                                production‑ready UI.
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M6 4h12v4H6V4Zm0 6h5v10H6V10Zm7 0h5v6h-5v-6Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">Full Stack Web</div>
+                                </div>
+                                <div class="skill-tag">MERN · REST · Auth</div>
+                            </div>
+                            <div class="skill-detail">
+                                End‑to‑end web apps: React frontends, Node/Express backends, Supabase/Firebase, auth &
+                                dashboards.
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M4 4h16v4H4V4Zm3 5h10v2H7V9Zm-3 4h16v7H4v-7Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">Backend & Databases</div>
+                                </div>
+                                <div class="skill-tag">SQL · Supabase</div>
+                            </div>
+                            <div class="skill-detail">
+                                Relational schemas, indexing, query optimization, and secure APIs for real‑world
+                                traffic.
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M12 2 3 6v12l9 4 9-4V6L12 2Zm0 2.2 6.5 2.8L12 9.8 5.5 7 12 4.2Zm-7 5L12 12l7-2.8v2.3L12 14.3 5 11.5V9.2Zm0 4.3L12 17l7-3.5v2.3L12 19.3 5 16.3v-2.8Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">AI Agents & RAG</div>
+                                </div>
+                                <div class="skill-tag">Chatbots · Tools</div>
+                            </div>
+                            <div class="skill-detail">
+                                Domain‑specific agents, RAG pipelines, and integrated AI features for college and client
+                                projects.
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M4 5h7v4H4V5Zm0 5h7v4H4v-4Zm9-5h7v9h-7V5Zm0 10h7v4h-7v-4Zm-9 0h7v4H4v-4Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">Product & UX</div>
+                                </div>
+                                <div class="skill-tag">From brief to ship</div>
+                            </div>
+                            <div class="skill-detail">
+                                Translate vague problem statements into simple interfaces with minimal friction,
+                                especially for non‑technical users.
+                            </div>
+                        </div>
+
+                        <div class="skill-card">
+                            <div class="skill-top">
+                                <div class="skill-left">
+                                    <div class="skill-icon">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor" d="M5 4h14v6H5V4Zm0 8h6v8H5v-8Zm8 0h6v5h-6v-5Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="skill-name">Leadership & Delivery</div>
+                                </div>
+                                <div class="skill-tag">Dominal Tech</div>
+                            </div>
+                            <div class="skill-detail">
+                                Leading small teams, scoping features, and delivering stable deployments for colleges
+                                and local businesses.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🐍</span>
-                    <h3>Python Development</h3>
-                    <p>Advanced Python programming</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🗄️</span>
-                    <h3>SQL Database</h3>
-                    <p>Database design & optimization</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🌐</span>
-                    <h3>Web Development</h3>
-                    <p>Full-stack web applications</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🎨</span>
-                    <h3>Frontend Development</h3>
-                    <p>Amazing UI/UX design</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">⚡</span>
-                    <h3>Fullstack Development</h3>
-                    <p>End-to-end solutions</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">📲</span>
-                    <h3>Progressive Web Apps</h3>
-                    <p>PWA development expert</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🚀</span>
-                    <h3>Startup Founder</h3>
-                    <p>Company management</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">👥</span>
-                    <h3>Team Leadership</h3>
-                    <p>Leading development teams</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🤖</span>
-                    <h3>AI Prompt Expert</h3>
-                    <p>Advanced AI prompting</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">🧠</span>
-                    <h3>AI Engineer</h3>
-                    <p>AI model development</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">📊</span>
-                    <h3>AI Analysis</h3>
-                    <p>Data analysis with AI</p>
-                </div>
-                <div class="skill-card">
-                    <span class="skill-icon">💬</span>
-                    <h3>Communication Skills</h3>
-                    <p>Fluent English speaker</p>
+            </div>
+
+            <div class="section-card" style="margin-top:1rem;">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Languages & Tools</span>
+                        </div>
+                        <div class="section-sub">Technologies I use daily</div>
+                    </div>
+
+                    <div class="languages-grid">
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">Kotlin · Java</div>
+                            </div>
+                            <div class="language-level">Android</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">Python</div>
+                            </div>
+                            <div class="language-level">pyDefine · AI</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">TypeScript · JS</div>
+                            </div>
+                            <div class="language-level">Web · Node</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">React</div>
+                            </div>
+                            <div class="language-level">SPAs · Dashboards</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">Flutter</div>
+                            </div>
+                            <div class="language-level">Mobile UI</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">SQL</div>
+                            </div>
+                            <div class="language-level">Postgres · Supabase</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">Firebase</div>
+                            </div>
+                            <div class="language-level">Auth · Realtime</div>
+                        </div>
+                        <div class="language-card">
+                            <div class="language-left">
+                                <div class="language-dot"></div>
+                                <div class="language-name">Git · Linux</div>
+                            </div>
+                            <div class="language-level">Shipping</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="section">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-
-
-                                <!-- Project 17 - Dominal AI v2.5 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/1765018670251%20(1).jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzLzE3NjUwMTg2NzAyNTEgKDEpLmpwZyIsImlhdCI6MTc2NTAxOTA2NywiZXhwIjoxNzk2NTU1MDY3fQ.0XTSR97-Rzr4m8_wHakASNr4jbetjEnnDgKiS33cLvU" alt="Dominal AI v2.5" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#8b5cf6" text-anchor="middle" dy=".3em">🧠</text>
-                            <text x="100" y="150" font-size="15" fill="#ffffff" text-anchor="middle">Dominal AI v2.5</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Dominal AI v2.5 - Custom AI Model</h3>
-                            <a href="https://ai.dominal.in" target="_blank" class="visit-btn">Visit Site →</a>
+        <!-- PROJECTS -->
+        <section id="projects" class="section section-full">
+            <div class="section-card">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Featured Projects</span>
                         </div>
-                        <div class="project-description">
-                            Custom AI model with a dedicated knowledge base, built using natural language processing to understand user questions and respond conversationally. Handles user queries, answers domain-specific questions, and provides intelligent, context-aware replies from its custom knowledge source.
+                        <div class="section-sub">Selected work across AI, Android, and web</div>
+                    </div>
+
+                    <div class="projects-list">
+                        <!-- Dominal AI v2.5 -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/1765018670251%20(1).jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzLzE3NjUwMTg2NzAyNTEgKDEpLmpwZyIsImlhdCI6MTc2NTAxOTA2NywiZXhwIjoxNzk2NTU1MDY3fQ.0XTSR97-Rzr4m8_wHakASNr4jbetjEnnDgKiS33cLvU"
+                                    alt="Dominal AI v2.5" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Dominal AI v2.5 – Custom AI Model</div>
+                                        <div class="project-meta">ai.dominal.in · AI Agent with private knowledge base
+                                        </div>
+                                    </div>
+                                    <a href="https://ai.dominal.in" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Custom AI model that answers domain‑specific questions using a curated knowledge
+                                    base,
+                                    built for conversational support and context‑aware responses for Dominal Tech and
+                                    client workflows.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">AI Agent</span>
+                                    <span class="project-tag">RAG</span>
+                                    <span class="project-tag">Custom Tools</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI PPT Maker -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/images%20(5).jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2ltYWdlcyAoNSkuanBlZyIsImlhdCI6MTc2NTAyMjI0OCwiZXhwIjoxNzk2NTU4MjQ4fQ.d_dIkOb0-IfjOoCUREUFES_pdA6Y_n2yPF_UfqKbbuw"
+                                    alt="AI PPT Maker" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">AI PPT Maker – Conversation‑Driven Slide Builder
+                                        </div>
+                                        <div class="project-meta">dominalai.netlify.app/ppt · AI presentation agent
+                                        </div>
+                                    </div>
+                                    <a href="https://dominalai.netlify.app/ppt" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    AI agent that collects topic, tone, and length through a simple chat interface and
+                                    generates
+                                    fully structured PPT content with exportable slides for college and business
+                                    presentations.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">AI</span>
+                                    <span class="project-tag">Automation</span>
+                                    <span class="project-tag">Education</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- pydefine -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/1764074691044.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzLzE3NjQwNzQ2OTEwNDQuanBnIiwiaWF0IjoxNzY1MDE5MzAzLCJleHAiOjE3OTY1NTUzMDN9.E18D-VScqgCMbbL7Vg5q0g5AWSFpnxknXIfIDhIp-aI"
+                                    alt="pydefine" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">pyDefine – Python Error Explainer</div>
+                                        <div class="project-meta">PyPI package · Created & maintained by Yahya</div>
+                                    </div>
+                                    <a href="https://pypi.org/project/pydefine/" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Pure‑Python library that converts raw tracebacks into human‑readable explanations
+                                    and quick‑fix hints,
+                                    making debugging friendlier for students and new developers.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Python</span>
+                                    <span class="project-tag">Developer Tools</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Chatbot for college website -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/vvplogo.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL3Z2cGxvZ28uanBlZyIsImlhdCI6MTc2NTAyMTUxMCwiZXhwIjoxNzk2NTU3NTEwfQ.eB7a8tcRYEfdVvjnzqXYaYZPzjqrVhTfmur0osFWHkg"
+                                    alt="VVPIET AI Chatbot" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">VVPIET College AI Chatbot</div>
+                                        <div class="project-meta">vvpengineering.org · Multilingual college assistant
+                                        </div>
+                                    </div>
+                                    <a href="https://vvpengineering.org" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    ChatGPT‑style assistant for VVPIET that answers questions about branches, fees,
+                                    placements, and more
+                                    in English, Hindi, and Marathi, directly embedded into the college website.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">AI Chatbot</span>
+                                    <span class="project-tag">Multilingual</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shadow Browser -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/Picsart_25-12-06_17-35-07-982.jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="Shadow Browser" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Shadow Browser – Privacy‑First Android Browser</div>
+                                        <div class="project-meta">shadow.dominal.in · Zero‑history secure browser</div>
+                                    </div>
+                                    <a href="https://shadow.dominal.in" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Android browser that avoids saving history, blocks tracking, and filters harmful
+                                    websites,
+                                    designed for people who care about privacy on mobile.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Android</span>
+                                    <span class="project-tag">Privacy</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SafeChats -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/chaticon192.png?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="SafeChats" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">SafeChats – WhatsApp‑Style Web Chat</div>
+                                        <div class="project-meta">safechats.netlify.app · Realtime messaging</div>
+                                    </div>
+                                    <a href="https://safechats.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Web‑based chat app with live message delivery and offline notifications, mirroring
+                                    the WhatsApp
+                                    UX for easy onboarding.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">WebSockets</span>
+                                    <span class="project-tag">Notifications</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FaceAttend AI -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/facecam.jpeg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="FaceAttend AI" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">FaceAttend AI – Face Recognition Attendance</div>
+                                        <div class="project-meta">facetech.netlify.app · AI attendance system</div>
+                                    </div>
+                                    <a href="https://facetech.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    AI‑powered attendance app that stores facial embeddings and automates daily
+                                    attendance
+                                    using face recognition.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Computer Vision</span>
+                                    <span class="project-tag">Education</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Heart AI -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/doctor-holding-heart-hand-red-heartbeat-with-life-line-cardiology-concept-health-protection-symbol-healthcare-vector-illustration-flat-minimal-design-isolated-white-background_153097-1973%20(1).png?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="Heart AI" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Heart AI – Disease Guidance</div>
+                                        <div class="project-meta">heartai.netlify.app · Health info & predictions</div>
+                                    </div>
+                                    <a href="https://heartai.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    A healthcare‑oriented web app with heart‑disease information, symptom‑based
+                                    prediction tools,
+                                    health tips, and doctor discovery.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Healthcare</span>
+                                    <span class="project-tag">Web App</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SmileUp -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/Picsart_25-12-06_17-39-19-695.jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="SmileUp" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">SmileUp – Smile Reward App</div>
+                                        <div class="project-meta">smilegift.netlify.app · Mental‑wellness gamification
+                                        </div>
+                                    </div>
+                                    <a href="https://smilegift.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Unique app that rewards users for smiling; uses an AI model to verify smiles without
+                                    storing images,
+                                    turning daily positivity into a small habit.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">AI</span>
+                                    <span class="project-tag">Gamification</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coderverse -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/coderverse.png?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="Coderverse" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Coderverse – Coding Learning Platform</div>
+                                        <div class="project-meta">coderverse.netlify.app · MCQs & AI analytics</div>
+                                    </div>
+                                    <a href="https://coderverse.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Web platform for learning programming concepts via MCQs and AI‑powered pattern
+                                    analysis
+                                    of how students study and attempt questions.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">EdTech</span>
+                                    <span class="project-tag">Analytics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Maidly -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/House%20cleaning%20services%20vector%20logo_%20Black%20icon%20on%20a%20white%20background%20(1).jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="Maidly" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Maidly – Maid Booking Platform</div>
+                                        <div class="project-meta">maidly.netlify.app · Live availability and bookings
+                                        </div>
+                                    </div>
+                                    <a href="https://maidly.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Online maid management system with real‑time availability, bookings, and
+                                    confirmations,
+                                    built for local household services.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Booking</span>
+                                    <span class="project-tag">Client Work</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VVPIET Staff -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/stafflogo.jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="VVPIET Staff" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">VVPIET Staff Profile Site</div>
+                                        <div class="project-meta">vvpstaff.netlify.app · Central staff profiles</div>
+                                    </div>
+                                    <a href="https://vvpstaff.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Internal staff portal for VVPIET with structured profiles, qualifications, and
+                                    contact details,
+                                    built to make it easier for students and visitors to know the faculty.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">College</span>
+                                    <span class="project-tag">Directory</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VVPIET Students -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/studentslogo.jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="VVPIET Students" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">VVPIET Students Portal</div>
+                                        <div class="project-meta">vvpstudents.netlify.app · Student‑first platform</div>
+                                    </div>
+                                    <a href="https://vvpstudents.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Central place for VVPIET students to access announcements, notes, and resources,
+                                    reducing the friction of scattered WhatsApp and PDF sharing.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Portal</span>
+                                    <span class="project-tag">Students</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VVPIET Drives -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphssh.supabase.co/storage/v1/object/sign/portfolio-images/placement.png?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="VVPIET Drives" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">VVPIET Drives – Placement Portal</div>
+                                        <div class="project-meta">vvpdrives.netlify.app · Placement and drives</div>
+                                    </div>
+                                    <a href="https://vvpdrives.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Simple, focused interface for announcing campus drives, eligibility, and timelines
+                                    so students
+                                    never miss a placement opportunity.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Placements</span>
+                                    <span class="project-tag">VVPIET</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sharp Kolors -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/salonlogo.jpg?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="Sharp Kolors" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">Sharp Kolors – Salon Management & Booking</div>
+                                        <div class="project-meta">Client work · Local business digitization</div>
+                                    </div>
+                                    <a href="https://sharpkolors.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Web system for managing appointments, services, and customers for a salon,
+                                    built to replace manual registers and calls.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Business</span>
+                                    <span class="project-tag">Scheduling</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PythonBuddy -->
+                        <div class="project-card">
+                            <div class="project-image-container">
+                                <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/unnamed%20(3).png?token=eyJraWQiOiJzdG9yZWluZy1rZXlfaWQifQ"
+                                    alt="PythonBuddy" class="project-image">
+                            </div>
+                            <div class="project-content">
+                                <div class="project-header">
+                                    <div>
+                                        <div class="project-title">PythonBuddy – Online Python IDE</div>
+                                        <div class="project-meta">pythonbuddy.netlify.app · 200+ libraries</div>
+                                    </div>
+                                    <a href="https://pythonbuddy.netlify.app" target="_blank" class="visit-btn">
+                                        Visit
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="currentColor"
+                                                d="M14 5h5v5h-2.1V8.4l-5.8 5.8-1.4-1.4 5.8-5.8H14V5Zm-9 4h5v2H7v6h6v-3h2v5H5V9Z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="project-desc">
+                                    Browser‑based Python IDE and compiler with support for popular data‑science
+                                    libraries like NumPy,
+                                    Pandas, Matplotlib, and scikit‑learn.
+                                </p>
+                                <div class="project-tags">
+                                    <span class="project-tag">IDE</span>
+                                    <span class="project-tag">Data Science</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-                                <!-- Project 18 - AI PPT Maker -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/images%20(5).jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2ltYWdlcyAoNSkuanBlZyIsImlhdCI6MTc2NTAyMjI0OCwiZXhwIjoxNzk2NTU4MjQ4fQ.d_dIkOb0-IfjOoCUREUFES_pdA6Y_n2yPF_UfqKbbuw" alt="AI PPT Maker" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#8b5cf6" text-anchor="middle" dy=".3em">📊</text>
-                            <text x="100" y="150" font-size="15" fill="#ffffff" text-anchor="middle">AI PPT Maker</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>AI Agent - AI PPT Maker</h3>
-                            <a href="https://dominalai.netlify.app/ppt" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Intelligent AI agent that creates professional PPTs through conversation. Asks for topic, user name, tone (College, Business, Technical, Educational), and number of pages, then generates complete slide content and downloadable PDF presentations automatically.
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/1764074691044.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzLzE3NjQwNzQ2OTEwNDQuanBnIiwiaWF0IjoxNzY1MDE5MzAzLCJleHAiOjE3OTY1NTUzMDN9.E18D-VScqgCMbbL7Vg5q0g5AWSFpnxknXIfIDhIp-aI" alt="pydefine" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🐍</text>
-                            <text x="100" y="150" font-size="20" fill="#ffffff" text-anchor="middle">pydefine</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>pydefine - Python Library</h3>
-                            <a href="https://pypi.org/project/pydefine" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Own Python library that converts raw Python errors into easy-to-understand explanations with emojis and quick solutions. Makes debugging more intuitive and beginner-friendly.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 15 - AI Chatbot -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/vvplogo.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL3Z2cGxvZ28uanBlZyIsImlhdCI6MTc2NTAyMTUxMCwiZXhwIjoxNzk2NTU3NTEwfQ.eB7a8tcRYEfdVvjnzqXYaYZPzjqrVhTfmur0osFWHkg" alt="AI Chatbot" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#8b5cf6" text-anchor="middle" dy=".3em">🤖</text>
-                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">AI Chatbot</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>AI Chatbot for College Website</h3>
-                            <a href="https://vvpengineering.org" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            ChatGPT-style AI chatbot for college website supporting English, Hindi, and Marathi. Provides instant information about college placements, fee structure, branches, faculties, and more. (Accessible via BLUE CHAT Box on BOTTOM RIGHT corner of website).
-                        </div>
-                    </div>
-                </div>
-
-                                <!-- Project 16 - Python IDE -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/unnamed%20(3).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL3VubmFtZWQgKDMpLnBuZyIsImlhdCI6MTc2NTAyMjYxMCwiZXhwIjoxNzk2NTU4NjEwfQ.Ri2MmOi3LLeS9PRLOc5mJCCrvxUrhMogLGk7SIjXM_w" alt="Python IDE" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#8b5cf6" text-anchor="middle" dy=".3em">🧪</text>
-                            <text x="100" y="150" font-size="15" fill="#ffffff" text-anchor="middle">Python IDE</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>PythonBuddy - Online Python IDE/Compiler</h3>
-                            <a href="https://pythonbuddy.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Online Python IDE and compiler that runs 200+ popular libraries including NumPy, Pandas, Matplotlib, SciPy, scikit-learn, and scikit-image. Designed for data science, machine learning, and scientific computing experiments directly in the browser.
-                        </div>
-                    </div>
-                </div>
-
-                
-
-                <!-- Project 3 -->
-                
-
-                <!-- Project 4 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/Picsart_25-12-06_17-35-07-982.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL1BpY3NhcnRfMjUtMTItMDZfMTctMzUtMDctOTgyLmpwZyIsImlhdCI6MTc2NTAyMjgyOSwiZXhwIjoxNzk2NTU4ODI5fQ.JRFPOLjSN9Dho6vy4HWPCBMonP11Q6GOZpugZQkUgwc" alt="Dominal Browser" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🔒</text>
-                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">Dominal Browser</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Shadow Browser - Privacy-First Android Browser</h3>
-                            <a href="shadow.dominal.in" target="_blank" class="visit-btn">Visit Site</a>
-                        </div>
-                        <div class="project-description">
-                            Secure Android browser that saves no browsing history, blocks user data sharing, and filters harmful external sites for maximum privacy protection.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                
-
-                <!-- Project 6 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/chaticon192.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2NoYXRpY29uMTkyLnBuZyIsImlhdCI6MTc2NTAxODgxOSwiZXhwIjoxNzk2NTU0ODE5fQ.PvJLdwH4WcWvPvbQ6bAdHmZtZv3jEcy1I6XNev53rzQ" alt="Chat App" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">💬</text>
-                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Chat App</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>WhatsApp-Style Chat Application</h3>
-                            <a href="https://safechats.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Web-based messaging app with live message delivery and offline notifications. Real-time chat experience similar to WhatsApp.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 7 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/facecam.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2ZhY2VjYW0uanBlZyIsImlhdCI6MTc2NTAyMzM3NywiZXhwIjoxNzk2NTU5Mzc3fQ.dPbh--xSpngBEFlQOM-sCdzuHvKzNmEEBxQfAHxUhcw" alt="FaceAttend" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">👤</text>
-                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">FaceAttend AI</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>FaceAttend AI - Attendance System</h3>
-                            <a href="https://facetech.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            AI-powered attendance software that stores student facial data and automatically detects attendance using facial recognition AI model.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 8 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/doctor-holding-heart-hand-red-heartbeat-with-life-line-cardiology-concept-health-protection-symbol-healthcare-vector-illustration-flat-minimal-design-isolated-white-background_153097-1973%20(1).png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2RvY3Rvci1ob2xkaW5nLWhlYXJ0LWhhbmQtcmVkLWhlYXJ0YmVhdC13aXRoLWxpZmUtbGluZS1jYXJkaW9sb2d5LWNvbmNlcHQtaGVhbHRoLXByb3RlY3Rpb24tc3ltYm9sLWhlYWx0aGNhcmUtdmVjdG9yLWlsbHVzdHJhdGlvbi1mbGF0LW1pbmltYWwtZGVzaWduLWlzb2xhdGVkLXdoaXRlLWJhY2tncm91bmRfMTUzMDk3LTE5NzMgKDEpLnBuZyIsImlhdCI6MTc2NTAyMjg4OCwiZXhwIjoxNzk2NTU4ODg4fQ.-XhYysTfu_XXR0pNs7ZWq_ZsM8mSQdnlCBlNwZU7GLw" alt="Heart AI" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">❤️</text>
-                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Heart AI</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Heart AI - Disease Prediction</h3>
-                            <a href="https://heartai.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Healthcare app providing heart disease information, symptom-based disease prediction, health tips, and doctor directories with location and contact details.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 9 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/Picsart_25-12-06_17-39-19-695.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL1BpY3NhcnRfMjUtMTItMDZfMTctMzktMTktNjk1LmpwZyIsImlhdCI6MTc2NTAyMzAyMCwiZXhwIjoxNzk2NTU5MDIwfQ.lI45EmxoXRZDnFyEqK9ZBB9JQe8-5W0gZwvUMHwkj50" alt="SmileUp" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">😊</text>
-                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">SmileUp</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>SmileUp - Smile Reward App</h3>
-                            <a href="https://smilegift.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Innovative app rewarding users with points and gifts for smiling. Uses AI model to capture and verify smiles without storing images, promoting mental wellness.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 10 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/coderverse.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL2NvZGVydmVyc2UucG5nIiwiaWF0IjoxNzY1MDE5MTQ3LCJleHAiOjE3OTY1NTUxNDd9.7-Zq_GrZRm4U6w0rQkH2d4A9i-JyKiZKcHIjg7bWuuU" alt="Coderverse" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">💻</text>
-                            <text x="100" y="150" font-size="17" fill="#ffffff" text-anchor="middle">Coderverse</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Coderverse - Coding Learning Platform</h3>
-                            <a href="https://coderverse.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Educational platform for learning programming languages with MCQ tests, AI-powered analytics of user study patterns, and personalized growth tracking.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 11 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/House%20cleaning%20services%20vector%20logo_%20Black%20icon%20on%20a%20white%20background%20(1).jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL0hvdXNlIGNsZWFuaW5nIHNlcnZpY2VzIHZlY3RvciBsb2dvXyBCbGFjayBpY29uIG9uIGEgd2hpdGUgYmFja2dyb3VuZCAoMSkuanBnIiwiaWF0IjoxNzY1MDE5MjU3LCJleHAiOjE3OTY1NTUyNTd9.PcVdlXRejXosoJwfIxlvrnCW698EDQTXtrepEN9pdVw" alt="Maidly" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">🏡</text>
-                            <text x="100" y="150" font-size="18" fill="#ffffff" text-anchor="middle">Maidly</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Maidly - Maid Booking System</h3>
-                            <a href="https://maidly.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Online maid booking platform with live availability tracking and instant booking confirmations. Streamlines household service hiring.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 12 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/stafflogo.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL3N0YWZmbG9nby5qcGciLCJpYXQiOjE3NjUwMjE0MzMsImV4cCI6MTc5NjU1NzQzM30.DdZPrJKbyvlSBbsdtr0U8ezVjqqtXvxoDrYN0uss9UU" alt="VVPIET Staff" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📸</text>
-                            <text x="100" y="150" font-size="15" fill="#ffffff" text-anchor="middle">Staff Profiles</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>VVPIET Staff Profile Site</h3>
-                            <a href="https://vvpstaff.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Professional photo app and profile website for VVPIET Solapur staff members. Centralized staff information management system.
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <!-- Project 13 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/Picsart_25-12-06_17-41-37-141.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL1BpY3NhcnRfMjUtMTItMDZfMTctNDEtMzctMTQxLmpwZyIsImlhdCI6MTc2NTAyMzE4NywiZXhwIjoxNzk2NTU5MTg3fQ.QBeP4boq5eY2dBBkJUyKJFnVQcrB7MRHnUXz37FyFEA" alt="T&P System" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📊</text>
-                            <text x="100" y="150" font-size="17" fill="#ffffff" text-anchor="middle">T&P System</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Training & Placement Data System</h3>
-                            <a href="https://vvpdrives.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Website and app for VVPIET managing training and placement data. Tracks student placements, company visits, and training sessions.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 14 -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <!-- Uncomment and add your image URL -->
-                        <img src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/20251027_011828-BlendCollage%20(1).jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzLzIwMjUxMDI3XzAxMTgyOC1CbGVuZENvbGxhZ2UgKDEpLmpwZyIsImlhdCI6MTc2NTAxODY4NCwiZXhwIjoxNzk2NTU0Njg0fQ.ZyiqLp6k0CvSDusKE-uu1SVwQrZnLORaSF5bco8szTc" alt="Student CV" class="project-image">
-                        <!-- <svg class="project-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="200" height="200" fill="#1a1a1a"/>
-                            <text x="100" y="100" font-size="60" fill="#a855f7" text-anchor="middle" dy=".3em">📄</text>
-                            <text x="100" y="150" font-size="16" fill="#ffffff" text-anchor="middle">Student CV</text>
-                        </svg> -->
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>College Student Profiles Social Media & CV Creation System</h3>
-                            <a href="https://vvpstudents.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Automated CV and profile creation platform for VVPIET students. Helps students build professional resumes and manage academic portfolios.
-                        </div>
-                    </div>
-                </div>
-
-                                <!-- Project 19 - Sharp Kolors Photopoint -->
-                <div class="project-card">
-                    <div class="project-image-container">
-                        <img 
-                          src="https://xopymfulxtphdthvfssh.supabase.co/storage/v1/object/sign/portfolio-images/sharpkolors.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wY2VkYTZmYi0xODk0LTQxZjEtYTBlZC04ZjlhOTYzZDYyMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJwb3J0Zm9saW8taW1hZ2VzL3NoYXJwa29sb3JzLmpwZyIsImlhdCI6MTc2NTAyMTI4NiwiZXhwIjoxNzk2NTU3Mjg2fQ.8ac9tQpZd4q9AnHp1RhlKHHL4ENhnXc46pq2gRNG9fU" 
-                          alt="Sharp Kolors Photopoint Website" 
-                          class="project-image"
-                        >
-                    </div>
-                    <div class="project-content">
-                        <div class="project-title">
-                            <h3>Sharp Kolors Photopoint - Photography Shop Website</h3>
-                            <a href="https://sharpkolors.netlify.app" target="_blank" class="visit-btn">Visit Site →</a>
-                        </div>
-                        <div class="project-description">
-                            Modern photography shop website built for client Sharp Kolors Photopoint, showcasing services, portfolio images, and contact details for bookings and inquiries, with a clean responsive layout optimized for both desktop and mobile.
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </section>
 
-        <!-- Languages Section -->
-        <section id="languages" class="section">
-            <h2>Programming Languages</h2>
-            <div class="languages-grid">
-                <div class="language-card">
-                    <span class="skill-icon">📱</span>
-                    <div class="language-name">Kotlin</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">🐍</span>
-                    <div class="language-name">Python</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">🗄️</span>
-                    <div class="language-name">SQL</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">🌐</span>
-                    <div class="language-name">HTML</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">🎨</span>
-                    <div class="language-name">CSS</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">⚡</span>
-                    <div class="language-name">JavaScript</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">⚛️</span>
-                    <div class="language-name">React</div>
-                </div>
-                <div class="language-card">
-                    <span class="skill-icon">🦋</span>
-                    <div class="language-name">Flutter</div>
+        <!-- ACHIEVEMENTS -->
+        <section id="achievements" class="section section-full">
+            <div class="section-card">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Achievements</span>
+                        </div>
+                        <div class="section-sub">Highlights from work and college</div>
+                    </div>
+
+                    <div class="achievement-list">
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor"
+                                        d="M12 2 7.5 4.1 3 5.5l1.2 4.7L5 15.1 8.3 22h7.4L19 15.1l0.8-4.9L21 5.5l-4.5-1.4L12 2Z" />
+                                </svg>
+                            </div>
+                            <div class="achievement-body">
+                                <div class="achievement-title">Founder – Dominal Tech Pvt Ltd</div>
+                                <div class="achievement-meta">Building products deployed across colleges and businesses
+                                </div>
+                                <div class="achievement-desc">
+                                    Bootstrapped Dominal Tech to ship AI agents, Android apps, and portals that are
+                                    actively used
+                                    by students, faculties, and local clients.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M5 4h14v6h-4v10H9V10H5V4Z" />
+                                </svg>
+                            </div>
+                            <div class="achievement-body">
+                                <div class="achievement-title">Training & Placement Co‑Ordinator – VVPIET</div>
+                                <div class="achievement-meta">VVPIET, Solapur · CSE</div>
+                                <div class="achievement-desc">
+                                    Supporting students with placement preparation and building internal tools like the
+                                    VVPIET Drives and Students portals.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor" d="M4 5h16v3H4V5Zm2 4h12v11l-6-3-6 3V9Z" />
+                                </svg>
+                            </div>
+                            <div class="achievement-body">
+                                <div class="achievement-title">Author of pyDefine (PyPI)</div>
+                                <div class="achievement-meta">Python package · Open‑source</div>
+                                <div class="achievement-desc">
+                                    Published and maintain pyDefine on PyPI, used by learners to understand Python
+                                    errors
+                                    faster with friendly explanations.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor"
+                                        d="M8 3h8l4 4v12H4V7l4-4Zm0 4h8V5H8v2Zm1 4h2v6H9v-6Zm4 0h2v6h-2v-6Z" />
+                                </svg>
+                            </div>
+                            <div class="achievement-body">
+                                <div class="achievement-title">College & Client Deployments</div>
+                                <div class="achievement-meta">VVPIET, local businesses, and online products</div>
+                                <div class="achievement-desc">
+                                    Multiple apps and AI tools in production – from VVPIET AI Chatbot to Heart AI,
+                                    SmileUp,
+                                    PythonBuddy, Shadow Browser, and more.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill="currentColor"
+                                        d="M4 4h16v2H4V4Zm2 4h12v2H6V8Zm-2 4h16v2H4v-2Zm2 4h12v2H6v-2Z" />
+                                </svg>
+                            </div>
+                            <div class="achievement-body">
+                                <div class="achievement-title">Talks & Workshops</div>
+                                <div class="achievement-meta">College sessions on AI & development</div>
+                                <div class="achievement-desc">
+                                    Have guided juniors and peers on practical Android development, AI usage, and how to
+                                    ship
+                                    real projects instead of only mini‑projects.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-    </div>
+        <!-- BLOG -->
+        <section id="blog" class="section section-full">
+            <div class="section-card">
+                <div class="section-card-inner">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <div class="section-dot">
+                                <div class="section-dot-inner"></div>
+                            </div>
+                            <span>Blog & Writing</span>
+                        </div>
+                        <div class="section-sub">Thoughts on code, AI, and learning</div>
+                    </div>
+
+                    <!-- Static list for now – you can wire it to a real blog later -->
+                    <div class="blog-list">
+                        <article class="blog-item">
+                            <div class="blog-title-row">
+                                <h3 class="blog-title">How I Built AI Assistants for VVPIET & Dominal</h3>
+                                <span class="blog-meta">AI · Agents</span>
+                            </div>
+                            <p class="blog-excerpt">
+                                A breakdown of the real stack behind my AI chatbots – from prompt design and tools
+                                to integrating them into existing college and company websites.
+                            </p>
+                            <a href="https://yahya.dominal.in" target="_blank" class="blog-link">
+                                Read on my personal site →
+                            </a>
+                        </article>
+
+                        <article class="blog-item">
+                            <div class="blog-title-row">
+                                <h3 class="blog-title">Designing Apps for Non‑Technical Users</h3>
+                                <span class="blog-meta">Product · UX</span>
+                            </div>
+                            <p class="blog-excerpt">
+                                Lessons from building apps for principals, shop owners, and students – how to reduce
+                                friction
+                                and make software feel natural instead of complex.
+                            </p>
+                        </article>
+
+                        <article class="blog-item">
+                            <div class="blog-title-row">
+                                <h3 class="blog-title">From College Projects to Production Products</h3>
+                                <span class="blog-meta">Career · Students</span>
+                            </div>
+                            <p class="blog-excerpt">
+                                Why I turned class assignments into actual deployable tools like Heart AI, SmileUp, and
+                                PythonBuddy,
+                                and how other students can do the same.
+                            </p>
+                        </article>
+
+                        <article class="blog-item">
+                            <div class="blog-title-row">
+                                <h3 class="blog-title">Making Python Errors Understandable with pyDefine</h3>
+                                <span class="blog-meta">Python · Teaching</span>
+                            </div>
+                            <p class="blog-excerpt">
+                                The story behind pyDefine, how it parses tracebacks, and how better error messages
+                                can change the learning curve for beginners.
+                            </p>
+                            <a href="https://pypi.org/project/pydefine/" target="_blank" class="blog-link">
+                                View the package on PyPI →
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div>
+            © <span id="year-span"></span> yahya.in · Built and maintained by Yahya Mundewadi.
+        </div>
+        <div class="footer-right">
+            <span class="footer-pill">Dominal Tech Pvt Ltd</span>
+            <span class="footer-pill">BTech CSE'26 · VVPIET</span>
+        </div>
+    </footer>
 
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
+        // Year
+        document.getElementById('year-span').textContent = new Date().getFullYear();
 
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+        // Section switching
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
 
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-
-            // Add active class to clicked button
-            event.target.classList.add('active');
-
-            // Smooth scroll to top
+        function showSection(id) {
+            sections.forEach(sec => {
+                if (sec.id === id) {
+                    sec.classList.add('active');
+                } else {
+                    sec.classList.remove('active');
+                }
+            });
+            navButtons.forEach(btn => {
+                if (btn.dataset.section === id) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Add smooth scrolling and animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add entrance animation
-            const cards = document.querySelectorAll('.skill-card, .project-card, .language-card');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '0';
-                        entry.target.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            entry.target.style.transition = 'all 0.5s ease';
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, 100);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            cards.forEach(card => observer.observe(card));
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.section;
+                if (id) showSection(id);
+            });
         });
     </script>
 </body>
+
 </html>
