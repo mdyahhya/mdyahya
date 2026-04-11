@@ -1241,19 +1241,20 @@
             .hero {
                 display: grid;
                 grid-template-columns: 1fr 125px;
-                gap: 1rem;
+                gap: 0.75rem;
                 text-align: left;
                 padding: 1rem 0 2rem;
                 align-items: center;
             }
 
-            .hero > div:first-child {
+            .hero>div:first-child {
                 display: contents;
             }
 
             .hero-badge {
                 grid-column: 1 / span 2;
-                margin: 0 0 0.75rem 0;
+                margin: 0 0 0.6rem 0;
+                width: fit-content;
             }
 
             h1 {
@@ -1277,8 +1278,8 @@
                 border: 3px solid var(--accent3);
             }
 
-            .hero-role, 
-            .hero > div:first-child > p,
+            .hero-role,
+            .hero>div:first-child>p,
             .hero-actions,
             .hero-featured {
                 grid-column: 1 / span 2;
@@ -1415,7 +1416,7 @@
                     </div>
                     <h1>Yahya<br />Mundewadi</h1>
                     <p class="hero-role">
-                        Full Stack Developer · Android · AI Engineer<br />
+                        Full-Stack · Android · AI Engineer<br />
                         &amp; <strong>Founder, Dominal Tech</strong><br />
                         BTech CSE '26 · VVPIET Solapur · Pune, Maharashtra
                     </p>
