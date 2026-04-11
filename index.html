@@ -1239,23 +1239,50 @@
             }
 
             .hero {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 1.5rem 0 2rem;
+                display: grid;
+                grid-template-columns: 1fr 100px;
+                gap: 1rem;
+                text-align: left;
+                padding: 1rem 0 2rem;
+                align-items: center;
+            }
+
+            .hero > div:first-child {
+                display: contents;
+            }
+
+            .hero-badge {
+                grid-column: 1 / span 2;
+                margin: 0 0 0.75rem 0;
+            }
+
+            h1 {
+                grid-column: 1;
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin: 0;
             }
 
             .hero-avatar-wrap {
-                order: -1;
-                margin-bottom: 0.5rem;
+                grid-column: 2;
+                grid-row: 2;
+                margin: 0;
+                justify-self: end;
             }
 
             .hero-avatar {
-                width: 130px;
-                height: 130px;
-                margin: 0 auto;
-                display: block;
+                width: 90px;
+                height: 90px;
                 position: static;
-                border: 4px solid var(--accent3);
+                border: 3px solid var(--accent3);
+            }
+
+            .hero-role, 
+            .hero > div:first-child > p,
+            .hero-actions,
+            .hero-featured {
+                grid-column: 1 / span 2;
+                text-align: left;
             }
 
             .hero-avatar-ring,
@@ -1263,21 +1290,9 @@
                 display: none;
             }
 
-            .hero {
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-                position: relative;
-                padding-top: 2rem;
-            }
-
-            .hero-badge {
-                margin: 0 auto 1.25rem;
-            }
-
             .hero-actions,
             .hero-featured {
-                justify-content: center;
+                justify-content: flex-start;
             }
 
             .stats-strip {
@@ -1400,7 +1415,7 @@
                     </div>
                     <h1>Yahya<br />Mundewadi</h1>
                     <p class="hero-role">
-                        Full Stack Developer · Android · AI Engineer<br />
+                        Full Stack Developer · Android Engineer · AI Builder<br />
                         &amp; <strong>Founder, Dominal Tech</strong><br />
                         BTech CSE '26 · VVPIET Solapur · Pune, Maharashtra
                     </p>
