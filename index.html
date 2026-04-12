@@ -15,8 +15,20 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
-    <link rel="canonical" href="https://yahya.in/">
-    <link rel="icon" type="image/jpeg" href="favicon.jpg">
+    <!-- SEO: Force Google to drop old domain and index strictly yahya.in -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://yahya.in/" />
+    <link rel="icon" type="image/jpeg" href="favicon.jpg" />
+    <script>
+        // If Google or users load the old domain, immediately block indexing and redirect
+        if (window.location.hostname === "yahya.dominal.in") {
+            // Inject noindex tag to violently force Google to drop this domain
+            var meta = document.createElement('meta');
+            meta.name = "robots";
+            meta.content = "noindex, noarchive";
+            document.head.appendChild(meta);
+        }
+    </script>
     <style>
         *,
         *::before,
