@@ -1374,6 +1374,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
         /* ── AI PRESENCE SECTION ───────────────────────────────────── */
         #ai-presence {
             padding: 100px 0;
@@ -1391,7 +1392,7 @@
 
         .ai-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 20px;
         }
 
         .ai-header h2 {
@@ -1406,7 +1407,7 @@
         /* AI Card Animation */
         .ai-cards-wrapper {
             position: relative;
-            height: 380px;
+            height: 310px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -1438,7 +1439,7 @@
             align-items: center;
             justify-content: center;
             gap: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.6;
             transform: scale(0.85);
@@ -1447,7 +1448,7 @@
         .ai-card.active {
             opacity: 1;
             transform: scale(1);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.06);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
             border-color: #efefef;
         }
 
@@ -1501,7 +1502,7 @@
         /* Google Search Animation */
         .google-search-section {
             text-align: center;
-            margin-bottom: 120px;
+            margin-bottom: 60px;
         }
 
         .google-search-section h3 {
@@ -1527,8 +1528,8 @@
         }
 
         .search-box-outer:hover {
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-            border-color: rgba(223,225,229,0);
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
         }
 
         .search-icon-google {
@@ -1544,7 +1545,15 @@
             color: #202124;
             display: flex;
             align-items: center;
-            height: 28px;
+            min-height: 28px;
+            overflow: hidden;
+            word-break: break-all;
+        }
+
+        @media (max-width: 600px) {
+            .typing-wrapper { font-size: 0.85rem; }
+            .search-box-outer { min-height: 44px; height: auto; padding: 5px 15px; }
+            .search-btn-google { display: none; }
         }
 
         .cursor-google {
@@ -1557,8 +1566,15 @@
         }
 
         @keyframes googleBlink {
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
+
+            from,
+            to {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         .search-btn-google {
@@ -1576,11 +1592,11 @@
         .search-btn-google:hover {
             background: #f1f3f4;
             border-color: #dadce0;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         }
 
         .search-result-reveal {
-            margin-top: 40px;
+            margin-top: 20px;
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1614,7 +1630,7 @@
             width: 100%;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.06);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.06);
             background: #f9f9f9;
         }
 
@@ -1661,7 +1677,7 @@
             background: #ffffff;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
         }
 
         .proof-slide img {
@@ -1712,11 +1728,36 @@
         }
 
         @media (max-width: 768px) {
-            #ai-presence { padding: 60px 0; }
-            .ai-card { min-width: 170px; height: 220px; padding: 20px; }
-            .ai-icon-box { width: 55px; height: 55px; }
-            .search-result-reveal h4 { font-size: 1.6rem; }
-            .ai-header h2 { font-size: 1.5rem; }
+            #ai-presence {
+                padding: 40px 0;
+            }
+
+            .ai-card {
+                min-width: 130px;
+                height: 180px;
+                padding: 15px;
+                transition-duration: 0.5s;
+            }
+
+            .ai-icon-box {
+                width: 45px;
+                height: 45px;
+            }
+
+
+
+            .ai-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .google-search-section {
+                margin-bottom: 40px;
+            }
+
+            .google-search-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
@@ -1922,9 +1963,11 @@
                     </div>
                     <!-- Section 3: Google Search Animation -->
                     <div class="google-search-section ai-reveal" id="googleSearchTrigger">
-                        <h3>I can influence all these AI LLMs & <span class="highlight-text">help AI find and suggest your brand.</span></h3>
+                        <h3>I can influence all these AI LLMs & <span class="highlight-text">help AI find and suggest
+                                your brand.</span></h3>
                         <div class="search-box-outer">
-                            <svg class="search-icon-google" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <svg class="search-icon-google" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
@@ -1940,7 +1983,7 @@
 
                     <!-- Section 4: AI Showcase Slider -->
                     <div class="image-showcase ai-reveal">
-                        <p>Search: Best Software Developer in Solapur</p>
+                        <p>Search on Google: Best Software Developer in Solapur</p>
                         <div class="proof-slider-container">
                             <div class="proof-track" id="showcaseTrack">
                                 <div class="proof-slide">
@@ -3805,11 +3848,11 @@
                 if (!wrapper || !cards.length) return;
                 const containerWidth = wrapper.offsetWidth;
                 const cardWidth = cards[0].offsetWidth + 30; // card width + gap
-                
+
                 cardSlider.style.transition = smooth ? 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
                 const offset = (containerWidth / 2) - (cardWidth / 2) - (currentCardIndex * cardWidth) + 15; // +15 for half of the gap
                 cardSlider.style.transform = `translateX(${offset}px)`;
-                
+
                 cards.forEach((card, i) => {
                     // Match index 0 and the clone (last index) for active state during loop
                     const isActive = (i === currentCardIndex) || (currentCardIndex === cards.length - 1 && i === 0);
@@ -3834,7 +3877,8 @@
             }
 
             function startCardRotation() {
-                cardRotationInterval = setInterval(nextCard, 2500);
+                const interval = window.innerWidth < 768 ? 1800 : 2500;
+                cardRotationInterval = setInterval(nextCard, interval);
             }
 
             function stopCardRotation() {
