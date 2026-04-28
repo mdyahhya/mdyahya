@@ -1374,6 +1374,350 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        /* ── AI PRESENCE SECTION ───────────────────────────────────── */
+        #ai-presence {
+            padding: 100px 0;
+            background: #ffffff;
+            color: #111111;
+            overflow: hidden;
+            font-family: var(--sans);
+        }
+
+        .ai-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .ai-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .ai-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 500;
+            color: #111111;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* AI Card Animation */
+        .ai-cards-wrapper {
+            position: relative;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 100px;
+            overflow: visible;
+        }
+
+        .highlight-text {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .ai-cards-slider {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .ai-card {
+            min-width: 200px;
+            height: 260px;
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.6;
+            transform: scale(0.85);
+        }
+
+        .ai-card.active {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.06);
+            border-color: #efefef;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-8px) scale(0.85);
+        }
+
+        .ai-card.active:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .ai-icon-box {
+            width: 70px;
+            height: 70px;
+            background: #ffffff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #f0f0f0;
+            overflow: hidden;
+        }
+
+        .ai-icon-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-card:hover .ai-icon-box img {
+            transform: scale(1.1);
+        }
+
+        .ai-card span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333333;
+        }
+
+        .ai-influence-text {
+            text-align: center;
+            margin-top: -60px;
+            margin-bottom: 80px;
+            font-size: 1rem;
+            color: #777777;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* Google Search Animation */
+        .google-search-section {
+            text-align: center;
+            margin-bottom: 120px;
+        }
+
+        .google-search-section h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #555555;
+            margin-bottom: 40px;
+            border: none;
+        }
+
+        .search-box-outer {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #dfe1e5;
+            border-radius: 32px;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+        }
+
+        .search-box-outer:hover {
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            border-color: rgba(223,225,229,0);
+        }
+
+        .search-icon-google {
+            width: 20px;
+            height: 20px;
+            color: #9aa0a6;
+        }
+
+        .typing-wrapper {
+            flex: 1;
+            text-align: left;
+            font-size: 1.1rem;
+            color: #202124;
+            display: flex;
+            align-items: center;
+            height: 28px;
+        }
+
+        .cursor-google {
+            display: inline-block;
+            width: 2px;
+            height: 22px;
+            background: #4285f4;
+            margin-left: 2px;
+            animation: googleBlink 1s step-end infinite;
+        }
+
+        @keyframes googleBlink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .search-btn-google {
+            background: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #3c4043;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn-google:hover {
+            background: #f1f3f4;
+            border-color: #dadce0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .search-result-reveal {
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-result-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-result-reveal h4 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #111111;
+            letter-spacing: -0.02em;
+        }
+
+        /* Image Showcase */
+        .image-showcase {
+            text-align: center;
+            margin-bottom: 120px;
+        }
+
+        .image-showcase p {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 40px;
+        }
+
+        .showcase-container {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.06);
+            background: #f9f9f9;
+        }
+
+        .showcase-container img {
+            width: 100%;
+            display: block;
+            transition: transform 8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .showcase-container.animate img {
+            transform: scale(1.05);
+        }
+
+        /* AI Proof Section */
+        .ai-proof-section {
+            text-align: center;
+        }
+
+        .ai-proof-section p {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 50px;
+        }
+
+        .proof-slider-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proof-track {
+            display: flex;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .proof-slide {
+            min-width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .proof-slide-content {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
+        }
+
+        .proof-slide img {
+            width: 100%;
+            display: block;
+        }
+
+        .proof-caption {
+            padding: 20px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #111111;
+            background: #ffffff;
+        }
+
+        .proof-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .proof-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e5e5e5;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .proof-dot.active {
+            background: #111111;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        /* Entrance / Reveal */
+        .ai-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ai-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            #ai-presence { padding: 60px 0; }
+            .ai-card { min-width: 170px; height: 220px; padding: 20px; }
+            .ai-icon-box { width: 55px; height: 55px; }
+            .search-result-reveal h4 { font-size: 1.6rem; }
+            .ai-header h2 { font-size: 1.5rem; }
+        }
     </style>
 </head>
 
@@ -1503,14 +1847,6 @@
                             </svg>
                             Shadow Browser
                         </a>
-                        <!-- <a href="https://homecare.yahya.in" target="_blank" class="hero-feat-btn">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                                <polyline points="9 22 9 12 15 12 15 22" />
-                            </svg>
-                            Homecare App
-                        </a> -->
                         <span class="hero-feat-btn" style="cursor:default; opacity:0.7;">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fbbf24"
                                 stroke-width="2">
@@ -1527,6 +1863,151 @@
                         onerror="this.style.display='none'" />
                 </div>
             </div>
+
+            <!-- ── AI PRESENCE SECTION ───────────────────────────────────── -->
+            <section id="ai-presence">
+                <div class="ai-container">
+                    <!-- Section 1: Title -->
+                    <div class="ai-header ai-reveal">
+                        <h2>Search About Yahya Mundewadi on:-</h2>
+                    </div>
+
+                    <!-- Section 2: AI Card Animation -->
+                    <div class="ai-cards-wrapper ai-reveal">
+                        <div class="ai-cards-slider" id="aiCardSlider">
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="chatgpt.jpg" alt="ChatGPT">
+                                </div>
+                                <span>ChatGPT</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="google.jpg" alt="Google">
+                                </div>
+                                <span>Google</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="claude.jpg" alt="Claude">
+                                </div>
+                                <span>Claude</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="gemini.jpg" alt="Gemini">
+                                </div>
+                                <span>Gemini</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="perplexity.jpg" alt="Perplexity">
+                                </div>
+                                <span>Perplexity</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="grok.jpg" alt="Grok">
+                                </div>
+                                <span>Grok</span>
+                            </div>
+                            <!-- Clone for Circular Loop -->
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="chatgpt.jpg" alt="ChatGPT">
+                                </div>
+                                <span>ChatGPT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 3: Google Search Animation -->
+                    <div class="google-search-section ai-reveal" id="googleSearchTrigger">
+                        <h3>I can influence all these AI LLMs & <span class="highlight-text">help AI find and suggest your brand.</span></h3>
+                        <div class="search-box-outer">
+                            <svg class="search-icon-google" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <div class="typing-wrapper">
+                                <span id="google-typing"></span><span class="cursor-google" id="google-cursor"></span>
+                            </div>
+                            <button class="search-btn-google">Search</button>
+                        </div>
+                        <div class="search-result-reveal" id="googleResult">
+                            <h4>Yahya Mundewadi</h4>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: AI Showcase Slider -->
+                    <div class="image-showcase ai-reveal">
+                        <p>Search: Best Software Developer in Solapur</p>
+                        <div class="proof-slider-container">
+                            <div class="proof-track" id="showcaseTrack">
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="googless.jpeg" alt="Google Search">
+                                        <div class="proof-caption">Google</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="gemini.jpeg" alt="Gemini AI">
+                                        <div class="proof-caption">Gemini</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="perp.jpeg" alt="Perplexity AI">
+                                        <div class="proof-caption">Perplexity</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="proof-pagination" id="showcaseDots"></div>
+                    </div>
+
+                    <!-- Section 5: AI Proof 
+                    <div class="ai-proof-section ai-reveal">
+                        <p>Ask any AI: Who is the best developer in Solapur?</p>
+                        <div class="proof-slider-container">
+                            <div class="proof-track" id="proofTrack">
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 1">
+                                        <div class="proof-caption">ChatGPT</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 2">
+                                        <div class="proof-caption">Claude</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 3">
+                                        <div class="proof-caption">Perplexity</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 4">
+                                        <div class="proof-caption">Gemini</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 5">
+                                        <div class="proof-caption">Grok</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="proof-pagination" id="proofDots"></div>
+                    </div>
+                    -->
+                </div>
+            </section>
 
             <!-- Stats -->
             <div class="stats-strip">
@@ -3294,6 +3775,214 @@
             });
         }
 
+        // ── AI Presence Section Logic ───────────────────────────────
+        function initAIPresence() {
+            const aiRevealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        if (entry.target.id === 'googleSearchTrigger') {
+                            startGoogleTyping();
+                        }
+                        if (entry.target.id === 'showcaseContainer') {
+                            entry.target.classList.add('animate');
+                        }
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            document.querySelectorAll('.ai-reveal, .showcase-container').forEach(el => aiRevealObserver.observe(el));
+
+            // 1. Circular Card Slider Logic
+            const cardSlider = document.getElementById('aiCardSlider');
+            const cards = document.querySelectorAll('.ai-card');
+            let currentCardIndex = 0;
+            let cardRotationInterval;
+            let isTransitioning = false;
+
+            function updateCards(smooth = true) {
+                const wrapper = document.querySelector('.ai-cards-wrapper');
+                if (!wrapper || !cards.length) return;
+                const containerWidth = wrapper.offsetWidth;
+                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                
+                cardSlider.style.transition = smooth ? 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+                const offset = (containerWidth / 2) - (cardWidth / 2) - (currentCardIndex * cardWidth) + 15; // +15 for half of the gap
+                cardSlider.style.transform = `translateX(${offset}px)`;
+                
+                cards.forEach((card, i) => {
+                    // Match index 0 and the clone (last index) for active state during loop
+                    const isActive = (i === currentCardIndex) || (currentCardIndex === cards.length - 1 && i === 0);
+                    card.classList.toggle('active', isActive);
+                });
+            }
+
+            function nextCard() {
+                if (isTransitioning) return;
+                currentCardIndex++;
+                updateCards();
+
+                // Seamless loop: if at clone, jump back to start
+                if (currentCardIndex === cards.length - 1) {
+                    isTransitioning = true;
+                    setTimeout(() => {
+                        currentCardIndex = 0;
+                        updateCards(false);
+                        isTransitioning = false;
+                    }, 800);
+                }
+            }
+
+            function startCardRotation() {
+                cardRotationInterval = setInterval(nextCard, 2500);
+            }
+
+            function stopCardRotation() {
+                clearInterval(cardRotationInterval);
+            }
+
+            cards.forEach((card, index) => {
+                card.addEventListener('mouseenter', () => {
+                    stopCardRotation();
+                    // If hovering over clone, treat as first card
+                    currentCardIndex = index === cards.length - 1 ? 0 : index;
+                    updateCards();
+                });
+                card.addEventListener('mouseleave', startCardRotation);
+            });
+
+            window.addEventListener('resize', () => updateCards(false));
+            updateCards();
+            startCardRotation();
+
+            // 2. Google Typing Animation
+            let typingStarted = false;
+            function startGoogleTyping() {
+                if (typingStarted) return;
+                typingStarted = true;
+                const text = "Best Software Developer in Solapur";
+                const element = document.getElementById('google-typing');
+                const cursor = document.getElementById('google-cursor');
+                let i = 0;
+
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, Math.random() * 40 + 80);
+                    } else {
+                        setTimeout(() => {
+                            cursor.style.display = 'none';
+                            document.getElementById('googleResult').classList.add('active');
+                        }, 800);
+                    }
+                }
+                type();
+            }
+
+            // 3. Touch-Movable Showcase Slider
+            const sTrack = document.getElementById('showcaseTrack');
+            const sSlides = document.querySelectorAll('#showcaseTrack .proof-slide');
+            const sDots = document.getElementById('showcaseDots');
+            if (sTrack) {
+                let sIndex = 0;
+                let sStartX = 0;
+                let sCurrentTranslate = 0;
+                let sPrevTranslate = 0;
+                let sIsDragging = false;
+                let sAutoInterval;
+
+                if (sDots) {
+                    sSlides.forEach((_, i) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('proof-dot');
+                        if (i === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => {
+                            stopSAuto();
+                            goToS(i);
+                            startSAuto();
+                        });
+                        sDots.appendChild(dot);
+                    });
+                }
+
+                function goToS(index) {
+                    sIndex = index;
+                    sPrevTranslate = -index * 100;
+                    sTrack.style.transition = 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                    sTrack.style.transform = `translateX(${sPrevTranslate}%)`;
+                    const allDots = sDots.querySelectorAll('.proof-dot');
+                    allDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+                }
+
+                function startSAuto() {
+                    sAutoInterval = setInterval(() => {
+                        sIndex = (sIndex + 1) % sSlides.length;
+                        goToS(sIndex);
+                    }, 4000);
+                }
+
+                function stopSAuto() { clearInterval(sAutoInterval); }
+
+                sTrack.addEventListener('touchstart', e => {
+                    sIsDragging = true;
+                    sStartX = e.touches[0].clientX;
+                    stopSAuto();
+                    sTrack.style.transition = 'none';
+                });
+                sTrack.addEventListener('touchmove', e => {
+                    if (!sIsDragging) return;
+                    const diff = ((e.touches[0].clientX - sStartX) / window.innerWidth) * 100;
+                    sCurrentTranslate = sPrevTranslate + diff;
+                    sTrack.style.transform = `translateX(${sCurrentTranslate}%)`;
+                });
+                sTrack.addEventListener('touchend', () => {
+                    sIsDragging = false;
+                    const movedBy = sCurrentTranslate - sPrevTranslate;
+                    if (movedBy < -10 && sIndex < sSlides.length - 1) sIndex++;
+                    if (movedBy > 10 && sIndex > 0) sIndex--;
+                    goToS(sIndex);
+                    startSAuto();
+                });
+
+                // Mouse Drag
+                sTrack.addEventListener('mousedown', e => {
+                    sIsDragging = true;
+                    sStartX = e.pageX;
+                    stopSAuto();
+                    sTrack.style.transition = 'none';
+                });
+                sTrack.addEventListener('mousemove', e => {
+                    if (!sIsDragging) return;
+                    const diff = ((e.pageX - sStartX) / window.innerWidth) * 100;
+                    sCurrentTranslate = sPrevTranslate + diff;
+                    sTrack.style.transform = `translateX(${sCurrentTranslate}%)`;
+                });
+                sTrack.addEventListener('mouseup', () => {
+                    if (!sIsDragging) return;
+                    sIsDragging = false;
+                    const movedBy = sCurrentTranslate - sPrevTranslate;
+                    if (movedBy < -10 && sIndex < sSlides.length - 1) sIndex++;
+                    if (movedBy > 10 && sIndex > 0) sIndex--;
+                    goToS(sIndex);
+                    startSAuto();
+                });
+                sTrack.addEventListener('mouseleave', () => {
+                    if (sIsDragging) { sIsDragging = false; goToS(sIndex); startSAuto(); }
+                });
+
+                startSAuto();
+            }
+
+            // 4. (Commented) Proof Slider Logic
+            const proofTrack = document.getElementById('proofTrack');
+            // ... (keeping check for safety if un-commented later)
+            if (!proofTrack) {
+                // Proof track is currently commented in HTML
+            }
+        }
+
+        initAIPresence();
         observeCards();
     </script>
 </body>
