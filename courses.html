@@ -477,59 +477,102 @@
             const email = document.getElementById('custEmail').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
 
+            const reqPayload = {
+                courseId: currentCourse.id,
+                courseName: currentCourse.name,
+                amount: currentCourse.amount,
+                customerName: name,
+                customerEmail: email,
+                customerPhone: phone
+            };
+
+            console.log('[Payment] Starting payment flow...');
+            console.log('[Payment] Course:', currentCourse);
+            console.log('[Payment] Payload being sent:', reqPayload);
+
             try {
                 // Try Netlify endpoint first, fallback to Vercel endpoint
                 let endpoint = '/.netlify/functions/create-order';
+                console.log('[Payment] Trying endpoint:', endpoint);
+
                 let response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        courseId: currentCourse.id,
-                        courseName: currentCourse.name,
-                        amount: currentCourse.amount,
-                        customerName: name,
-                        customerEmail: email,
-                        customerPhone: phone
-                    })
+                    body: JSON.stringify(reqPayload)
                 });
+
+                console.log('[Payment] Response status from', endpoint, ':', response.status);
 
                 if (response.status === 404) {
                     endpoint = '/api/create-order';
+                    console.log('[Payment] Netlify endpoint returned 404. Falling back to Vercel endpoint:', endpoint);
                     response = await fetch(endpoint, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            courseId: currentCourse.id,
-                            courseName: currentCourse.name,
-                            amount: currentCourse.amount,
-                            customerName: name,
-                            customerEmail: email,
-                            customerPhone: phone
-                        })
+                        body: JSON.stringify(reqPayload)
                     });
+                    console.log('[Payment] Vercel fallback response status:', response.status);
                 }
 
-                const data = await response.json();
-
-                if (!response.ok || !data.payment_session_id) {
-                    alert('Payment initialization failed: ' + (data.error || data.message || 'Unknown error'));
+                let data;
+                try {
+                    data = await response.json();
+                    console.log('[Payment] Full response from server:', data);
+                } catch (parseErr) {
+                    console.error('[Payment] Failed to parse JSON response. Server may have returned HTML/empty body.');
+                    alert('Server returned an unreadable response. Check Netlify Function logs.');
                     payBtn.innerText = 'Pay Now';
                     payBtn.disabled = false;
                     return;
                 }
 
+                if (response.status === 401) {
+                    console.error('[Payment] ❌ 401 Unauthorized — Cashfree rejected the credentials.');
+                    console.error('[Payment] This means CASHFREE_APP_ID or CASHFREE_SECRET_KEY is missing or wrong in Netlify Environment Variables.');
+                    console.error('[Payment] Server detail:', data.detail || 'No detail returned.');
+                    console.error('[Payment] Hint:', data.hint || 'Check Netlify Dashboard → Site Settings → Environment Variables.');
+                    console.error('[Payment] Full error object:', data);
+                    alert('Payment failed (401): Cashfree credentials are invalid or missing.\n\nCheck Netlify → Site Settings → Environment Variables.\n\nSee browser console for full details.');
+                    payBtn.innerText = 'Pay Now';
+                    payBtn.disabled = false;
+                    return;
+                }
+
+                if (!response.ok) {
+                    console.error('[Payment] ❌ HTTP Error:', response.status);
+                    console.error('[Payment] Error detail:', data.error || data.message || 'Unknown');
+                    console.error('[Payment] Full server response:', data);
+                    alert(`Payment failed (HTTP ${response.status}): ${data.error || data.message || 'Unknown error.'}\n\nSee browser console for full details.`);
+                    payBtn.innerText = 'Pay Now';
+                    payBtn.disabled = false;
+                    return;
+                }
+
+                if (!data.payment_session_id) {
+                    console.error('[Payment] ❌ No payment_session_id in response!');
+                    console.error('[Payment] Full response data:', data);
+                    alert('Payment initialization failed: No session ID returned.\n\nSee browser console for full details.');
+                    payBtn.innerText = 'Pay Now';
+                    payBtn.disabled = false;
+                    return;
+                }
+
+                console.log('[Payment] ✅ payment_session_id received:', data.payment_session_id);
+                console.log('[Payment] Opening Cashfree Checkout...');
+
                 // Initialize Cashfree SDK v3
-                const cashfree = Cashfree({ mode: "sandbox" }); // change mode to "production" when live
+                const cashfree = Cashfree({ mode: "sandbox" }); // change to "production" when going live
                 closePaymentModal();
-                
+
                 cashfree.checkout({
                     paymentSessionId: data.payment_session_id,
                     redirectTarget: "_self"
                 });
 
             } catch (err) {
-                console.error(err);
-                alert('Network error initiating payment: ' + err.message);
+                console.error('[Payment] ❌ Unexpected JS error during payment flow:', err.message);
+                console.error('[Payment] Stack trace:', err.stack);
+                alert('Network/JS error: ' + err.message + '\n\nSee browser console for details.');
                 payBtn.innerText = 'Pay Now';
                 payBtn.disabled = false;
             }
