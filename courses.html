@@ -561,7 +561,7 @@
                 console.log('[Payment] Opening Cashfree Checkout...');
 
                 // Initialize Cashfree SDK v3
-                const cashfree = Cashfree({ mode: "sandbox" }); // change to "production" when going live
+                const cashfree = Cashfree({ mode: "production" }); // production keys in use
                 closePaymentModal();
 
                 cashfree.checkout({

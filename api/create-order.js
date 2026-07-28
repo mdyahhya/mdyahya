@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 
     const appId = process.env.CASHFREE_APP_ID;
     const secretKey = process.env.CASHFREE_SECRET_KEY;
-    const env = (process.env.CASHFREE_ENV || 'TEST').toUpperCase();
+    const env = (process.env.CASHFREE_ENV || 'PRODUCTION').toUpperCase();
 
     if (!appId || !secretKey) {
       return res.status(500).json({ error: 'Cashfree API credentials are not set in environment variables.' });

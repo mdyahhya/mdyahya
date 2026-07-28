@@ -32,7 +32,7 @@ exports.handler = async (event, context) => {
 
     const appId = process.env.CASHFREE_APP_ID;
     const secretKey = process.env.CASHFREE_SECRET_KEY;
-    const env = (process.env.CASHFREE_ENV || 'TEST').toUpperCase();
+    const env = (process.env.CASHFREE_ENV || 'PRODUCTION').toUpperCase();
 
     // Log env var presence WITHOUT revealing secrets
     console.log('[Cashfree] ENV check:');
