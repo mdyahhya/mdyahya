@@ -478,7 +478,9 @@
             const phone = document.getElementById('custPhone').value.trim();
 
             try {
-                const response = await fetch('/api/create-order', {
+                // Try Netlify endpoint first, fallback to Vercel endpoint
+                let endpoint = '/.netlify/functions/create-order';
+                let response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -490,6 +492,22 @@
                         customerPhone: phone
                     })
                 });
+
+                if (response.status === 404) {
+                    endpoint = '/api/create-order';
+                    response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            courseId: currentCourse.id,
+                            courseName: currentCourse.name,
+                            amount: currentCourse.amount,
+                            customerName: name,
+                            customerEmail: email,
+                            customerPhone: phone
+                        })
+                    });
+                }
 
                 const data = await response.json();
 
