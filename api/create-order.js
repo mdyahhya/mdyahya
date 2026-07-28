@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
         customer_phone: customerPhone
       },
       order_meta: {
-        return_url: `https://${req.headers.host || 'yahya.in'}/courses.html?order_id={order_id}`
+        return_url: `https://${req.headers.host || 'yahya.in'}/course-player.html?order_id={order_id}&course_id=${encodeURIComponent(courseId || '')}&course_name=${encodeURIComponent(courseName || '')}`
       },
       order_note: `Enrollment for ${courseName || 'Course'}`
     });

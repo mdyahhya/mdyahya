@@ -371,10 +371,10 @@
                 </div>
                 <div>
                     <div class="price-row">
-                        <span class="price">₹5</span>
+                        <span class="price">₹1</span>
                         <span class="old-price">₹1,999</span>
                     </div>
-                    <button class="enroll-btn" onclick="openPaymentModal('course_fullstack', 'Full-Stack Web Development', 5)">Enroll Now</button>
+                    <button class="enroll-btn" onclick="openPaymentModal('course_fullstack', 'Full-Stack Web Development', 1)">Enroll Now</button>
                 </div>
             </div>
 
@@ -393,10 +393,10 @@
                 </div>
                 <div>
                     <div class="price-row">
-                        <span class="price">₹10</span>
+                        <span class="price">₹5</span>
                         <span class="old-price">₹2,999</span>
                     </div>
-                    <button class="enroll-btn" onclick="openPaymentModal('course_ai', 'AI Agent Bootcamp', 10)">Enroll Now</button>
+                    <button class="enroll-btn" onclick="openPaymentModal('course_ai', 'AI Agent Bootcamp', 5)">Enroll Now</button>
                 </div>
             </div>
 
@@ -415,10 +415,10 @@
                 </div>
                 <div>
                     <div class="price-row">
-                        <span class="price">₹15</span>
+                        <span class="price">₹10</span>
                         <span class="old-price">₹4,999</span>
                     </div>
-                    <button class="enroll-btn" onclick="openPaymentModal('course_mentorship', '1-on-1 Developer Mentorship', 15)">Enroll Now</button>
+                    <button class="enroll-btn" onclick="openPaymentModal('course_mentorship', '1-on-1 Developer Mentorship', 10)">Enroll Now</button>
                 </div>
             </div>
         </div>
@@ -456,6 +456,14 @@
 
     <script>
         let currentCourse = null;
+
+        // Auto-redirect to player portal if redirected from Cashfree with order_id
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('order_id') || params.get('orderId')) {
+                window.location.href = 'course-player.html' + window.location.search;
+            }
+        });
 
         function openPaymentModal(id, name, amount) {
             currentCourse = { id, name, amount };
