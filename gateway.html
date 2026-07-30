@@ -9,7 +9,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/jpeg" href="favicon.jpg" />
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then((reg) => {
+                    console.log('[SW] Service Worker Registered:', reg.scope);
+                    reg.update();
+                }).catch((err) => {
+                    console.error('[SW] Registration failed:', err);
+                });
+            });
+        }
+    </script>
     <!-- Cashfree SDK (v3) -->
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <style>

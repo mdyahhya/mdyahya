@@ -17,8 +17,23 @@
         rel="stylesheet" />
     <!-- SEO: Force Google to drop old domain and index strictly yahya.in -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="https://yahya.in/" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/jpeg" href="favicon.jpg" />
+    <script>
+        // Register Service Worker to enforce Network-First fresh fetching
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then((reg) => {
+                    console.log('[SW] Service Worker Registered:', reg.scope);
+                    reg.update();
+                }).catch((err) => {
+                    console.error('[SW] Registration failed:', err);
+                });
+            });
+        }
+    </script>
     <script>
         // If Google or users load the old domain, immediately block indexing and redirect
         if (window.location.hostname === "yahya.dominal.in") {
