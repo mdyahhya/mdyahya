@@ -568,13 +568,13 @@
                 console.log('[Payment] ✅ payment_session_id received:', data.payment_session_id);
                 console.log('[Payment] Opening Cashfree Checkout...');
 
-                // Initialize Cashfree SDK v3
+                // Initialize Cashfree SDK v3 with _modal target for seamless on-site checkout
                 const cashfree = Cashfree({ mode: "production" }); // production keys in use
                 closePaymentModal();
 
                 cashfree.checkout({
                     paymentSessionId: data.payment_session_id,
-                    redirectTarget: "_self"
+                    redirectTarget: "_modal"
                 });
 
             } catch (err) {
