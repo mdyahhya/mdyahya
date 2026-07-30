@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Successful — Payment Gateway Integration Demo | Yahya Mundewadi</title>
+    <meta name="description" content="Demonstration of instant post-payment verification, email receipt delivery, and client portal access." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/jpeg" href="favicon.jpg" />
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #ffffff;
+            --bg2: #f8fbff;
+            --bg3: #f0f7ff;
+            --border: #e2e8f0;
+            --border2: #cbd5e1;
+            --text: #0f172a;
+            --text2: #334155;
+            --text3: #64748b;
+            --accent: #1d4ed8;
+            --accent-light: #2563eb;
+            --green: #10b981;
+            --green-bg: #ecfdf5;
+            --mono: 'Space Mono', monospace;
+            --sans: 'DM Sans', sans-serif;
+            --radius: 14px;
+            --nav-h: 64px;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--nav-h);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: var(--mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent-light); }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--text3);
+            border: none;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s, background 0.2s;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--text);
+            background: var(--bg3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: calc(var(--nav-h) + 2.5rem) 1.5rem 4rem;
+        }
+
+        .success-card {
+            background: var(--green-bg);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .check-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--green);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .success-content h2 {
+            font-size: 1.5rem;
+            color: #065f46;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .success-content p {
+            font-size: 0.95rem;
+            color: #047857;
+            margin-bottom: 0.8rem;
+        }
+
+        .banner-highlight {
+            background: #ffffff;
+            border: 1px dashed #10b981;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #065f46;
+            font-weight: 500;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .detail-box {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+        }
+
+        .detail-box label {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-box .val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: var(--mono);
+            word-break: break-all;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .demo-showcase-box {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 2rem;
+        }
+
+        .demo-showcase-box h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .demo-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .demo-steps li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            color: var(--text2);
+        }
+
+        .demo-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--bg3);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+            color: var(--accent-light);
+            font-family: var(--mono);
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-box {
+            background: var(--bg3);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .cta-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-box p {
+            font-size: 0.92rem;
+            color: var(--text2);
+            margin-bottom: 1.2rem;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text3);
+            font-family: var(--mono);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">
+            <span>//</span> yahya.in
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-btn">Home</a>
+            <a href="gateway.html" class="nav-btn">Payment Gateway Demo</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Success Banner -->
+        <div class="success-card">
+            <div class="check-icon">✓</div>
+            <div class="success-content">
+                <h2>Payment Successful!</h2>
+                <p>Your live test payment was processed seamlessly through Cashfree Modal Integration.</p>
+                <div class="banner-highlight">
+                    💡 <strong>This is how we can implement on your website/e-commerce:</strong> Immediate on-page verification, zero site redirection, and instant email payment confirmation delivered directly to your customer!
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+            <div class="detail-box">
+                <label>Transaction ID / Order ID</label>
+                <div class="val" id="orderIdVal">ORDER_PROCESSING</div>
+            </div>
+            <div class="detail-box">
+                <label>Payment Status</label>
+                <div><span class="status-badge">PAID ✓</span></div>
+            </div>
+            <div class="detail-box">
+                <label>Email Notification</label>
+                <div class="val" style="font-family: var(--sans); font-size: 0.95rem; color: #10b981; font-weight: 600;">Receipt Sent to Email 📧</div>
+            </div>
+        </div>
+
+        <!-- Demonstration Steps Box -->
+        <div class="demo-showcase-box">
+            <h3>How This Integration Works For Your Business</h3>
+            <ol class="demo-steps">
+                <li><strong>On-Site Checkout Popup:</strong> Customer clicks "Buy" or "Pay" and the Cashfree modal opens directly over your website.</li>
+                <li><strong>Multi-Option Payments:</strong> Accepts GPay, PhonePe, Paytm, Any UPI ID, Debit/Credit Cards, and Netbanking.</li>
+                <li><strong>Automated Backend Verification:</strong> Secure serverless API validates transaction signature without exposing private API keys.</li>
+                <li><strong>Instant Automated Email Receipt:</strong> Cashfree sends a formatted payment invoice receipt straight to customer's email address.</li>
+                <li><strong>Zero GST / Business PAN Required:</strong> Get your payment gateway deployed and taking payments within 24 hours.</li>
+            </ol>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="cta-box">
+            <h3>Want This Payment Gateway Integrated On Your Website?</h3>
+            <p>We build complete custom payment flows for e-commerce, SaaS, agency services, and digital products in 24 hours.</p>
+            <a href="https://wa.me/918625902920?text=Hi%20Yahya,%20I%20saw%20your%20Payment%20Gateway%20demo%20on%20yahya.in%20and%20want%20to%20integrate%20it%20on%20my%20website!" target="_blank" class="contact-btn">
+                Get Payment Gateway Integration (WhatsApp)
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© Yahya Mundewadi — Custom Payment Gateway Integration Services — yahya.in</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('order_id') || params.get('orderId') || 'ORDER_' + Math.random().toString(36).substring(2, 9).toUpperCase();
+            document.getElementById('orderIdVal').innerText = orderId;
+        });
+    </script>
+</body>
+
+</html>

@@ -70,9 +70,9 @@ exports.handler = async (event, context) => {
         customer_phone: customerPhone
       },
       order_meta: {
-        return_url: `https://${event.headers.host || 'yahya.in'}/course-player.html?order_id={order_id}&course_id=${encodeURIComponent(courseId || '')}&course_name=${encodeURIComponent(courseName || '')}`
+        return_url: `https://${event.headers.host || 'yahya.in'}/payment-success.html?order_id={order_id}&course_id=${encodeURIComponent(courseId || '')}&course_name=${encodeURIComponent(courseName || '')}`
       },
-      order_note: `Enrollment for ${courseName || 'Course'}`
+      order_note: `Payment Gateway Integration Demo - ${courseName || 'Test'}`
     });
 
     console.log('[Cashfree] Sending order request to:', host);
