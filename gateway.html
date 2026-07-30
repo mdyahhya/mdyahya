@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Gateway Integration — Live Demo | Yahya Mundewadi</title>
-    <meta name="description" content="Custom Payment Gateway integration services. Accept UPI, Cards, and Netbanking on your website in 24 hours without GST or Business PAN." />
+    <meta name="description" content="Accept payments on your website using our payment gateway setup within 24 hours without business registration or GST." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -33,7 +33,6 @@
             --bg: #ffffff;
             --bg2: #f8fbff;
             --bg3: #f0f7ff;
-            --bg4: #e8f2ff;
             --border: #e2e8f0;
             --border2: #cbd5e1;
             --text: #0f172a;
@@ -107,9 +106,20 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: calc(var(--nav-h) + 3rem) 1.5rem 4rem;
+            padding: calc(var(--nav-h) + 2rem) 1.5rem 3rem;
+        }
+
+        /* ── HERO SECTION ───────────────────────────────────────────────── */
+        .hero {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
         .header-tag {
@@ -118,50 +128,112 @@
             color: var(--accent-light);
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            display: inline-block;
+            background: var(--bg3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(29, 78, 216, 0.2);
         }
 
         h1 {
-            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             letter-spacing: -0.02em;
-            line-height: 1.2;
+            line-height: 1.25;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .subtitle {
-            font-size: 1.08rem;
-            color: var(--text2);
-            max-width: 720px;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        /* ── HERO ACTION BUTTONS (TOP DEMO) ─────────────────────────────── */
+        .demo-buttons-hero {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .hero-pay-btn {
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 12px;
+            font-family: var(--sans);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(29, 78, 216, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-pay-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29, 78, 216, 0.35);
+        }
+
+        .hero-pay-btn span.price-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: var(--mono);
+            font-size: 0.95rem;
+        }
+
+        .hero-note {
+            font-size: 0.85rem;
+            color: var(--text3);
+            font-family: var(--mono);
+            margin-top: 0.8rem;
+        }
+
+        /* ── FEATURES GRID (AT THE BOTTOM) ────────────────────────────── */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
             margin-bottom: 3rem;
         }
 
-        /* ── FEATURE HIGHLIGHTS ────────────────────────────────────────── */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 3.5rem;
-        }
-
         .feature-card {
-            background: var(--bg2);
+            background: #ffffff;
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.5rem;
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
         .feature-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             border-color: var(--border2);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
         }
 
         .feature-icon {
-            width: 46px;
-            height: 46px;
+            width: 42px;
+            height: 42px;
             background: var(--bg3);
             border: 1px solid rgba(29, 78, 216, 0.2);
             border-radius: 10px;
@@ -169,143 +241,20 @@
             align-items: center;
             justify-content: center;
             color: var(--accent-light);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .feature-card h3 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
         }
 
         .feature-card p {
             font-size: 0.88rem;
             color: var(--text3);
             line-height: 1.5;
-        }
-
-        /* ── DEMO PAYMENTS SECTION ───────────────────────────────────── */
-        .demo-section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
-
-        .demo-section-sub {
-            font-size: 0.95rem;
-            color: var(--text3);
-            margin-bottom: 1.8rem;
-        }
-
-        .payment-options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .demo-card {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .demo-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-light);
-            box-shadow: 0 14px 32px rgba(29, 78, 216, 0.08);
-        }
-
-        .badge {
-            display: inline-block;
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            background: var(--bg3);
-            color: var(--accent-light);
-            border: 1px solid rgba(29, 78, 216, 0.2);
-            padding: 0.2rem 0.6rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .demo-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .demo-card p {
-            font-size: 0.9rem;
-            color: var(--text3);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .demo-features {
-            list-style: none;
-            margin-bottom: 1.8rem;
-            font-size: 0.88rem;
-            color: var(--text2);
-        }
-
-        .demo-features li {
-            margin-bottom: 0.4rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .demo-features li::before {
-            content: "✓";
-            color: var(--accent-light);
-            font-weight: bold;
-        }
-
-        .price-row {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .price {
-            font-family: var(--mono);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .price-label {
-            font-size: 0.8rem;
-            color: var(--text3);
-            font-family: var(--mono);
-        }
-
-        .pay-test-btn {
-            background: var(--accent);
-            color: #ffffff;
-            border: none;
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 10px;
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-        }
-
-        .pay-test-btn:hover {
-            background: var(--accent-light);
-            transform: translateY(-1px);
         }
 
         /* ── MODAL ──────────────────────────────────────────────────────── */
@@ -403,6 +352,37 @@
             cursor: not-allowed;
         }
 
+        .contact-cta {
+            background: var(--bg3);
+            border: 1px solid rgba(29, 78, 216, 0.2);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-cta h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .contact-cta p {
+            font-size: 0.9rem;
+            color: var(--text2);
+            margin-bottom: 1rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
         footer {
             border-top: 1px solid var(--border);
             padding: 2rem 1.5rem;
@@ -410,7 +390,7 @@
             font-size: 0.82rem;
             color: var(--text3);
             font-family: var(--mono);
-            margin-top: 4rem;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -428,146 +408,84 @@
     </nav>
 
     <div class="container">
-        <div class="header-tag">// Custom Integration Services</div>
-        <h1>Accept Payments On Your Website in 24 Hours</h1>
-        <p class="subtitle">Complete Payment Gateway setup for your website or e-commerce store. <strong>No GST registration or Business PAN required to get started.</strong> Cashfree, UPI (GPay, PhonePe, Paytm), Credit/Debit Cards, and Netbanking supported with zero-redirection modal checkout & instant email receipts.</p>
+        <!-- ── HERO SECTION WITH DIRECT DEMO BUTTONS AT THE TOP ────────── -->
+        <section class="hero">
+            <span class="header-tag">// Express Integration</span>
+            <h1>Accept Payments on your Website using our Payment Gateway Setup within 24 Hours</h1>
+            <p class="subtitle">Without Business Registration or GST</p>
 
-        <!-- Feature Highlights Grid -->
+            <!-- Action Buttons right in the Hero area -->
+            <div class="demo-buttons-hero">
+                <button class="hero-pay-btn" onclick="openPaymentModal('demo_1', 'Demo Payment ₹1', 1)">
+                    <span class="price-tag">₹1</span> Pay ₹1 Demo
+                </button>
+                <button class="hero-pay-btn" onclick="openPaymentModal('demo_2', 'Demo Payment ₹2', 2)">
+                    <span class="price-tag">₹2</span> Pay ₹2 Demo
+                </button>
+                <button class="hero-pay-btn" onclick="openPaymentModal('demo_5', 'Demo Payment ₹5', 5)">
+                    <span class="price-tag">₹5</span> Pay ₹5 Demo
+                </button>
+            </div>
+            <p class="hero-note">⚡ Click any button to test live modal checkout & instant email receipt delivery!</p>
+        </section>
+
+        <!-- ── FEATURES / EXPLANATIONS (BELOW HERO) ────────────────────── -->
+        <h2 class="section-title">Integration Features</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                 </div>
-                <h3>24-Hour Express Integration</h3>
-                <p>Full frontend modal + serverless API backend integration ready and live on your website within 24 hours.</p>
+                <h3>Setup within 24 Hours</h3>
+                <p>Complete payment gateway integration deployed to your website or e-commerce store within 24 hours.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                 </div>
-                <h3>No GST / Business PAN Required</h3>
-                <p>Start accepting online payments as an individual, freelancer, creator, or startup without complex corporate filings.</p>
+                <h3>No Business Registration / GST</h3>
+                <p>Start accepting online payments as an individual, freelancer, creator, or small business hassle-free.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 </div>
-                <h3>Embedded On-Site Modal Checkout</h3>
-                <p>Customers complete payment in a smooth popup modal overlay directly on your website without being redirected away.</p>
+                <h3>On-Site Modal Popup</h3>
+                <p>Payment opens smoothly directly over your website. Customers pay via UPI, GPay, PhonePe, Cards, or Netbanking.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
-                <h3>Automated Instant Email Receipts</h3>
-                <p>Customers automatically receive a clean, professional email payment confirmation immediately after paying.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                </div>
-                <h3>Works On Any Stack</h3>
-                <p>Seamlessly integrates with React, Next.js, HTML/JS, Node.js, Python, PHP, WordPress, Vercel, and Netlify.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                </div>
-                <h3>Secure Environment Variables</h3>
-                <p>API keys stay completely hidden in secure serverless environment variables — never exposed to the client browser.</p>
+                <h3>Instant Email Receipts</h3>
+                <p>Every paying customer automatically receives a formal Cashfree email payment receipt instantly.</p>
             </div>
         </div>
 
-        <!-- Live Demo Options Section -->
-        <h2 class="demo-section-title">Test Live Payment Gateway Demo</h2>
-        <p class="demo-section-sub">Select a test payment amount below (₹1, ₹2, or ₹5), enter your real email and phone number, and experience live modal checkout and real-time email receipt delivery!</p>
-
-        <div class="payment-options-grid">
-            <!-- Option 1 -->
-            <div class="demo-card">
-                <div>
-                    <span class="badge">Test Option A</span>
-                    <h3>Micro Transaction Test</h3>
-                    <p>Test the instant Cashfree modal checkout flow with a minimal ₹1 live payment.</p>
-                    <ul class="demo-features">
-                        <li>Embedded Popup Checkout</li>
-                        <li>UPI / GPay / PhonePe / QR Code</li>
-                        <li>Instant Real-Time Email Receipt</li>
-                        <li>Post-Payment Auto Redirect</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="price-row">
-                        <span class="price">₹1</span>
-                        <span class="price-label">(Test Live Payment)</span>
-                    </div>
-                    <button class="pay-test-btn" onclick="openPaymentModal('demo_opt_1', 'Micro Payment Test', 1)">Test ₹1 Checkout</button>
-                </div>
-            </div>
-
-            <!-- Option 2 -->
-            <div class="demo-card">
-                <div>
-                    <span class="badge">Test Option B</span>
-                    <h3>Standard Integration Test</h3>
-                    <p>Test full checkout modal along with customer details verification and order callback.</p>
-                    <ul class="demo-features">
-                        <li>Embedded Popup Checkout</li>
-                        <li>Cards / Netbanking / UPI</li>
-                        <li>Instant Real-Time Email Receipt</li>
-                        <li>Order Verification Webhook</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="price-row">
-                        <span class="price">₹2</span>
-                        <span class="price-label">(Test Live Payment)</span>
-                    </div>
-                    <button class="pay-test-btn" onclick="openPaymentModal('demo_opt_2', 'Standard Payment Test', 2)">Test ₹2 Checkout</button>
-                </div>
-            </div>
-
-            <!-- Option 3 -->
-            <div class="demo-card">
-                <div>
-                    <span class="badge">Test Option C</span>
-                    <h3>Full E-Commerce Package</h3>
-                    <p>Test the full e-commerce & service booking payment flow with instant receipt confirmation.</p>
-                    <ul class="demo-features">
-                        <li>Embedded Popup Checkout</li>
-                        <li>All Payment Methods Supported</li>
-                        <li>Instant Real-Time Email Receipt</li>
-                        <li>Success Client Portal Redirect</li>
-                    </ul>
-                </div>
-                <div>
-                    <div class="price-row">
-                        <span class="price">₹5</span>
-                        <span class="price-label">(Test Live Payment)</span>
-                    </div>
-                    <button class="pay-test-btn" onclick="openPaymentModal('demo_opt_3', 'E-Commerce Package Test', 5)">Test ₹5 Checkout</button>
-                </div>
-            </div>
+        <div class="contact-cta">
+            <h3>Ready to add a Payment Gateway to your website?</h3>
+            <p>Get custom integration setup within 24 hours on your website, e-commerce store, or app.</p>
+            <a href="https://wa.me/918625902920?text=Hi%20Yahya,%20I%20want%20Payment%20Gateway%20integration%20on%20my%20website!" target="_blank" class="cta-btn">
+                Contact on WhatsApp
+            </a>
         </div>
     </div>
 
     <!-- Modal for customer info before Cashfree checkout -->
     <div class="modal-overlay" id="paymentModal">
         <div class="modal-content">
-            <h3 id="modalCourseTitle">Live Payment Demo</h3>
-            <p>Enter your real email and phone number to receive your instant payment confirmation email.</p>
+            <h3 id="modalCourseTitle">Demo Payment</h3>
+            <p>Enter your email & phone number to receive instant payment receipt confirmation.</p>
             <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
                 <div class="form-group">
                     <label for="custName">FULL NAME</label>
                     <input type="text" id="custName" placeholder="e.g. Rahul Sharma" required />
                 </div>
                 <div class="form-group">
-                    <label for="custEmail">EMAIL ADDRESS (For Email Receipt)</label>
+                    <label for="custEmail">EMAIL ADDRESS (For Receipt)</label>
                     <input type="email" id="custEmail" placeholder="your-email@example.com" required />
                 </div>
                 <div class="form-group">
@@ -583,13 +501,13 @@
     </div>
 
     <footer>
-        <p>© Yahya Mundewadi — Custom Payment Gateway Integration Services — yahya.in</p>
+        <p>© Yahya Mundewadi — Payment Gateway Integration Services — yahya.in</p>
     </footer>
 
     <script>
         let currentCourse = null;
 
-        // Auto-redirect to player portal if redirected from Cashfree with order_id
+        // Auto-redirect to payment-success.html if redirected from Cashfree with order_id
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             if (params.get('order_id') || params.get('orderId')) {
@@ -599,7 +517,7 @@
 
         function openPaymentModal(id, name, amount) {
             currentCourse = { id, name, amount };
-            document.getElementById('modalCourseTitle').innerText = name + ' (₹' + amount + ')';
+            document.getElementById('modalCourseTitle').innerText = name;
             document.getElementById('paymentModal').classList.add('active');
         }
 
@@ -626,85 +544,65 @@
                 customerPhone: phone
             };
 
-            console.log('[Payment] Starting payment flow...');
-            console.log('[Payment] Item:', currentCourse);
-            console.log('[Payment] Payload being sent:', reqPayload);
+            console.log('[Payment] Starting checkout payload:', reqPayload);
 
             try {
-                // Try Netlify endpoint first, fallback to Vercel endpoint
                 let endpoint = '/.netlify/functions/create-order';
-                console.log('[Payment] Trying endpoint:', endpoint);
-
                 let response = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(reqPayload)
                 });
 
-                console.log('[Payment] Response status from', endpoint, ':', response.status);
-
                 if (response.status === 404) {
                     endpoint = '/api/create-order';
-                    console.log('[Payment] Netlify endpoint returned 404. Falling back to Vercel endpoint:', endpoint);
                     response = await fetch(endpoint, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(reqPayload)
                     });
-                    console.log('[Payment] Vercel fallback response status:', response.status);
                 }
 
                 let data;
                 try {
                     data = await response.json();
-                    console.log('[Payment] Full response from server:', data);
                 } catch (parseErr) {
-                    console.error('[Payment] Failed to parse JSON response. Server may have returned HTML/empty body.');
-                    alert('Server returned an unreadable response. Check Netlify Function logs.');
+                    alert('Server response error. Please try again.');
                     payBtn.innerText = 'Pay Now';
                     payBtn.disabled = false;
                     return;
                 }
 
-                if (response.status === 401) {
-                    console.error('[Payment] ❌ 401 Unauthorized — Cashfree rejected the credentials.');
-                    alert('Payment failed (401): Cashfree credentials are invalid or missing.\n\nCheck Netlify → Site Settings → Environment Variables.');
+                if (!response.ok || !data.payment_session_id) {
+                    alert(`Payment setup error: ${data.error || data.message || 'Check credentials'}`);
                     payBtn.innerText = 'Pay Now';
                     payBtn.disabled = false;
                     return;
                 }
 
-                if (!response.ok) {
-                    console.error('[Payment] ❌ HTTP Error:', response.status);
-                    alert(`Payment failed (HTTP ${response.status}): ${data.error || data.message || 'Unknown error.'}`);
-                    payBtn.innerText = 'Pay Now';
-                    payBtn.disabled = false;
-                    return;
-                }
-
-                if (!data.payment_session_id) {
-                    console.error('[Payment] ❌ No payment_session_id in response!');
-                    alert('Payment initialization failed: No session ID returned.');
-                    payBtn.innerText = 'Pay Now';
-                    payBtn.disabled = false;
-                    return;
-                }
-
-                console.log('[Payment] ✅ payment_session_id received:', data.payment_session_id);
-                console.log('[Payment] Opening Cashfree Embedded Checkout Modal...');
-
-                // Initialize Cashfree SDK v3 with _modal target for embedded overlay popup
-                const cashfree = Cashfree({ mode: "production" }); // production keys in use
                 closePaymentModal();
 
-                cashfree.checkout({
+                // Initialize Cashfree SDK v3
+                const cashfree = Cashfree({ mode: "production" });
+
+                // Launch modal checkout
+                const result = await cashfree.checkout({
                     paymentSessionId: data.payment_session_id,
                     redirectTarget: "_modal"
                 });
 
+                console.log('[Payment] Modal result:', result);
+
+                // If modal completes or closes, check order status & redirect to payment-success.html
+                if (result && result.error) {
+                    console.log('[Payment] Modal error or closed:', result.error);
+                } else {
+                    window.location.href = 'payment-success.html?order_id=' + (data.order_id || '');
+                }
+
             } catch (err) {
-                console.error('[Payment] ❌ Unexpected JS error during payment flow:', err.message);
-                alert('Network/JS error: ' + err.message);
+                console.error('[Payment] Error:', err);
+                alert('Payment error: ' + err.message);
                 payBtn.innerText = 'Pay Now';
                 payBtn.disabled = false;
             }
