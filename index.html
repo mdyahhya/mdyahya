@@ -508,9 +508,13 @@
 
         .stat-item {
             background: var(--bg2);
-            padding: 1.1rem 1.25rem;
+            padding: 1.15rem 1rem;
             text-align: center;
             transition: background 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .stat-item:hover {
@@ -519,18 +523,140 @@
 
         .stat-num {
             font-family: var(--mono);
-            font-size: 1.5rem;
+            font-size: clamp(1.05rem, 1.8vw, 1.45rem);
             font-weight: 700;
             color: var(--accent-light);
-            line-height: 1;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
         .stat-label {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--text3);
-            margin-top: 0.3rem;
+            margin-top: 0.35rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
+            line-height: 1.35;
+        }
+
+        .hero-scale-line {
+            font-size: 0.88rem;
+            color: var(--text2);
+            margin-bottom: 0.85rem;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 0.65rem 0.95rem;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.5;
+        }
+
+        .hero-partner-line {
+            font-size: 0.82rem;
+            color: var(--text2);
+            margin-bottom: 1.25rem;
+            background: var(--accent3);
+            border-left: 3px solid var(--accent);
+            padding: 0.6rem 0.85rem;
+            border-radius: 0 6px 6px 0;
+            display: inline-block;
+        }
+
+        /* ── HERO KEY HIGHLIGHTS ────────────────────────────────────────── */
+        .hero-highlights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 0.9rem 0 1.15rem;
+        }
+
+        .hero-hl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 0.5rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.81rem;
+            line-height: 1.35;
+            color: var(--text2);
+            transition: all 0.2s ease;
+        }
+
+        .hero-hl-item:hover {
+            background: var(--bg3);
+            border-color: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        .hero-hl-item svg {
+            flex-shrink: 0;
+            width: 14px;
+            height: 14px;
+            margin-top: 2px;
+            color: var(--accent);
+        }
+
+        .hero-hl-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .hero-hl-wide {
+            grid-column: 1 / -1;
+        }
+
+
+        .skill-card-featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+            border: 1px solid var(--border2);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+        }
+
+        .skill-badge-top {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: #fff;
+            background: var(--accent);
+            padding: 0.2rem 0.65rem;
+            border-radius: 100px;
+            display: inline-block;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .skill-dev-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.85rem;
+        }
+
+        .case-study-badge {
+            font-family: var(--mono);
+            font-size: 0.74rem;
+            color: var(--text2);
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .project-action-group {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
         }
 
         /* Social links */
@@ -1307,10 +1433,27 @@
 
             .hero-role,
             .hero>div:first-child>p,
+            .hero-highlights,
             .hero-actions,
             .hero-featured {
                 grid-column: 1 / span 2;
                 text-align: left;
+            }
+
+            .hero-highlights {
+                grid-template-columns: 1fr;
+                gap: 0.35rem;
+                margin: 0.65rem 0 0.85rem;
+            }
+
+            .hero-hl-item {
+                padding: 0.42rem 0.6rem;
+                font-size: 0.77rem;
+                line-height: 1.3;
+            }
+
+            .hero-hl-wide {
+                grid-column: auto;
             }
 
             .hero-avatar-ring,
@@ -1324,7 +1467,10 @@
             }
 
             .stats-strip {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-strip .stat-item:last-child {
+                grid-column: 1 / span 2;
             }
 
             .stat-item {
@@ -1386,7 +1532,10 @@
             }
 
             .stats-strip {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-strip .stat-item:last-child {
+                grid-column: 1 / span 2;
             }
         }
 
@@ -2050,8 +2199,36 @@
                         <strong>Founder, Dominal Tech</strong><br />
                         BTech CSE '26 · VVPIET Solapur · Pune, Maharashtra
                     </p>
-                    <p
-                        style="font-size:0.82rem; color:var(--text2); margin-bottom:1.25rem; background:var(--accent3); border-left: 3px solid var(--accent); padding: 0.6rem 0.85rem; border-radius: 0 6px 6px 0; display: inline-block;">
+                    <div class="hero-highlights">
+                        <div class="hero-hl-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            <div><strong>10,000+ PyPI Downloads:</strong> Published Python library (<a href="https://pypi.org/project/pydefine/" target="_blank" style="color:var(--accent); text-decoration:underline;">pydefine</a>)</div>
+                        </div>
+                        <div class="hero-hl-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            <div><strong>10 SGPA / 93% Score:</strong> Final Sem BTech CSE (VVPIET Solapur)</div>
+                        </div>
+                        <div class="hero-hl-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                            <div><strong>Android Browser Creator:</strong> Built <a href="https://shadow.yahya.in" target="_blank" style="color:var(--accent); text-decoration:underline;">Shadow Browser</a> (Privacy app)</div>
+                        </div>
+                        <div class="hero-hl-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M13 7l6 3v11"/></svg>
+                            <div><strong>Created 3 Tech Firms:</strong> Product-level startups founded &amp; engineered</div>
+                        </div>
+                        <div class="hero-hl-item hero-hl-wide">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                            <div><strong>Scaled SaaS Products:</strong> Scaled SaaS solutions for hundreds of users across 8-district network</div>
+                        </div>
+                    </div>
+                    <p class="hero-scale-line">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display:inline-block; vertical-align:-2px; margin-right:5px; color:var(--accent);">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        I can scale any SaaS software or company with Business Development and Research, and help get thousands of clients and users.
+                    </p>
+                    <p class="hero-partner-line">
                         <strong style="color:var(--accent)">Become a Business Partner:</strong> Yahya and team handle
                         the Tech; you lead all the Business Operations.
                     </p>
@@ -2153,7 +2330,7 @@
                 <div class="ai-container">
                     <!-- Section 1: Title -->
                     <div class="ai-header ai-reveal">
-                        <h2>Search About Yahya Mundewadi on:-</h2>
+                        <h2>You can search About Yahya Mundewadi on:-</h2>
                     </div>
 
                     <!-- Section 2: AI Card Animation -->
@@ -2204,7 +2381,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Section 3: Google Search Animation -->
+                    <!-- Section 3: Google Search Animation (Temporarily Commented Out)
                     <div class="google-search-section ai-reveal" id="googleSearchTrigger">
                         <h3>I can influence all these AI LLMs & <span class="highlight-text">help AI find and suggest
                                 your brand.</span></h3>
@@ -2223,8 +2400,9 @@
                             <h4>Yahya Mundewadi</h4>
                         </div>
                     </div>
+                    -->
 
-                    <!-- Section 4: AI Showcase Slider -->
+                    <!-- Section 4: AI Showcase Slider (Temporarily Commented Out)
                     <div class="image-showcase ai-reveal">
                         <p>Search on Google or any AI tool: Best Software Developer in Solapur</p>
                         <div class="proof-slider-container">
@@ -2257,6 +2435,7 @@
                         </div>
                         <div class="proof-pagination" id="showcaseDots"></div>
                     </div>
+                    -->
 
                     <!-- Section 5: AI Proof 
                     <div class="ai-proof-section ai-reveal">
@@ -2312,16 +2491,16 @@
                     <div class="stat-label">Years Building</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">1</div>
-                    <div class="stat-label">PyPI Library</div>
+                    <div class="stat-num">10,000+</div>
+                    <div class="stat-label">PyPI Downloads (pydefine)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">7.5</div>
-                    <div class="stat-label">CGPA</div>
+                    <div class="stat-num">10 SGPA / 93%</div>
+                    <div class="stat-label">Final Semester (BTech CSE, VVPIET)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-num">1</div>
-                    <div class="stat-label">Govt. Client</div>
+                    <div class="stat-num">100+</div>
+                    <div class="stat-label">Clients Served (India + International)</div>
                 </div>
             </div>
 
@@ -2330,6 +2509,22 @@
                 <h2>Featured Projects</h2>
             </div>
             <div class="featured-row">
+
+                <div class="feat-card">
+                    <div class="feat-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                            <line x1="12" y1="2" x2="12" y2="6" />
+                            <line x1="12" y1="18" x2="12" y2="22" />
+                        </svg>
+                    </div>
+                    <span class="feat-badge" style="background:var(--accent); color:#fff;">⚡ Flagship</span>
+                    <h4>Website Builder</h4>
+                    <p>User only enters a website name and uploads images — a fully responsive, live website is generated and deployed in under 30 seconds with an instant live link.</p>
+                    <a href="javascript:void(0)" onclick="showSection('projects')" class="feat-card-link">Explore in Projects →</a>
+                </div>
 
                 <div class="feat-card">
                     <div class="feat-card-icon">
@@ -2347,7 +2542,6 @@
                     <a href="https://ppt.yahya.in" target="_blank" class="feat-card-link">Try it now →</a>
                 </div>
 
-
                 <div class="feat-card">
                     <div class="feat-card-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2359,9 +2553,8 @@
                     </div>
                     <span class="feat-badge">AI Chatbot</span>
                     <h4>Yahya's AI Chatbot | Dominal v2.5</h4>
-                    <p>Custom AI chatbot with a dedicated knowledge base about Yahya and Dominal Tech. Context-aware,
-                        domain-specific conversational replies. ChatGPT-style interface.</p>
-                    <a href="https://ai.yahya.in" target="_blank" class="feat-card-link">Try it →</a>
+                    <p>Acts like a customer executive: takes requirements, explains company services, and provides a direct WhatsApp button routing leads straight to enquiry.</p>
+                    <a href="https://ai.yahya.in" target="_blank" class="feat-card-link">Try it (ai.yahya.in) →</a>
                 </div>
 
                 <div class="feat-card">
@@ -2413,24 +2606,6 @@
                     <a href="https://walltone.in" target="_blank" class="feat-card-link">Visit Walltone →</a>
                 </div>
 
-                <!-- <div class="feat-card">
-                    <div class="feat-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                            <path d="M12 7v3" />
-                        </svg>
-                    </div>
-                    <span class="feat-badge">Client Work</span>
-                    <h4>Apartment Management System</h4>
-                    <p>Full apartment management platform for a real client — resident management, maintenance requests,
-                        visitor logs, and admin dashboard. Live at homecare.yahya.in.</p>
-                    <a href="https://homecare.yahya.in" target="_blank" class="feat-card-link">Check Out →</a>
-                </div> -->
-
-
-
             </div>
 
             <!-- Socials -->
@@ -2461,6 +2636,12 @@
                     </svg>
                     dominal.in
                 </a>
+                <a href="https://dominal.in/chat" target="_blank" class="social-link">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    dominal.in/chat
+                </a>
                 <a href="https://shadow.yahya.in" target="_blank" class="social-link">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="5" y="2" width="14" height="20" rx="2" />
@@ -2489,7 +2670,15 @@
                         <polyline points="16 18 22 12 16 6" />
                         <polyline points="8 6 2 12 8 18" />
                     </svg>
-                    PyPI — pydefine
+                    PyPI (10K+ DL)
+                </a>
+                <a href="https://pepy.tech/projects/pydefine" target="_blank" class="social-link">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                    pepy.tech stats
                 </a>
                 <a href="mailto:yahyabuilds@gmail.com" class="social-link">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2527,7 +2716,7 @@
                 </div>
                 <div class="contact-cell">
                     <label>CiteWorks Studio</label>
-                    <span>Full Stack Developer, Pune (2026–)</span>
+                    <span>Full Stack Python Developer (US-based firm, Pune), Feb 2026 – Sep 2026</span>
                 </div>
             </div>
 
@@ -2543,16 +2732,13 @@
                 <div class="about-block">
                     <h3>Who I Am</h3>
                     <p>
-                        I'm Yahya Mundewadi — a full-stack developer, Android engineer, Python author, and founder of
-                        <strong style="color:var(--text)">Dominal Tech</strong> based in Solapur,
-                        Maharashtra.<br /><br />
-                        I build real products: AI chatbots, privacy-first browsers, government applications, e-commerce
-                        platforms, healthcare tools, EdTech systems, and everything in between.<br /><br />
-                        I published <strong style="color:var(--text)">pydefine</strong> on PyPI — a Python library that
-                        turns raw errors into human-readable explanations with fix suggestions. I've delivered projects
-                        for Indian Central Railway, VVPIET college, and multiple private clients.<br /><br />
-                        Currently pursuing BTech CSE '26 at VVPIET Solapur with a 7.5 CGPA and simultaneously working as
-                        Full Stack Developer at CiteWorks Studio, Pune.
+                        I'm <strong>Yahya Mundewadi</strong> — a Full-Stack, Android, Python, and AI Engineer, and the Founder of <strong style="color:var(--text)">Dominal Tech</strong> based in Solapur, Maharashtra.<br /><br />
+                        To gain authentic, production-grade industry experience early in my career, I built <strong>three tech firms (companies) as side startups</strong>. Through these ventures and client engagements, I have served <strong>100+ Indian clients</strong> across Billing Software, CRM/ERP systems, Mobile Apps, E-commerce platforms, and custom AI tools.<br /><br />
+                        Internationally, I have delivered solutions for clients from <strong>Saudi Arabia</strong> (delivered enterprise billing CRM software to Sari Al Mesk Hotel in the Makkah region) and from <strong>Harvard University (USA)</strong>, delivering specialized freelance work in AI/agentic AI, billing software, AI automation, and native Android applications.<br /><br />
+                        My institutional track record includes an official landmark project commissioned by the <strong>Indian Central Railway Government</strong> for employee promotion exams, as well as architecting and maintaining the entire digital ecosystem for <strong>VVPIET College</strong> (serving 2,000+ students).<br /><br />
+                        As a <strong>SaaS expert and builder</strong>, I have engineered an AI-driven billing/CRM/ERP SaaS product suite as well as a centralized School Management SaaS running across an educational network of <strong>8 districts</strong>, integrated with a real-time Android mobile application connecting parents, staff, and teachers.<br /><br />
+                        I published <strong style="color:var(--text)">pydefine</strong> on PyPI — now surpassing <strong>10,000+ downloads</strong> and covering 88+ Python exception types. Academically, I am completing BTech Computer Science at VVPIET Solapur with an overall <strong>7.5 CGPA and zero backlogs across all 8 semesters</strong>, achieving a standout <strong>10 SGPA (93%)</strong> in my final semester. Concurrently, I serve as Full Stack Python Developer at <strong>CiteWorks Studio</strong> (a US-based firm in Pune, Feb 2026 – Sep 2026).<br /><br />
+                        Beyond engineering, I can scale any SaaS software or company with <strong>Business Development and Research</strong>, helping acquire thousands of clients and active users.
                     </p>
                 </div>
                 <div class="about-block">
@@ -2561,22 +2747,36 @@
                         <div class="timeline-item">
                             <div class="tl-year">2022–26</div>
                             <div>
-                                <div class="tl-title">BTech Computer Science</div>
-                                <div class="tl-sub">VVPIET, Solapur — CGPA 7.5 · No Backlogs</div>
+                                <div class="tl-title">BTech Computer Science, VVPIET Solapur</div>
+                                <div class="tl-sub">CGPA 7.5 · No Backlogs across all 8 Semesters</div>
                             </div>
                         </div>
                         <div class="timeline-item">
-                            <div class="tl-year">2023</div>
+                            <div class="tl-year">2026</div>
                             <div>
-                                <div class="tl-title">Founded Dominal Tech</div>
-                                <div class="tl-sub">AI Chatbots, Shadow Browser, Web &amp; Mobile Apps</div>
+                                <div class="tl-title" style="color:var(--accent); font-weight:700;">Final Semester Result: 10 SGPA / 93%</div>
+                                <div class="tl-sub">BTech CSE, VVPIET Solapur — Perfect Score in Final Semester</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="tl-year">2026</div>
+                            <div>
+                                <div class="tl-title">Full Stack Python Developer — CiteWorks Studio</div>
+                                <div class="tl-sub">US-based firm, Pune · Feb 2026 – Sep 2026</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="tl-year">2024–25</div>
+                            <div>
+                                <div class="tl-title">Indian Central Railway — Govt. Project</div>
+                                <div class="tl-sub">Official Notes &amp; Exam Platform for Railway Employees</div>
                             </div>
                         </div>
                         <div class="timeline-item">
                             <div class="tl-year">2024</div>
                             <div>
                                 <div class="tl-title">Published pydefine on PyPI</div>
-                                <div class="tl-sub">Open-source Python error explanation library · v1.0.2</div>
+                                <div class="tl-sub">Open-source Python error explanation library · 10,000+ Downloads · 88+ Exceptions</div>
                             </div>
                         </div>
                         <div class="timeline-item">
@@ -2587,17 +2787,10 @@
                             </div>
                         </div>
                         <div class="timeline-item">
-                            <div class="tl-year">2024–25</div>
+                            <div class="tl-year">2023</div>
                             <div>
-                                <div class="tl-title">Indian Central Railway — Govt. Project</div>
-                                <div class="tl-sub">Notes &amp; Exam app for railway employees</div>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="tl-year">2026</div>
-                            <div>
-                                <div class="tl-title">Full Stack Developer — CiteWorks Studio</div>
-                                <div class="tl-sub">Professional industry position, Pune</div>
+                                <div class="tl-title">Founded Dominal Tech &amp; Built 3 Side Startups</div>
+                                <div class="tl-sub">AI Chatbots, Shadow Browser, SaaS Platforms, Web &amp; Mobile Apps</div>
                             </div>
                         </div>
                     </div>
@@ -2611,41 +2804,25 @@
                 <div class="about-block">
                     <h3>Dominal Tech</h3>
                     <p>
-                        Dominal Tech is my indie tech brand. It houses the <strong style="color:var(--text)">Shadow
-                            Browser</strong> (privacy-first Android browser at shadow.yahya.in), the <strong
-                            style="color:var(--text)">Dominal AI v2.5</strong> chatbot, the <strong
-                            style="color:var(--text)">AI PPT Maker</strong> at ppt.yahya.in, and multiple web/mobile
-                        applications used by real users worldwide. I handle the full cycle — design, development,
-                        deployment, and maintenance.
+                        Dominal Tech is my indie tech company and product innovation hub. It houses the <strong>Website Builder</strong> (instant 30-second live site engine), the <strong>AI Call Assistant</strong> (conversational voice agent powered by Twilio, WebRTC &amp; OpenAI), the <strong style="color:var(--text)">Shadow Browser</strong> (privacy-first Android browser with 24 security features at shadow.yahya.in), the <strong style="color:var(--text)">Dominal AI v2.5</strong> chatbot (with customer executive lead routing), and the <strong style="color:var(--text)">AI PPT Maker</strong> at ppt.yahya.in. I handle the complete cycle — architecture, engineering, deployment, and customer acquisition.
                     </p>
                 </div>
                 <div class="about-block">
                     <h3>Client &amp; Institutional Work</h3>
                     <p>
-                        I've built systems for <strong style="color:var(--text)">Indian Central Railway
-                            Government</strong>, the complete digital ecosystem for VVPIET college (2,000+ students),
-                        <strong style="color:var(--text)">Walltone.in</strong> (Indian handmade wall art brand, business
-                        partner), <strong style="color:var(--text)">HCC High School Solapur</strong>, and the <strong
-                            style="color:var(--text)">Homecare Apartment Management System</strong> for a private
-                        client.
+                        I've delivered mission-critical software for the <strong style="color:var(--text)">Indian Central Railway Government</strong>, international clients including <strong>Sari Al Mesk Hotel (Makkah, Saudi Arabia)</strong> for billing CRM software, and <strong>Harvard University (USA)</strong> for AI/automation freelance engineering. Domestically, I built the complete digital ecosystem for <strong>VVPIET College</strong> (2,000+ students), serve as tech business partner for <strong style="color:var(--text)">Walltone.in</strong> (e-commerce with AI Cam preview), and engineered solutions for <strong style="color:var(--text)">HCC High School</strong>, an industrial <strong>Furniture Factory</strong> (450+ catalog CRM), and 100+ private clients.
                     </p>
                 </div>
                 <div class="about-block">
                     <h3>AI &amp; Open Source</h3>
                     <p>
-                        Deep into AI engineering — RAG pipelines, AI agents, prompt engineering, local LLMs via Ollama
-                        (Llama 3.1), Groq, Claude and OpenAI APIs. Published <strong
-                            style="color:var(--text)">pydefine</strong> on PyPI. Active on Hugging Face as <strong
-                            style="color:var(--text)">MdYahya</strong>. Ranked #1 on Solapur Software Developers
-                        Directory.
+                        Deeply specialized in Agentic AI, conversational voice agents (Twilio + WebRTC + OpenAI), RAG vector pipelines, and market intelligence tools like the <strong>AI Company Brain</strong> (built around Y Combinator's Request for Startups vision). I work extensively with local LLMs via Ollama (Llama 3.1), Groq, Claude, and OpenAI APIs. Published <strong style="color:var(--text)">pydefine</strong> on PyPI (10,000+ downloads, 88+ exception types). Active on Hugging Face as <strong style="color:var(--text)">MdYahya</strong> and ranked #1 on the Solapur Software Developers Directory.
                     </p>
                 </div>
                 <div class="about-block">
-                    <h3>Philosophy</h3>
+                    <h3>SaaS &amp; Scaling Philosophy</h3>
                     <p>
-                        I believe software should solve real problems for real people. Every project I ship is a
-                        production app, not a concept. I care deeply about privacy (Shadow Browser), accessibility
-                        (multilingual AI), and giving developers better tools (pydefine). Building is my default state.
+                        I don't just build code — I build and scale sustainable SaaS businesses. Having engineered production AI billing/CRM/ERP SaaS suites and a multi-district school management SaaS spanning <strong>8 districts</strong> with companion Android apps, I believe software must create real operational leverage. With a dual focus on engineering excellence and data-driven <strong>Business Development &amp; Research</strong>, I help early-stage ventures and enterprise SaaS platforms scale from zero to thousands of paying clients and users.
                     </p>
                 </div>
             </div>
@@ -2658,6 +2835,32 @@
             </div>
 
             <div class="skills-grid">
+                <!-- Development (Top Primary Category) -->
+                <div class="skill-card skill-card-featured">
+                    <div class="skill-icon-wrap" style="background:var(--accent); color:#fff; border-color:var(--accent);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                            <circle cx="12" cy="12" r="2" />
+                        </svg>
+                    </div>
+                    <span class="skill-badge-top">Top Category</span>
+                    <h3>Development</h3>
+                    <p style="margin-bottom:0.75rem; color:var(--text2); font-size:0.88rem;">End-to-end engineering excellence across artificial intelligence, modern web, mobile apps, desktop systems, and distributed cloud backends.</p>
+                    <div class="skill-dev-tags">
+                        <span class="tech-tag" style="border-color:var(--accent); color:var(--accent); font-weight:600;">AI Engineer</span>
+                        <span class="tech-tag">AI Development</span>
+                        <span class="tech-tag">APIs</span>
+                        <span class="tech-tag">App Development</span>
+                        <span class="tech-tag">Computer/PC Software Development (Electron)</span>
+                        <span class="tech-tag">Fullstack Development</span>
+                        <span class="tech-tag">Web Development</span>
+                        <span class="tech-tag">Frontend Design</span>
+                        <span class="tech-tag">Backend Development</span>
+                    </div>
+                </div>
+
                 <!-- Android Development -->
                 <div class="skill-card">
                     <div class="skill-icon-wrap">
@@ -2817,7 +3020,7 @@
                         </svg>
                     </div>
                     <h3>Open Source &amp; PyPI</h3>
-                    <p>Published <strong>pydefine</strong> on PyPI — v1.0.2, covers 88+ exception types. Active on
+                    <p>Published <strong>pydefine</strong> on PyPI — 10,000+ downloads, covers 88+ exception types. Active on
                         Hugging Face (MdYahya). Git version control and public contribution workflows.</p>
                 </div>
             </div>
@@ -2876,14 +3079,99 @@
             </div>
         </section>
 
-        <!-- ── PROJECTS ──────────────────────────────────────────────────── -->
+        <!-- ── PROJECTS ────────────────────────────────────────────────── -->
         <section id="projects" class="section">
             <div class="sec-title">
                 <h2>Projects</h2>
             </div>
             <div class="projects-grid">
 
-                <!-- AI PPT Maker -->
+                <!-- 1. Website Builder (flagship) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                            <line x1="12" y1="2" x2="12" y2="6" />
+                            <line x1="12" y1="18" x2="12" y2="22" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag" style="background:var(--accent); color:#fff;">⚡ Flagship Product · AI Site Engine</span>
+                            <div class="project-meta">
+                                <h3>Website Builder — Instant 30-Second Web Generator</h3>
+                                <span class="case-study-badge">⚡ 30s Generation Claim</span>
+                            </div>
+                            <p class="project-desc">Flagship site generator where a user only enters their website name and uploads images — a fully responsive, styled, and live website is generated in just 30 seconds with an instant public live link. Eliminates weeks of manual design and coding, automating page layout, asset optimization, and CDN deployment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. AI Call Assistant (Voice Agent) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            <path d="M14 2a8 8 0 0 1 8 8" />
+                            <path d="M14 6a4 4 0 0 1 4 4" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Voice AI · Agentic AI · Telephony</span>
+                            <div class="project-meta">
+                                <h3>AI Call Assistant — Conversational Voice Agent</h3>
+                                <span class="case-study-badge">🎙️ Production Voice Agent</span>
+                            </div>
+                            <p class="project-desc">Conversational voice AI agent engineered with Twilio, WebRTC, OpenAI, and Python. Capable of making hundreds of automated inbound and outbound phone calls with ultra-low latency, human-like audio responsiveness, and vector RAG for intelligent, context-aware answers to complex customer questions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. AI Company Brain (Y Combinator RFS Tool) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <circle cx="12" cy="12" r="3" />
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Market Intelligence · Semantic Search · YC RFS</span>
+                            <div class="project-meta">
+                                <h3>AI Company Brain — Startup Intelligence Platform</h3>
+                                <span class="case-study-badge">🧠 YC RFS Concept</span>
+                            </div>
+                            <p class="project-desc">A market intelligence platform built around a Y Combinator Request for Startups (RFS) idea. Functions as a centralized company "operating system" holding all organizational knowledge, analyzing startup ideas, evaluating industry trends, and assessing product-market fit using semantic search and vector embeddings.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Job Search AI -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            <line x1="11" y1="8" x2="11" y2="14" />
+                            <line x1="8" y1="11" x2="14" y2="11" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">AI Scraping · Career Tech · Automation</span>
+                            <div class="project-meta">
+                                <h3>Job Search AI — Hourly Aggregation &amp; Matching Engine</h3>
+                                <span class="case-study-badge">🔍 2,000+ Jobs in 2 Days</span>
+                            </div>
+                            <p class="project-desc">Automated job intelligence system that scrapes listings across the internet every single hour, filtering out expired postings to surface only verified, active opportunities. Collected over 2,000+ curated jobs within its first 2 days of operation with intelligent deduplication and role categorization.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. AI PPT Maker (Updated 30s claim) -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2895,21 +3183,146 @@
                     </div>
                     <div class="project-body">
                         <div>
-                            <span class="project-tag">AI Agent · Presentation</span>
+                            <span class="project-tag">AI Agent · Presentation · Productivity</span>
                             <div class="project-meta">
                                 <h3>AI PPT Maker — Auto Presentation Generator</h3>
                                 <a href="https://ppt.yahya.in" target="_blank" class="visit-btn">Try Now →</a>
                             </div>
-                            <p class="project-desc">Conversational AI agent that generates complete, professional
-                                presentations in under 30 seconds. Just enter your topic — it handles slides, content,
-                                layout, and design automatically. Provides downloadable PDF and PPT files. No design
-                                skills needed. Available at
-                                ppt.yahya.in.</p>
+                            <p class="project-desc">Conversational AI agent that generates complete, professional presentations in under 30 seconds. Just enter your topic — it handles slides, content, layout, and design automatically. Provides downloadable PDF and PPT files. Zero design skills needed. Available at ppt.yahya.in.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Indian Central Railway Government -->
+                <!-- 6. Dominal AI v2.5 (Customer Executive + WhatsApp Lead Routing) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.3">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            <path d="M8 10h8M8 14h5" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">AI · NLP · Customer Executive Model</span>
+                            <div class="project-meta">
+                                <h3>Yahya's AI Chatbot | Dominal AI v2.5 — Custom AI Model</h3>
+                                <div class="project-action-group">
+                                    <a href="https://ai.yahya.in" target="_blank" class="visit-btn">ai.yahya.in →</a>
+                                    <a href="https://ai.dominal.in" target="_blank" class="visit-btn">ai.dominal.in →</a>
+                                    <a href="https://dominal.in/chat" target="_blank" class="visit-btn">dominal.in/chat →</a>
+                                </div>
+                            </div>
+                            <p class="project-desc">Custom AI chatbot with a dedicated knowledge base about Yahya and Dominal Tech. Now also acts like a customer executive: takes the visitor's requirement, explains company services and offerings, and shows a direct WhatsApp button that routes the qualified lead straight into a live sales enquiry. Features industry-scale API rate management and response caching.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Billing CRM Software — Sari Al Mesk Hotel (Saudi Arabia) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <path d="M3 21h18M5 21V7l8-4v18M13 7l6 3v11" />
+                            <path d="M9 9h1M9 13h1M9 17h1M17 13h1M17 17h1" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">🌍 International Client · Saudi Arabia · Hospitality CRM</span>
+                            <div class="project-meta">
+                                <h3>Billing CRM Software — Sari Al Mesk Hotel</h3>
+                                <span class="case-study-badge">Delivered Production CRM</span>
+                            </div>
+                            <p class="project-desc">International client project delivered for Sari Al Mesk Hotel in the Makkah region, Saudi Arabia. A comprehensive billing, guest reservation, invoice calculation, and financial reconciliation CRM tailored to international hospitality operational standards and multi-currency billing requirements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. CRM Software — 5 Star Hotel -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Desktop App · Electron.js · Hospitality ERP</span>
+                            <div class="project-meta">
+                                <h3>CRM Software — 5 Star Hotel Management</h3>
+                                <span class="case-study-badge">💻 Electron Desktop App</span>
+                            </div>
+                            <p class="project-desc">Cross-platform Electron.js desktop CRM software built for luxury 5-star hotel operations. Streamlines guest check-ins, automated guest billing, invoice generation, real-time room status analytics, and housekeeping synchronization with native OS integration.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. School Management CRM & Mobile App (8-District Network) -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <rect x="16" y="3" width="6" height="10" rx="1" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">SaaS · Multi-District · Android App</span>
+                            <div class="project-meta">
+                                <h3>School Management CRM &amp; Mobile App (8-District Network)</h3>
+                                <span class="case-study-badge">🏫 8-District SaaS</span>
+                            </div>
+                            <p class="project-desc">Comprehensive school management CRM and SaaS ecosystem running across an educational network of 8 districts. Accompanied by a native Android application that functions as an interactive, real-time panel connecting parents, staff, and teachers for student progress, attendance, and administrative communications.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. AI Billing, CRM & ERP SaaS Software -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="M7 15h0M2 9.5h20" />
+                            <circle cx="12" cy="14" r="2" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">SaaS · Enterprise AI · ERP Suite</span>
+                            <div class="project-meta">
+                                <h3>AI Billing, CRM &amp; ERP SaaS Software</h3>
+                                <span class="case-study-badge">⚡ Enterprise SaaS</span>
+                            </div>
+                            <p class="project-desc">Next-generation AI-powered billing, CRM, and ERP SaaS product line. Automates tax calculations, invoicing cycles, customer relationship tracking, stock forecasting, and predictive business insights with natural language query capabilities for executive decision-makers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. Inventory & Sales CRM — Furniture Factory (id for linking) -->
+                <div class="project-card" id="project-furniture-factory">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2" />
+                            <rect x="2" y="9" width="20" height="8" rx="2" />
+                            <path d="M4 17v2M20 17v2" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Industrial ERP · PostgreSQL · React</span>
+                            <div class="project-meta">
+                                <h3>Inventory &amp; Sales CRM — Furniture &amp; Steel Factory</h3>
+                                <span class="case-study-badge">🏭 Client in Clients Grid</span>
+                            </div>
+                            <p class="project-desc">Full-scale React, Node.js, and PostgreSQL ERP+CRM system managing an expansive catalog of 450+ products, real-time inventory stock cycles, raw materials, batch manufacturing tracking, and sales invoices for a major furniture and steel factory. Directly linked to the client showcase below.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. Indian Central Railway Government -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.3">
@@ -2934,31 +3347,7 @@
                     </div>
                 </div>
 
-                <!-- Dominal AI v2.5 -->
-                <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                            <path d="M8 10h8M8 14h5" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">AI · NLP · Custom Knowledge Base</span>
-                            <div class="project-meta">
-                                <h3>Yahya's AI Chatbot | Dominal AI v2.5 — Custom AI Model</h3>
-                                <a href="https://ai.dominal.in" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Custom AI chatbot with a dedicated knowledge base about Yahya and
-                                Dominal Tech. Understands user queries, answers domain-specific questions, and provides
-                                context-aware conversational replies in a ChatGPT-style interface. Features
-                                industry-scale API rate management and response caching.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Shadow Browser -->
+                <!-- 13. Shadow Browser -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2984,7 +3373,7 @@
                     </div>
                 </div>
 
-                <!-- Walltone.in -->
+                <!-- 14. Walltone.in -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3011,11 +3400,7 @@
                     </div>
                 </div>
 
-                <!-- Homecare Apartment Management -->
-
-
-
-                <!-- pydefine -->
+                <!-- 15. pydefine (Updated to 10,000+ Downloads and both links) -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3027,43 +3412,44 @@
                     </div>
                     <div class="project-body">
                         <div>
-                            <span class="project-tag">Python · PyPI · Open Source</span>
+                            <span class="project-tag">Python · PyPI · 10,000+ Downloads</span>
                             <div class="project-meta">
                                 <h3>pydefine — Python Error Explainer Library</h3>
-                                <a href="https://pypi.org/project/pydefine" target="_blank" class="visit-btn">PyPI →</a>
+                                <div class="project-action-group">
+                                    <a href="https://pypi.org/project/pydefine" target="_blank" class="visit-btn">PyPI (10K+ DL) →</a>
+                                    <a href="https://pepy.tech/projects/pydefine" target="_blank" class="visit-btn">Pepy Stats →</a>
+                                </div>
                             </div>
-                            <p class="project-desc">Python library published on PyPI (v1.0.2) that converts raw
-                                tracebacks into beginner-friendly explanations with quick-fix suggestions. Covers 88+
-                                exception types via a simple <code>explain()</code> function. Makes debugging intuitive
-                                for all skill levels. Globally available — pip install pydefine.</p>
+                            <p class="project-desc">Python library published on PyPI with over 10,000+ downloads that converts raw tracebacks into beginner-friendly explanations with quick-fix suggestions. Covers 88+ exception types via a simple <code>explain()</code> function. Makes debugging intuitive for all skill levels. Globally available — pip install pydefine.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- PythonBuddy -->
+                <!-- 16. Homecare Apartment Management -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.3">
-                            <rect x="3" y="3" width="18" height="18" rx="2" />
-                            <path d="M9 9l3 3-3 3M13 15h3" />
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                            <path d="M12 7v2" />
                         </svg>
                     </div>
                     <div class="project-body">
                         <div>
-                            <span class="project-tag">Web · IDE · Data Science · Python</span>
+                            <span class="project-tag">Client Work · Management System</span>
                             <div class="project-meta">
-                                <h3>PythonBuddy — Online Python IDE</h3>
-                                <a href="https://pythonbuddy.netlify.app" target="_blank" class="visit-btn">Visit →</a>
+                                <h3>Homecare — Apartment Management System</h3>
+                                <a href="https://homecare.yahya.in" target="_blank" class="visit-btn">Visit →</a>
                             </div>
-                            <p class="project-desc">Browser-based Python compiler supporting 200+ libraries including
-                                NumPy, Pandas, Matplotlib, and scikit-learn. Designed for data science and ML
-                                experimentation — fully in the browser with no setup required.</p>
+                            <p class="project-desc">Full-featured apartment management platform built for a real client.
+                                Includes resident management, maintenance request tracking, visitor logs, notice board,
+                                payment tracking, and a secure admin dashboard. Live at homecare.yahya.in.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- AI Chatbot for College -->
+                <!-- 17. AI Chatbot for College -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3088,7 +3474,55 @@
                     </div>
                 </div>
 
-                <!-- SafeChats -->
+                <!-- 18. HCC High School -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.3">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <rect x="9" y="12" width="6" height="10" />
+                            <path d="M12 3v4M9 8l3-3 3 3" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Client Work · School Website</span>
+                            <div class="project-meta">
+                                <h3>HCC High School — Official School Website</h3>
+                                <a href="https://hccsolapur.in" target="_blank" class="visit-btn">Visit →</a>
+                            </div>
+                            <p class="project-desc">Full school website built for HCC High School, Solapur (Church
+                                Street). Polished, fast, and functional — covering admissions, academics, staff, events,
+                                and contact. Reviewed as "the best developer for student and institutional projects."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 19. PythonBuddy -->
+                <div class="project-card">
+                    <div class="project-svg-wrap">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.3">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M9 9l3 3-3 3M13 15h3" />
+                        </svg>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <span class="project-tag">Web · IDE · Data Science · Python</span>
+                            <div class="project-meta">
+                                <h3>PythonBuddy — Online Python IDE</h3>
+                                <a href="https://pythonbuddy.netlify.app" target="_blank" class="visit-btn">Visit →</a>
+                            </div>
+                            <p class="project-desc">Browser-based Python compiler supporting 200+ libraries including
+                                NumPy, Pandas, Matplotlib, and scikit-learn. Designed for data science and ML
+                                experimentation — fully in the browser with no setup required.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20. SafeChats -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3113,7 +3547,7 @@
                     </div>
                 </div>
 
-                <!-- FaceAttend AI -->
+                <!-- 21. FaceAttend AI -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3137,7 +3571,7 @@
                     </div>
                 </div>
 
-                <!-- Heart AI -->
+                <!-- 22. Heart AI -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3161,31 +3595,7 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                            <path d="M12 7v2" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">Client Work · Management System</span>
-                            <div class="project-meta">
-                                <h3>Homecare — Apartment Management System</h3>
-                                <a href="https://homecare.yahya.in" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Full-featured apartment management platform built for a real client.
-                                Includes resident management, maintenance request tracking, visitor logs, notice board,
-                                payment tracking, and a secure admin dashboard. Live at homecare.yahya.in.</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- SmileUp -->
+                <!-- 23. SmileUp -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3210,30 +3620,7 @@
                     </div>
                 </div>
 
-                <!-- Coderverse -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">EdTech · AI Analytics · Learning</span>
-                            <div class="project-meta">
-                                <h3>Coderverse — Coding Learning Platform</h3>
-                                <a href="https://coderverse.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Educational platform for programming with MCQ tests, AI-powered
-                                analytics of study patterns, and personalised growth tracking dashboards. Designed to
-                                make coding education measurable and data-driven.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- YouBuddy -->
+                <!-- 24. YouBuddy -->
                 <div class="project-card">
                     <div class="project-svg-wrap">
                         <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3249,159 +3636,11 @@
                             <span class="project-tag">EdTech · AI · Mobile App</span>
                             <div class="project-meta">
                                 <h3>YouBuddy — Engineering Student All-in-One App</h3>
-                                <span class="visit-btn" style="opacity:0.6;">Production App</span>
+                                <span class="case-study-badge">Production App</span>
                             </div>
                             <p class="project-desc">All-in-one app for engineering students featuring an AI chatbot for
                                 syllabus doubts (Maths M1, M2, M3 etc.), notes, PYQ question banks, and 15+ interactive
                                 learning games. Covers full BTech engineering curriculum.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Maidly -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                            <circle cx="12" cy="8" r="1" fill="currentColor" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">Marketplace · Booking · Services</span>
-                            <div class="project-meta">
-                                <h3>Maidly — Maid &amp; Home Service Booking</h3>
-                                <a href="https://maidly.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Online home service booking platform with live availability tracking
-                                and instant booking confirmations. Streamlines household service hiring end-to-end from
-                                search to confirmation.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- VVPIET Staff -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">EdTech · Directory · Institutional</span>
-                            <div class="project-meta">
-                                <h3>VVPIET Staff Profile Portal</h3>
-                                <a href="https://vvpstaff.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Professional staff photo and profile website for VVPIET Solapur.
-                                Centralised directory for faculty information, department listings, and academic profile
-                                management.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- T&P System -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <rect x="3" y="4" width="18" height="18" rx="2" />
-                            <line x1="16" y1="2" x2="16" y2="6" />
-                            <line x1="8" y1="2" x2="8" y2="6" />
-                            <line x1="3" y1="10" x2="21" y2="10" />
-                            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">EdTech · Database · Admin System</span>
-                            <div class="project-meta">
-                                <h3>T&amp;P Data System — VVPIET</h3>
-                                <a href="https://vvpdrives.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Training and Placement management system for VVPIET. Tracks student
-                                placements, company recruitment drives, and training sessions in real time. Built while
-                                serving as T&amp;P Student In-Charge.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- Student CV -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <rect x="4" y="2" width="16" height="20" rx="2" />
-                            <path d="M8 7h8M8 11h8M8 15h5" />
-                            <circle cx="16" cy="16" r="3" />
-                            <path d="M14.5 16h3M16 14.5v3" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">EdTech · CV Generation · Social</span>
-                            <div class="project-meta">
-                                <h3>Student Profiles &amp; CV System — VVPIET</h3>
-                                <a href="https://vvpstudents.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Auto-generates professional CVs and social media profiles for VVPIET
-                                students. Helps students manage academic portfolios and prepare for campus placements
-                                with one click.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- Sharp Kolors -->
-                <!-- <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path
-                                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                            <circle cx="12" cy="13" r="4" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">Client Work · Photography · Local Business</span>
-                            <div class="project-meta">
-                                <h3>Sharp Kolors Photopoint — Client Website</h3>
-                                <a href="https://sharpkolors.netlify.app" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Modern responsive website for Sharp Kolors Photopoint photography
-                                studio in Solapur. Showcases services, portfolio gallery, and booking/contact details.
-                                Rated by client as "highly polished, fast, and functional."</p>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- HCC High School -->
-                <div class="project-card">
-                    <div class="project-svg-wrap">
-                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.3">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <rect x="9" y="12" width="6" height="10" />
-                            <path d="M12 3v4M9 8l3-3 3 3" />
-                        </svg>
-                    </div>
-                    <div class="project-body">
-                        <div>
-                            <span class="project-tag">Client Work · School Website</span>
-                            <div class="project-meta">
-                                <h3>HCC High School — Official School Website</h3>
-                                <a href="https://hcchighschool.in" target="_blank" class="visit-btn">Visit →</a>
-                            </div>
-                            <p class="project-desc">Full school website built for HCC High School, Solapur (Church
-                                Street). Polished, fast, and functional — covering admissions, academics, staff, events,
-                                and contact. Reviewed as "the best developer for student and institutional projects."
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -3465,8 +3704,8 @@
                     </div>
                 </div>
 
-                <!-- 5) Furniture Factory - CRM (SVG) -->
-                <div class="client-card">
+                <!-- 5) Furniture Factory - CRM (Linked to Project Card) -->
+                <div class="client-card" style="cursor:pointer;" onclick="showSection('projects'); setTimeout(() => { const el = document.getElementById('project-furniture-factory'); if (el) el.scrollIntoView({behavior:'smooth'}); }, 100);" title="Click to view Project Case Study">
                     <div class="client-logo-box">
                         <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 9V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2" />
@@ -3476,7 +3715,7 @@
                     </div>
                     <div class="client-info-group">
                         <div class="client-main-name">Furniture and Steel Factory</div>
-                        <div class="client-sub-desc">450+ Products CRM</div>
+                        <div class="client-sub-desc">450+ Products CRM &middot; <span style="color:var(--accent-light); font-weight:600;">View Project &rarr;</span></div>
                     </div>
                 </div>
 
@@ -3525,6 +3764,34 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 10) Sari Al Mesk Hotel (Saudi Arabia - International Client, Text-only) -->
+                <div class="client-card">
+                    <div class="client-logo-box">
+                        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18M5 21V7l8-4v18M13 7l6 3v11" />
+                            <path d="M9 9h1M9 13h1M9 17h1M17 13h1M17 17h1" />
+                        </svg>
+                    </div>
+                    <div class="client-info-group">
+                        <div class="client-main-name">Sari Al Mesk Hotel</div>
+                        <div class="client-sub-desc">Makkah region, Saudi Arabia (International Client)</div>
+                    </div>
+                </div>
+
+                <!-- 11) Harvard University (USA - International Freelance Client, Text-only) -->
+                <div class="client-card">
+                    <div class="client-logo-box">
+                        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div class="client-info-group">
+                        <div class="client-main-name">Harvard University</div>
+                        <div class="client-sub-desc">USA (International Freelance Client)</div>
+                    </div>
+                </div>
             </div>
 
             <div class="nda-badge-container">
@@ -3549,7 +3816,88 @@
                 <h2>Achievements</h2>
             </div>
             <div class="achievements-list">
+                <!-- 1. Edureka / IIT Bombay (VERY TOP) -->
+                <div class="achievement-item">
+                    <div class="ach-icon" style="background:var(--accent); color:#fff;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                            <path d="M4 22h16" />
+                            <path d="M10 14.66V17c0 .55-.45 1-1 1H7" />
+                            <path d="M14 14.66V17c0 .55.45 1 1 1h2" />
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="ach-title" style="color:var(--accent);">Invited as Judge / Jury Member — Startup Ideas Program</div>
+                        <div class="ach-desc">Invited as an official Judge and Jury Member at the prestigious Startup Ideas Program conducted by Edureka in association with <strong>IIT Bombay</strong>, assessing high-potential student innovations, business models, and technical architectures.</div>
+                        <div class="ach-year">2026 · Edureka &amp; IIT Bombay</div>
+                    </div>
+                </div>
 
+                <!-- 2. Final Semester Result: 10 SGPA / 93% -->
+                <div class="achievement-item">
+                    <div class="ach-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="ach-title">Final Semester Result: 10 SGPA / 93% — BTech CSE</div>
+                        <div class="ach-desc">Graduating BTech Computer Science &amp; Engineering at VVPIET Solapur with a perfect <strong>10 SGPA (93%)</strong> in the final semester, maintaining an immaculate record with <strong>zero backlogs across all 8 semesters</strong> and an overall 7.5 CGPA.</div>
+                        <div class="ach-year">2026 · VVPIET Solapur</div>
+                    </div>
+                </div>
+
+                <!-- 3. Served 100+ Indian & International Clients -->
+                <div class="achievement-item">
+                    <div class="ach-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="ach-title">Served 100+ Clients Across India &amp; Internationally</div>
+                        <div class="ach-desc">Delivered real-world production systems for 100+ Indian clients and international clients from Saudi Arabia (Sari Al Mesk Hotel) and Harvard University (USA) spanning billing software, enterprise CRM/ERP, native mobile apps, e-commerce, and custom AI tools.</div>
+                        <div class="ach-year">2023–2026 · India · Saudi Arabia · USA</div>
+                    </div>
+                </div>
+
+                <!-- 4. Built Three Tech Firms as Side Startups -->
+                <div class="achievement-item">
+                    <div class="ach-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                            <path d="M9 12H4s.55-3.03 2-4.5c1.62-1.63 5-2 5-2" />
+                            <path d="M12 15v5s3.03-.55 4.5-2c1.63-1.62 2-5 2-5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="ach-title">Built Three Tech Firms as Side Startups</div>
+                        <div class="ach-desc">Founded and developed three distinct technology companies as side startups to master product-level engineering, customer lifecycle management, team execution, and real-world deployment while pursuing undergraduate studies.</div>
+                        <div class="ach-year">2023–2026 · Startup Founder</div>
+                    </div>
+                </div>
+
+                <!-- 5. SaaS Builder & Scaling Expert -->
+                <div class="achievement-item">
+                    <div class="ach-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                            <polyline points="17 6 23 6 23 12" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="ach-title">SaaS Builder &amp; Scaling Expert</div>
+                        <div class="ach-desc">Built and scaled mission-critical SaaS products, including a multi-district school management ERP operating across a network of 8 districts with companion Android panels, and enterprise AI billing suites. Proven capability to scale SaaS companies with business development and research.</div>
+                        <div class="ach-year">2024–2026 · Multi-District Network</div>
+                    </div>
+                </div>
+
+                <!-- 6. Indian Central Railway Government -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3568,6 +3916,7 @@
                     </div>
                 </div>
 
+                <!-- 7. Published Python Library on PyPI (10,000+ Downloads) -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3577,14 +3926,15 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="ach-title">Published Python Library on PyPI</div>
+                        <div class="ach-title">Published Python Library on PyPI — 10,000+ Downloads</div>
                         <div class="ach-desc">Released <strong>pydefine</strong> — a developer tool that translates
-                            Python tracebacks into plain-English explanations with fix suggestions. Covers 88+ exception
-                            types. Listed publicly on PyPI v1.0.2 for global use by developers worldwide.</div>
-                        <div class="ach-year">2024 · pypi.org/project/pydefine</div>
+                            Python tracebacks into plain-English explanations with fix suggestions across 88+ exception
+                            types. Surpassed 10,000+ downloads globally on PyPI.</div>
+                        <div class="ach-year">2024 · <a href="https://pypi.org/project/pydefine" target="_blank" style="color:var(--accent-light);">pypi.org/project/pydefine</a> · <a href="https://pepy.tech/projects/pydefine" target="_blank" style="color:var(--accent-light);">pepy.tech</a></div>
                     </div>
                 </div>
 
+                <!-- 8. Founded Dominal Tech -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3602,6 +3952,7 @@
                     </div>
                 </div>
 
+                <!-- 9. Built AI Chatbot for VVPIET -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3620,6 +3971,7 @@
                     </div>
                 </div>
 
+                <!-- 10. Training & Placement In-charge -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3638,6 +3990,7 @@
                     </div>
                 </div>
 
+                <!-- 11. 20+ Live Production Projects -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3655,6 +4008,7 @@
                     </div>
                 </div>
 
+                <!-- 12. Shadow Browser -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3672,6 +4026,7 @@
                     </div>
                 </div>
 
+                <!-- 13. Tech Business Partner Walltone -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3688,6 +4043,7 @@
                     </div>
                 </div>
 
+                <!-- 14. Full College Digital Ecosystem -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3705,6 +4061,7 @@
                     </div>
                 </div>
 
+                <!-- 15. Selected for Kiran Academy -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3722,6 +4079,7 @@
                     </div>
                 </div>
 
+                <!-- 16. Ranked #1 Solapur Developers -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3739,6 +4097,7 @@
                     </div>
                 </div>
 
+                <!-- 17. CiteWorks Studio -->
                 <div class="achievement-item">
                     <div class="ach-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -3749,14 +4108,11 @@
                     </div>
                     <div>
                         <div class="ach-title">Full Stack Developer — CiteWorks Studio, Pune</div>
-                        <div class="ach-desc">Started as a professional Full Stack Developer at CiteWorks Studio, Pune
-                            in February 2026 — a significant milestone, landing a professional role while completing
-                            BTech CSE and running Dominal Tech simultaneously.</div>
-                        <div class="ach-year">Feb 2026 · CiteWorks Studio, Pune</div>
+                        <div class="ach-desc">Professional industry role as Full Stack Python Developer at CiteWorks Studio (US-based firm, Pune) from Feb 2026 to Sep 2026, building scalable systems alongside completing BTech CSE and running Dominal Tech.</div>
+                        <div class="ach-year">Feb 2026 – Sep 2026 · CiteWorks Studio, Pune</div>
                     </div>
                 </div>
-
-            </div>
+</div>
         </section>
 
         <!-- ── BLOGS ─────────────────────────────────────────────────────── -->
@@ -4286,10 +4642,11 @@
             let typingStarted = false;
             function startGoogleTyping() {
                 if (typingStarted) return;
-                typingStarted = true;
-                const text = "Best Software Developer in Solapur";
                 const element = document.getElementById('google-typing');
                 const cursor = document.getElementById('google-cursor');
+                if (!element || !cursor) return;
+                typingStarted = true;
+                const text = "Best Software Developer in Solapur";
                 let i = 0;
 
                 function type() {
