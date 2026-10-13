@@ -137,5 +137,9 @@ CREATE POLICY "Public read site_settings" ON public.site_settings FOR SELECT USI
 DROP POLICY IF EXISTS "Public manage site_settings" ON public.site_settings;
 CREATE POLICY "Public manage site_settings" ON public.site_settings FOR ALL USING (true);
 
+-- Performance Indexes for instant slot collision checks
+CREATE INDEX IF NOT EXISTS idx_bookings_date_status ON public.bookings (booking_date, status);
+CREATE INDEX IF NOT EXISTS idx_blocked_slots_date ON public.blocked_slots (slot_date);
+
 -- 7. CRITICAL: Force PostgREST schema cache to reload immediately!
 NOTIFY pgrst, 'reload schema';

@@ -1212,6 +1212,15 @@ body.modal-open {
     cursor: default;
 }
 
+.admin-hour-card.pending {
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+.admin-hour-card.pending .admin-hour-time {
+    color: #92400e;
+}
+
 /* Tab 3: Appointments List */
 .admin-bookings-table {
     width: 100%;

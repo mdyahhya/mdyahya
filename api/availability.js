@@ -31,15 +31,23 @@ module.exports = async (req, res) => {
         .select('*')
         .gte('slot_date', todayStr);
 
+      // ONLY confirmed or accepted bookings lock slots. Pending requests do NOT block slots!
       const { data: booked } = await supabase
         .from('bookings')
-        .select('booking_date, time_slot')
+        .select('id, booking_date, time_slot, status, name')
         .gte('booking_date', todayStr)
-        .neq('status', 'cancelled');
+        .in('status', ['confirmed', 'accepted']);
+
+      const { data: pending } = await supabase
+        .from('bookings')
+        .select('id, booking_date, time_slot, status, name')
+        .gte('booking_date', todayStr)
+        .eq('status', 'pending');
 
       return res.status(200).json({
         blocked: blocked || [],
-        booked: booked || []
+        booked: booked || [],
+        pending: pending || []
       });
     } catch (err) {
       console.error('[Availability GET Error]:', err);

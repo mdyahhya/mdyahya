@@ -26,7 +26,8 @@ const CalendarState = {
     slotDuration: 60,   // default: 60 mins (1 hour)
     adminSlotDuration: 60, // default: 60 mins for Admin Tab 2
     blockedSlots: [],   // from server
-    bookedSlots: [],    // from server
+    bookedSlots: [],    // confirmed bookings from server
+    pendingSlots: [],   // pending requests from server
     settings: {
         heroText: localStorage.getItem('yahya_hero_btn_text') || 'Book an Appointment',
         heroSub: localStorage.getItem('yahya_hero_btn_sub') || '1-on-1 Strategy & Engineering Call',
@@ -328,6 +329,7 @@ async function fetchAvailabilityData() {
             const data = await res.json();
             CalendarState.blockedSlots = data.blocked || [];
             CalendarState.bookedSlots = data.booked || [];
+            CalendarState.pendingSlots = data.pending || [];
             renderCalendarMonth();
             if (CalendarState.selectedDate) {
                 renderTimeSlots(CalendarState.selectedDate);
@@ -1014,18 +1016,24 @@ function renderAdminHourlyGrid() {
     slotRanges.forEach(slotItem => {
         const slotRange = [slotItem.startMinutes, slotItem.endMinutes];
 
-        // Check if booked by client
+        // 1. Check if confirmed booking
         const booking = CalendarState.bookedSlots.find(b => {
             if (b.booking_date !== selectedDate) return false;
-            if (b.status === 'cancelled') return false;
             const bRange = parseSlotInterval(b.time_slot);
             return intervalsOverlap(slotRange, bRange);
         });
 
-        // Check if blocked by admin
+        // 2. Check if blocked by admin
         const isBlocked = CalendarState.blockedSlots.some(b => {
             if (b.slot_date !== selectedDate) return false;
             if (!b.time_slot) return true;
+            const bRange = parseSlotInterval(b.time_slot);
+            return intervalsOverlap(slotRange, bRange);
+        });
+
+        // 3. Check if pending request from client (not yet accepted)
+        const pending = (CalendarState.pendingSlots || []).find(b => {
+            if (b.booking_date !== selectedDate) return false;
             const bRange = parseSlotInterval(b.time_slot);
             return intervalsOverlap(slotRange, bRange);
         });
@@ -1037,15 +1045,15 @@ function renderAdminHourlyGrid() {
             card.innerHTML = `
                 <div class="admin-hour-time">${slotItem.title}</div>
                 <div style="display:flex; align-items:center; gap:0.4rem;">
-                    <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Booked (${escapeHtml(booking.name || 'Client')})</span>
-                    <button class="admin-hour-toggle btn-booked" type="button" disabled>Booked</button>
+                    <span style="font-size:0.75rem; color:#065f46; background:#ecfdf5; font-weight:700; padding:0.25rem 0.55rem; border-radius:10px; border:1px solid #a7f3d0;">✓ Confirmed (${escapeHtml(booking.name || 'Client')})</span>
+                    <button class="admin-hour-toggle btn-booked" type="button" disabled>Locked</button>
                 </div>
             `;
         } else if (isBlocked) {
             card.className = 'admin-hour-card blocked';
             card.innerHTML = `
                 <div class="admin-hour-time">${slotItem.title}</div>
-                <button class="admin-hour-toggle btn-busy" type="button">
+                <button class="admin-hour-toggle btn-busy" type="button" title="Click to unblock slot">
                     Busy (Blocked)
                 </button>
             `;
@@ -1053,11 +1061,24 @@ function renderAdminHourlyGrid() {
             btn.addEventListener('click', async () => {
                 await toggleSlotBlockStatus(selectedDate, slotItem.title, false);
             });
+        } else if (pending) {
+            card.className = 'admin-hour-card pending';
+            card.innerHTML = `
+                <div class="admin-hour-time">${slotItem.title}</div>
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                    <span style="font-size:0.75rem; color:#92400e; background:#fef3c7; font-weight:700; padding:0.25rem 0.55rem; border-radius:10px; border:1px solid #fde68a;">⏳ Request: ${escapeHtml(pending.name || 'Client')}</span>
+                    <button class="admin-hour-toggle btn-pending-accept" type="button" style="background:#ecfdf5; color:#065f46; font-weight:700; border:1px solid #a7f3d0;" title="Accept request & lock slot">Accept</button>
+                </div>
+            `;
+            const btn = card.querySelector('.btn-pending-accept');
+            btn.addEventListener('click', async () => {
+                await updateBookingStatus(pending.id, 'confirmed');
+            });
         } else {
             card.className = 'admin-hour-card';
             card.innerHTML = `
                 <div class="admin-hour-time">${slotItem.title}</div>
-                <button class="admin-hour-toggle btn-avail" type="button">
+                <button class="admin-hour-toggle btn-avail" type="button" title="Click to mark unavailable">
                     Available
                 </button>
             `;
@@ -1159,17 +1180,48 @@ async function loadAdminBookings() {
             const cleanPhone = (b.phone || '').replace(/[^0-9]/g, '');
             const waUrl = cleanPhone ? `https://wa.me/${cleanPhone}?text=Hi%20${encodeURIComponent(b.name)}%2C%20regarding%20your%20appointment%20request%20with%20Yahya...` : '#';
 
+            let statusBadge = `<span class="status-badge ${b.status}">${b.status}</span>`;
+            let actionButtons = '';
+
+            if (b.status === 'pending') {
+                statusBadge = `<span class="status-badge" style="background:#fef3c7; color:#92400e; font-weight:700; padding:0.25rem 0.65rem; border-radius:12px; font-size:0.75rem; border:1px solid #fde68a;">⏳ Pending Review</span>`;
+                actionButtons = `
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'confirmed')" style="background:#ecfdf5; color:#065f46; font-weight:700; border-color:#a7f3d0;" title="Accept request & lock slot">✓ Accept &amp; Lock</button>
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'cancelled')" style="color:#b91c1c; border-color:#fca5a5;" title="Decline request">✕ Decline</button>
+                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
+                `;
+            } else if (b.status === 'confirmed') {
+                statusBadge = `<span class="status-badge" style="background:#ecfdf5; color:#065f46; font-weight:700; padding:0.25rem 0.65rem; border-radius:12px; font-size:0.75rem; border:1px solid #a7f3d0;">✓ Confirmed (Locked)</span>`;
+                actionButtons = `
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'completed')" title="Mark completed">Done</button>
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'cancelled')" style="color:#b91c1c; border-color:#fca5a5;" title="Cancel & unlock slot">Cancel</button>
+                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
+                `;
+            } else if (b.status === 'completed') {
+                statusBadge = `<span class="status-badge" style="background:#f1f5f9; color:#475569; font-weight:600; padding:0.25rem 0.65rem; border-radius:12px; font-size:0.75rem;">Done</span>`;
+                actionButtons = `
+                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
+                `;
+            } else if (b.status === 'cancelled') {
+                statusBadge = `<span class="status-badge" style="background:#fee2e2; color:#991b1b; font-weight:600; padding:0.25rem 0.65rem; border-radius:12px; font-size:0.75rem;">Declined / Cancelled</span>`;
+                actionButtons = `
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'confirmed')" style="background:#ecfdf5; color:#065f46;" title="Reopen & lock slot">Re-accept</button>
+                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
+                `;
+            } else {
+                actionButtons = `
+                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'confirmed')">Confirm</button>
+                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
+                `;
+            }
+
             tr.innerHTML = `
                 <td><strong>${b.booking_date}</strong><br/><span style="color:var(--text3); font-size:0.8rem;">${b.time_slot}</span></td>
                 <td><strong>${b.name}</strong><br/><span style="color:var(--text3); font-size:0.8rem;">${b.email}</span></td>
                 <td>${b.phone ? `<a href="${waUrl}" target="_blank" style="color:var(--accent); font-weight:600;">${b.phone}</a>` : '—'}</td>
                 <td style="max-width:200px; font-size:0.82rem; color:var(--text2);">${b.message || '—'}</td>
-                <td><span class="status-badge ${b.status}">${b.status}</span></td>
-                <td>
-                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'confirmed')">Confirm</button>
-                    <button class="booking-action-btn" onclick="updateBookingStatus('${b.id}', 'completed')">Done</button>
-                    <button class="booking-action-btn btn-delete" onclick="deleteBookingRecord('${b.id}')">Delete</button>
-                </td>
+                <td>${statusBadge}</td>
+                <td>${actionButtons}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -1191,7 +1243,15 @@ async function updateBookingStatus(id, status) {
         });
 
         if (res.ok) {
-            loadAdminBookings();
+            await loadAdminBookings();
+            await fetchAvailabilityData();
+            renderAdminHourlyGrid();
+            if (CalendarState.selectedDate) {
+                renderTimeSlots(CalendarState.selectedDate);
+            }
+        } else {
+            const data = await res.json();
+            alert(data.error || 'Failed to update status');
         }
     } catch (e) {
         alert('Error updating status');
@@ -1210,8 +1270,12 @@ async function deleteBookingRecord(id) {
         });
 
         if (res.ok) {
-            loadAdminBookings();
-            fetchAvailabilityData();
+            await loadAdminBookings();
+            await fetchAvailabilityData();
+            renderAdminHourlyGrid();
+            if (CalendarState.selectedDate) {
+                renderTimeSlots(CalendarState.selectedDate);
+            }
         }
     } catch (e) {
         alert('Error deleting booking');

@@ -76,13 +76,13 @@ module.exports = async (req, res) => {
         console.warn('[Blocked slot check note]:', blockErr.message);
       }
 
-      // 2. Check if already booked (with interval overlap check)
+      // 2. Check if already confirmed (only confirmed/accepted bookings lock slots)
       try {
         const { data: existing } = await supabase
           .from('bookings')
           .select('id, time_slot, status')
           .eq('booking_date', booking_date)
-          .neq('status', 'cancelled');
+          .in('status', ['confirmed', 'accepted']);
 
         if (existing && existing.length > 0) {
           const reqRange = parseSlotInterval(time_slot);
@@ -91,7 +91,7 @@ module.exports = async (req, res) => {
             return intervalsOverlap(reqRange, eRange);
           });
           if (hasConflict) {
-            return res.status(409).json({ error: 'This time slot is already booked or overlaps with an existing appointment. Please pick another time.' });
+            return res.status(409).json({ error: 'This time slot is already confirmed for an appointment. Please pick another time.' });
           }
         }
       } catch (checkErr) {
@@ -179,7 +179,7 @@ module.exports = async (req, res) => {
 
         if (!subsError && subs && subs.length > 0) {
           const pushPayload = JSON.stringify({
-            title: `📅 New Booking: ${savedBooking.name}`,
+            title: `📅 New Appointment Request: ${savedBooking.name}`,
             body: `${booking_date} at ${time_slot}\nEmail: ${savedBooking.email}${savedBooking.phone ? '\nPhone: ' + savedBooking.phone : ''}${savedBooking.message ? '\nNote: ' + savedBooking.message : ''}`,
             url: '/#admin'
           });
