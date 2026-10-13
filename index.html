@@ -21,6 +21,12 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <link rel="icon" type="image/jpeg" href="favicon.jpg" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="stylesheet" href="connect.css" />
     <script>
         // Register Service Worker to enforce Network-First fresh fetching
         if ('serviceWorker' in navigator) {
@@ -2166,6 +2172,7 @@
         </a>
         <div class="nav-links">
             <button class="nav-btn active" onclick="showSection('profile')">Profile</button>
+            <button class="nav-btn" id="navBtnConnect" onclick="showSection('connect')">Connect</button>
             <button class="nav-btn" onclick="showSection('about')">About</button>
             <button class="nav-btn" onclick="showSection('skills')">Skills</button>
             <button class="nav-btn" onclick="showSection('projects')">Projects</button>
@@ -2187,6 +2194,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <button class="nav-btn" onclick="showSection('profile'); toggleMenu()">Profile</button>
+        <button class="nav-btn" id="mobNavBtnConnect" onclick="showSection('connect'); toggleMenu()">Connect</button>
         <button class="nav-btn" onclick="showSection('about'); toggleMenu()">About</button>
         <button class="nav-btn" onclick="showSection('skills'); toggleMenu()">Skills</button>
         <button class="nav-btn" onclick="showSection('projects'); toggleMenu()">Projects</button>
@@ -2214,6 +2222,24 @@
                         <a href="https://dominal.in" target="_blank"><strong>Founder of Dominal Technology — <span style="color:var(--accent); text-decoration:underline;">dominal.in</span></strong></a><br />
                         BTech CSE · Pune, Maharashtra
                     </p>
+                    <!-- Hero Connect / Appointment CTA -->
+                    <div class="hero-connect-cta" id="heroConnectCta">
+                        <button class="hero-connect-btn" type="button" onclick="showSection('connect')">
+                            <span class="connect-icon-pulse">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <div class="connect-btn-content">
+                                <span class="connect-btn-title" id="heroBtnTitle">Book an Appointment</span>
+                                <span class="connect-btn-sub" id="heroBtnSub">1-on-1 Strategy &amp; Engineering Call</span>
+                            </div>
+                            <svg class="connect-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
                     <div class="hero-highlights">
                         <!-- 1. Created 3 Tech Firms -->
                         <div class="hero-hl-item">
@@ -2742,10 +2768,95 @@
 
         </section>
 
+        <!-- ── CONNECT & APPOINTMENTS (CALENDLY EXPERIENCE) ─────────────── -->
+        <section id="connect" class="section">
+            <div class="sec-title">
+                <h2 id="connectSectionTitle">Book an Appointment with Yahya Mundewadi</h2>
+                <p style="color:var(--text3); font-size:0.95rem; margin-top:0.4rem;">Select a date and convenient time for our discussion. Confirmed instantly.</p>
+            </div>
+
+            <div class="calendly-wrapper">
+                <!-- Topbar with Profile details -->
+                <div class="calendly-topbar">
+                    <div class="calendly-profile-chip">
+                        <img src="Yahya_Mundewadi.jpg" alt="Yahya Mundewadi" class="calendly-avatar" />
+                        <div class="calendly-profile-info">
+                            <h3>Yahya Mundewadi <span class="calendly-badge-verified"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span></h3>
+                            <p>Full-Stack · Apps · AI Engineer | Founder of Dominal Tech</p>
+                        </div>
+                    </div>
+                    <div class="calendly-meeting-meta">
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>30 Min Strategy Call</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                            <span>Google Meet / Phone Call</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar & Slots Grid -->
+                <div class="calendly-grid">
+                    <!-- Left: Month Date Picker -->
+                    <div class="calendly-calendar-box">
+                        <div class="cal-month-nav">
+                            <div class="cal-month-title" id="calMonthTitle">Loading Month...</div>
+                            <div class="cal-nav-buttons">
+                                <button type="button" class="cal-nav-btn" id="calPrevMonth" aria-label="Previous Month">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <button type="button" class="cal-nav-btn" id="calNextMonth" aria-label="Next Month">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Days of Week -->
+                        <div class="cal-weekdays">
+                            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                        </div>
+
+                        <!-- Days Grid -->
+                        <div class="cal-days-grid" id="calDaysGrid"></div>
+
+                        <div class="cal-tz-info">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            <span>Time zone: <strong>India Standard Time (IST, GMT+5:30)</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Hourly Time Slots -->
+                    <div class="calendly-slots-box">
+                        <div class="slots-header">
+                            <h4 class="slots-date-label" id="slotsDateLabel">Select a Date</h4>
+                            <p class="slots-sub-label">Select your preferred time slot below</p>
+                        </div>
+                        <div class="slots-list" id="slotsList">
+                            <div style="text-align:center; padding:2rem; color:var(--text3);">Select an available date on the calendar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ── ABOUT ─────────────────────────────────────────────────────── -->
         <section id="about" class="section">
             <div class="sec-title">
                 <h2>About Me</h2>
+            </div>
+
+            <!-- Yahya Photo with Secret Double-Click Gesture -->
+            <div class="about-photo-wrapper">
+                <img src="Yahya_Mundewadi.jpg" alt="Yahya Mundewadi" class="about-photo-img" id="aboutSecretPhoto" title="Yahya Mundewadi (Double-click or double-tap photo to open Admin Panel)" />
+                <div class="about-photo-meta">
+                    <h4>Yahya Mundewadi</h4>
+                    <p>Full-Stack Developer, Android &amp; AI Engineer · Solapur / Pune, India</p>
+                    <div style="font-size:0.78rem; color:var(--accent); margin-top:0.35rem; font-weight:600;">
+                        Founder @ Dominal Technology (dominal.in) · 10 SGPA (93%) Final Semester BTech CSE
+                    </div>
+                </div>
             </div>
 
             <div class="about-grid">
@@ -4516,25 +4627,40 @@
             });
 
             if (pushState) {
-                history.pushState({ sectionId: id }, "", "");
+                history.pushState({ sectionId: id }, "", "#" + id);
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             observeCards();
         }
 
-        // Handle browser back button
+        // Handle browser back button & hash changes
         window.addEventListener('popstate', function (event) {
             if (event.state && event.state.sectionId) {
                 showSection(event.state.sectionId, false);
+            } else if (window.location.hash) {
+                const h = window.location.hash.slice(1);
+                if (document.getElementById(h)) {
+                    showSection(h, false);
+                } else {
+                    showSection('profile', false);
+                }
             } else {
-                // If no state (initial load), go to profile
                 showSection('profile', false);
             }
         });
 
-        // Initialize first state
-        history.replaceState({ sectionId: 'profile' }, "", "");
+        // Initialize state on first load based on hash or default to profile
+        if (window.location.hash) {
+            const initialHash = window.location.hash.slice(1);
+            if (document.getElementById(initialHash)) {
+                showSection(initialHash, false);
+            } else {
+                history.replaceState({ sectionId: 'profile' }, "", "#profile");
+            }
+        } else {
+            history.replaceState({ sectionId: 'profile' }, "", "#profile");
+        }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function () {
@@ -4788,6 +4914,228 @@
         initAIPresence();
         observeCards();
     </script>
+
+    <!-- ── BOOKING MODAL & FORM ────────────────────────────────────────────── -->
+    <div class="booking-modal-overlay" id="bookingModal">
+        <div class="booking-modal-card">
+            <div class="booking-modal-header">
+                <div>
+                    <h3>Schedule Meeting</h3>
+                    <p id="bookingModalSlotSummary">Select Date &amp; Time</p>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeBookingModal()" aria-label="Close">✕</button>
+            </div>
+
+            <!-- Form View -->
+            <div class="booking-modal-body" id="bookingFormView">
+                <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                    <div class="booking-form-group">
+                        <label for="bookName">Your Full Name *</label>
+                        <input type="text" id="bookName" class="booking-input" placeholder="e.g. Rahul Sharma" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="bookEmail">Your Email Address *</label>
+                        <input type="email" id="bookEmail" class="booking-input" placeholder="e.g. rahul@example.com" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="bookPhone">Phone Number / WhatsApp <span class="opt">(Optional)</span></label>
+                        <input type="tel" id="bookPhone" class="booking-input" placeholder="+91 98765 43210" />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="bookMessage">Topic / One-Sentence Note <span class="opt">(Optional)</span></label>
+                        <textarea id="bookMessage" class="booking-textarea" placeholder="Briefly mention what you'd like to discuss..."></textarea>
+                    </div>
+
+                    <div class="booking-team-note">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span>You will receive a confirmation message from our team.</span>
+                    </div>
+
+                    <button type="submit" class="booking-submit-btn" id="bookingSubmitBtn">
+                        Confirm Booking Request
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success Confirmation View -->
+            <div class="booking-modal-body" id="bookingSuccessView" style="display:none;">
+                <div class="booking-success-box">
+                    <div class="success-check-icon">
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                    <h3>Appointment Requested!</h3>
+                    <p>Your meeting request with Yahya Mundewadi has been received. You will receive a confirmation message from our team.</p>
+
+                    <div class="success-details-card" id="successDetailsSummary"></div>
+
+                    <button type="button" class="booking-submit-btn" onclick="closeBookingModal()">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── 6-DIGIT PIN AUTH MODAL ────────────────────────────────────────────── -->
+    <div class="pin-modal-overlay" id="pinModal">
+        <div class="pin-modal-card">
+            <div class="pin-shield-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <h3>Admin Authentication</h3>
+            <p>Enter your 6-digit security PIN to access the portal</p>
+
+            <div class="pin-inputs-row">
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_0" autocomplete="off" />
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_1" autocomplete="off" />
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_2" autocomplete="off" />
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_3" autocomplete="off" />
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_4" autocomplete="off" />
+                <input type="password" maxlength="1" inputmode="numeric" class="pin-digit-box" id="pinDigit_5" autocomplete="off" />
+            </div>
+
+            <div class="pin-error-text" id="pinErrorText"></div>
+
+            <button type="button" class="booking-action-btn" onclick="closePinModal()" style="padding:0.6rem 1.25rem;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- ── SECRET ADMIN PANEL ────────────────────────────────────────────────── -->
+    <div class="admin-panel-overlay" id="adminPanelOverlay">
+        <div class="admin-container">
+            <div class="admin-header">
+                <div class="admin-header-title">
+                    <h2>Yahya Admin Portal</h2>
+                    <span>PWA Management</span>
+                </div>
+                <button type="button" class="admin-close-btn" onclick="closeAdminPanel()">✕ Close Dashboard</button>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="admin-tabs">
+                <button type="button" class="admin-tab-btn active" id="tabBtn_push" onclick="switchAdminTab('push')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    Push Alerts &amp; PWA
+                </button>
+                <button type="button" class="admin-tab-btn" id="tabBtn_availability" onclick="switchAdminTab('availability')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Hourly Availability
+                </button>
+                <button type="button" class="admin-tab-btn" id="tabBtn_bookings" onclick="switchAdminTab('bookings')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Inquiries &amp; Bookings
+                </button>
+                <button type="button" class="admin-tab-btn" id="tabBtn_settings" onclick="switchAdminTab('settings')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Page Customization
+                </button>
+            </div>
+
+            <!-- Tab 1 Content: Push & PWA -->
+            <div class="admin-tab-content active" id="tabContent_push">
+                <div class="push-banner-card">
+                    <div class="push-banner-text">
+                        <h3>Real-Time Booking Notifications</h3>
+                        <p>Receive instant OS-level push notifications on your phone or desktop whenever a new appointment is booked.</p>
+                        <div id="pushStatusBadge" style="margin-top:0.6rem; font-size:0.85rem; font-weight:600;">Checking status...</div>
+                    </div>
+                    <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                        <button type="button" class="push-action-btn" id="enablePushBtn" onclick="requestAndEnablePushNotifications()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                            Allow &amp; Enable Push Alerts
+                        </button>
+                        <button type="button" class="push-test-btn" id="testPushBtn" onclick="sendTestPushNotification()">
+                            Send Test Alert
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.5rem;">
+                    <h4 style="margin:0 0 0.5rem 0; font-size:1.1rem; color:var(--text);">Install as PWA App on Your Phone</h4>
+                    <p style="font-size:0.88rem; color:var(--text2); line-height:1.6; margin-bottom:1rem;">
+                        You can install <strong>yahya.in</strong> directly onto your Android or iPhone home screen without needing an app store:
+                    </p>
+                    <ol style="font-size:0.86rem; color:var(--text2); padding-left:1.25rem; line-height:1.6;">
+                        <li><strong>Android (Chrome):</strong> Tap the 3 dots (⋮) in the top right corner and select <em>"Add to Home screen"</em> or <em>"Install app"</em>.</li>
+                        <li><strong>iPhone (Safari):</strong> Tap the Share button at the bottom and tap <em>"Add to Home Screen"</em>.</li>
+                        <li>Once installed, open the app, go to About, double-tap your photo, and enable notifications.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Tab 2 Content: Hourly Availability -->
+            <div class="admin-tab-content" id="tabContent_availability">
+                <div class="admin-date-picker-bar">
+                    <label for="adminAvailDatePicker" style="font-weight:700; font-size:0.92rem;">Select Date:</label>
+                    <input type="date" id="adminAvailDatePicker" class="booking-input" style="width:auto; padding:0.5rem 0.85rem;" />
+                    <button type="button" class="booking-action-btn" onclick="blockEntireSelectedDay()" style="padding:0.6rem 1rem; color:#ef4444; border-color:#fca5a5;">
+                        Block Entire Day
+                    </button>
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--text3); margin-bottom:1rem;">
+                    Click on any hour below to toggle it between <strong>Available</strong> and <strong>Busy (Blocked)</strong>:
+                </p>
+
+                <div class="admin-hours-grid" id="adminHoursGrid"></div>
+            </div>
+
+            <!-- Tab 3 Content: Appointments Inbox -->
+            <div class="admin-tab-content" id="tabContent_bookings">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+                    <h4 style="margin:0; font-size:1.1rem;">Received Appointment Inquiries</h4>
+                    <button type="button" class="booking-action-btn" onclick="loadAdminBookings()" style="padding:0.5rem 0.9rem;">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table class="admin-bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Date &amp; Time</th>
+                                <th>Client Details</th>
+                                <th>Phone / WhatsApp</th>
+                                <th>Message / Note</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingsTableBody">
+                            <tr><td colspan="6" style="text-align:center; padding:2rem;">Loading bookings...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 4 Content: Settings -->
+            <div class="admin-tab-content" id="tabContent_settings">
+                <form onsubmit="saveAdminSettings(event)" style="max-width:600px;">
+                    <div class="booking-form-group">
+                        <label for="adminSettingHeroText">Main Page Hero Button Text</label>
+                        <input type="text" id="adminSettingHeroText" class="booking-input" value="Book an Appointment" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="adminSettingHeroSub">Main Page Hero Button Subtitle</label>
+                        <input type="text" id="adminSettingHeroSub" class="booking-input" value="1-on-1 Strategy &amp; Engineering Call" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="adminSettingNavTitle">Menu Section Name</label>
+                        <input type="text" id="adminSettingNavTitle" class="booking-input" value="Connect" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="adminSettingSectionTitle">Connect Page Heading</label>
+                        <input type="text" id="adminSettingSectionTitle" class="booking-input" value="Book an Appointment with Yahya Mundewadi" required />
+                    </div>
+
+                    <button type="submit" class="booking-submit-btn" style="width:auto; padding:0.75rem 2rem;">
+                        Save Page Settings
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Companion Appointment & Admin Logic -->
+    <script src="connect.js"></script>
 </body>
 
 </html>

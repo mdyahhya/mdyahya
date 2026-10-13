@@ -1,0 +1,13 @@
+{
+  "name": "mdyahya-portfolio",
+  "version": "1.0.0",
+  "description": "Yahya Mundewadi Portfolio & Appointment Scheduling System",
+  "private": true,
+  "scripts": {
+    "start": "node -e \"console.log('Static site & Vercel API ready')\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "web-push": "^3.6.7"
+  }
+}
