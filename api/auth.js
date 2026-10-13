@@ -1,15 +1,19 @@
-// api/auth.js — 6-Digit Admin PIN Authentication & Environment Diagnostics
+// api/auth.js — 6-Digit Admin PIN Authentication & Environment Diagnostics (STRICT: ZERO FALLBACKS)
 const crypto = require('crypto');
 const { parseBody, cleanEnv } = require('./utils');
 
 function getAdminPin() {
-  const pin = cleanEnv(process.env.ADMIN_PIN || process.env.ADMINPIN || process.env.PIN, '123456');
+  const pin = cleanEnv(process.env.ADMIN_PIN || process.env.ADMINPIN || process.env.PIN, '');
   return String(pin).trim();
 }
 
 function verifyPin(inputPin) {
   if (!inputPin) return false;
   const configuredPin = getAdminPin();
+  if (!configuredPin) {
+    // If ADMIN_PIN is not configured in Vercel environment, deny all access
+    return false;
+  }
   return String(inputPin).trim() === configuredPin;
 }
 
@@ -25,7 +29,9 @@ function isTokenValid(token) {
   try {
     const raw = Buffer.from(token, 'base64').toString('utf8');
     const { pin, timestamp, hash } = JSON.parse(raw);
-    const secret = getAdminPin() + '-yahya-secret-2026';
+    const configuredPin = getAdminPin();
+    if (!configuredPin) return false;
+    const secret = configuredPin + '-yahya-secret-2026';
     const expectedHash = crypto.createHmac('sha256', secret).update(`${pin}:${timestamp}`).digest('hex');
     if (hash !== expectedHash) return false;
     // Token valid for 7 days
@@ -45,20 +51,19 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  // ── GET: Check auth & return environment variable diagnostics ───────────────
+  // ── GET: Check auth status & return Vercel environment diagnostics ──────────
   if (req.method === 'GET') {
     const authHeader = req.headers.authorization || '';
     const token = authHeader.replace(/^Bearer\s+/i, '');
     const valid = isTokenValid(token);
+    const hasPin = Boolean(getAdminPin());
 
-    // Diagnostics to help Yahya verify Vercel environment variables without leaking secrets
     const diagnostics = {
-      hasAdminPin: Boolean(process.env.ADMIN_PIN || process.env.ADMINPIN),
+      hasAdminPin: hasPin,
       hasSupabaseUrl: Boolean(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL),
       hasSupabaseKey: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
       hasVapidPublic: Boolean(process.env.VAPID_PUBLIC_KEY),
-      hasVapidPrivate: Boolean(process.env.VAPID_PRIVATE_KEY),
-      activePinSource: (process.env.ADMIN_PIN || process.env.ADMINPIN) ? 'vercel_env' : 'default_fallback'
+      hasVapidPrivate: Boolean(process.env.VAPID_PRIVATE_KEY)
     };
 
     return res.status(200).json({
@@ -80,17 +85,25 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Please enter a valid PIN' });
     }
 
+    const configuredPin = getAdminPin();
+    if (!configuredPin) {
+      return res.status(500).json({
+        error: 'ADMIN_PIN environment variable is not configured in Vercel. Please add ADMIN_PIN under Vercel Project Settings → Environment Variables and redeploy.',
+        hasCustomPinSet: false
+      });
+    }
+
     if (verifyPin(pin)) {
       const token = generateAdminToken(pin);
       return res.status(200).json({
         success: true,
         token,
-        pinSource: (process.env.ADMIN_PIN || process.env.ADMINPIN) ? 'vercel_env' : 'default_fallback'
+        pinSource: 'vercel_env'
       });
     } else {
       return res.status(401).json({
-        error: 'Incorrect 6-digit PIN. Please check the PIN configured in your Vercel environment variables.',
-        hasCustomPinSet: Boolean(process.env.ADMIN_PIN || process.env.ADMINPIN)
+        error: 'Incorrect 6-digit PIN. Please enter the exact PIN configured in your Vercel environment variables.',
+        hasCustomPinSet: true
       });
     }
   } catch (err) {

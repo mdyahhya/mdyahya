@@ -4632,7 +4632,13 @@
             if (e.key === 'Escape') closeBlogDirect();
         });
 
-        // ── Nav ──────────────────────────────────────────────────────────
+        // ── Nav with Clean Path Routing (/connect, /book, /appointment, /) ──
+        function getAppointmentSlug() {
+            return (typeof CalendarState !== 'undefined' && CalendarState.settings && CalendarState.settings.sectionSlug) 
+                ? CalendarState.settings.sectionSlug 
+                : (localStorage.getItem('yahya_section_slug') || 'connect');
+        }
+
         function showSection(id, pushState = true) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -4647,39 +4653,56 @@
             });
 
             if (pushState) {
-                history.pushState({ sectionId: id }, "", "#" + id);
+                let targetUrl = '/';
+                if (id === 'connect') {
+                    targetUrl = `/${getAppointmentSlug()}`;
+                } else if (id !== 'profile') {
+                    targetUrl = `/${id}`;
+                }
+                history.pushState({ sectionId: id }, "", targetUrl);
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             observeCards();
         }
 
-        // Handle browser back button & hash changes
+        // Resolve clean path routes (e.g. /connect, /book, /appointment, /about)
+        function resolveCurrentRoute() {
+            const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+            const hash = window.location.hash.replace(/^#/, '').toLowerCase();
+            const currentSlug = getAppointmentSlug().toLowerCase();
+            const appointmentSlugs = ['connect', 'book', 'appointment', 'schedule', 'meetings', currentSlug];
+
+            if (path === 'admin' || hash === 'admin') {
+                return 'admin';
+            }
+            if (appointmentSlugs.includes(path) || appointmentSlugs.includes(hash)) {
+                return 'connect';
+            }
+            const known = ['about', 'skills', 'projects', 'clients', 'achievements', 'blogs'];
+            if (known.includes(path)) return path;
+            if (known.includes(hash)) return hash;
+            return 'profile';
+        }
+
+        // Handle browser back button & forward navigation
         window.addEventListener('popstate', function (event) {
             if (event.state && event.state.sectionId) {
                 showSection(event.state.sectionId, false);
-            } else if (window.location.hash) {
-                const h = window.location.hash.slice(1);
-                if (document.getElementById(h)) {
-                    showSection(h, false);
-                } else {
-                    showSection('profile', false);
-                }
             } else {
-                showSection('profile', false);
+                const route = resolveCurrentRoute();
+                showSection(route === 'admin' ? 'connect' : route, false);
             }
         });
 
-        // Initialize state on first load based on hash or default to profile
-        if (window.location.hash) {
-            const initialHash = window.location.hash.slice(1);
-            if (document.getElementById(initialHash)) {
-                showSection(initialHash, false);
-            } else {
-                history.replaceState({ sectionId: 'profile' }, "", "#profile");
-            }
+        // Initialize state on first load based on clean URL path
+        const initialRoute = resolveCurrentRoute();
+        if (initialRoute === 'admin') {
+            showSection('connect', false);
         } else {
-            history.replaceState({ sectionId: 'profile' }, "", "#profile");
+            showSection(initialRoute, false);
+            const targetUrl = (initialRoute === 'connect') ? `/${getAppointmentSlug()}` : (initialRoute === 'profile' ? '/' : `/${initialRoute}`);
+            history.replaceState({ sectionId: initialRoute }, "", targetUrl);
         }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -5161,6 +5184,24 @@
                     <div class="booking-form-group">
                         <label for="adminSettingSectionTitle">Connect Page Heading</label>
                         <input type="text" id="adminSettingSectionTitle" class="booking-input" value="Book an Appointment with Yahya Mundewadi" required />
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="adminSettingSlug">Shareable Clean URL Slug <span class="opt">(e.g. connect, book, appointment)</span></label>
+                        <div style="display:flex; align-items:center; gap:0.5rem;">
+                            <span style="font-family:var(--mono); color:var(--text3); font-size:0.9rem;">https://yahya.in/</span>
+                            <input type="text" id="adminSettingSlug" class="booking-input" value="connect" style="flex:1;" required oninput="previewShareableUrl()" />
+                        </div>
+                    </div>
+
+                    <!-- Clean Shareable Link Display & Copy Button -->
+                    <div style="margin:1rem 0; padding:1rem 1.25rem; background:var(--bg3); border:1px solid var(--accent3); border-radius:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">
+                        <div>
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.05em; display:block;">Your Clean Shareable Link:</span>
+                            <span id="adminLiveShareableUrl" style="font-family:var(--mono); font-size:0.95rem; font-weight:700; color:var(--accent);">https://yahya.in/connect</span>
+                        </div>
+                        <button type="button" class="booking-action-btn" onclick="copyShareableLink()" style="background:#ffffff; color:var(--accent); font-weight:700; padding:0.45rem 0.9rem;">
+                            📋 Copy Link
+                        </button>
                     </div>
 
                     <!-- Live Button Preview -->

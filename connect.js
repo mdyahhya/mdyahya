@@ -29,8 +29,8 @@ const CalendarState = {
     settings: {
         heroText: localStorage.getItem('yahya_hero_btn_text') || 'Book an Appointment',
         heroSub: localStorage.getItem('yahya_hero_btn_sub') || '1-on-1 Strategy & Engineering Call',
-        sectionSlug: 'connect',
-        sectionTitle: 'Book an Appointment with Yahya Mundewadi'
+        sectionSlug: localStorage.getItem('yahya_section_slug') || 'connect',
+        sectionTitle: localStorage.getItem('yahya_section_title') || 'Book an Appointment with Yahya Mundewadi'
     },
     adminToken: sessionStorage.getItem('yahya_admin_token') || null,
     adminPin: sessionStorage.getItem('yahya_admin_pin') || null
@@ -118,16 +118,22 @@ function applyCachedHeroSettings() {
     }
 }
 
-// ── Deep Linking & Hash Routing ──────────────────────────────────────────────
+// ── Deep Linking & Hash / Clean Path Routing ─────────────────────────────────
 function checkInitialHashRoute() {
     const hash = window.location.hash.toLowerCase();
-    if (hash === '#connect' || hash === '#appointment') {
-        showSection('connect', false);
-    } else if (hash === '#admin') {
+    const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+    const currentSlug = (CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect').toLowerCase();
+    const appointmentSlugs = ['connect', 'book', 'appointment', 'schedule', 'meetings', currentSlug];
+
+    if (path === 'admin' || hash === '#admin') {
         if (CalendarState.adminToken || CalendarState.adminPin) {
             openAdminPanel();
         } else {
             openPinModal();
+        }
+    } else if (appointmentSlugs.includes(path) || hash === '#connect' || hash === '#appointment') {
+        if (typeof showSection === 'function') {
+            showSection('connect', false);
         }
     }
 }
@@ -135,7 +141,9 @@ function checkInitialHashRoute() {
 window.addEventListener('hashchange', () => {
     const hash = window.location.hash.toLowerCase();
     if (hash === '#connect' || hash === '#appointment') {
-        showSection('connect', false);
+        if (typeof showSection === 'function') {
+            showSection('connect', false);
+        }
     } else if (hash === '#admin') {
         if (CalendarState.adminToken || CalendarState.adminPin) {
             openAdminPanel();
@@ -191,14 +199,26 @@ async function fetchSiteSettings() {
                 CalendarState.settings.sectionTitle = s.section_config.title;
                 const el = document.getElementById('connectSectionTitle');
                 if (el) el.textContent = s.section_config.title;
+                const adminSecTitle = document.getElementById('adminSettingSectionTitle');
+                if (adminSecTitle) adminSecTitle.value = s.section_config.title;
             }
             if (s.section_config && s.section_config.nav_title) {
                 const navBtn = document.getElementById('navBtnConnect');
                 if (navBtn) navBtn.textContent = s.section_config.nav_title;
                 const mobBtn = document.getElementById('mobNavBtnConnect');
                 if (mobBtn) mobBtn.textContent = s.section_config.nav_title;
+                const adminNavTitle = document.getElementById('adminSettingNavTitle');
+                if (adminNavTitle) adminNavTitle.value = s.section_config.nav_title;
+            }
+            if (s.section_config && s.section_config.slug) {
+                const cleanSlug = s.section_config.slug.replace(/^\/|\/$/g, '').trim().toLowerCase();
+                CalendarState.settings.sectionSlug = cleanSlug;
+                localStorage.setItem('yahya_section_slug', cleanSlug);
+                const adminSlug = document.getElementById('adminSettingSlug');
+                if (adminSlug) adminSlug.value = cleanSlug;
             }
             previewHeroButton();
+            previewShareableUrl();
         }
     } catch (e) {
         console.log('[Settings notice]: Using local defaults');
@@ -703,18 +723,25 @@ function openAdminPanel() {
     overlay.classList.add('active');
     history.pushState({ admin: true }, '', '#admin');
 
+    const slugInput = document.getElementById('adminSettingSlug');
+    if (slugInput && (!slugInput.value || slugInput.value === 'connect')) {
+        slugInput.value = CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect';
+    }
+
     loadAdminBookings();
     initAdminAvailabilityPicker();
     checkPushSubscriptionStatus();
     checkVercelEnvDiagnostics();
     previewHeroButton();
+    previewShareableUrl();
 }
 
 function closeAdminPanel() {
     const overlay = document.getElementById('adminPanelOverlay');
     if (overlay) overlay.classList.remove('active');
     document.body.classList.remove('modal-open');
-    history.pushState({}, '', '#connect');
+    const slug = CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect';
+    history.pushState({ sectionId: 'connect' }, '', `/${slug}`);
 }
 
 function switchAdminTab(tabName) {
@@ -730,7 +757,14 @@ function switchAdminTab(tabName) {
     if (tabName === 'bookings') loadAdminBookings();
     if (tabName === 'availability') renderAdminHourlyGrid();
     if (tabName === 'push') checkVercelEnvDiagnostics();
-    if (tabName === 'settings') previewHeroButton();
+    if (tabName === 'settings') {
+        const slugInput = document.getElementById('adminSettingSlug');
+        if (slugInput && !slugInput.value) {
+            slugInput.value = CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect';
+        }
+        previewHeroButton();
+        previewShareableUrl();
+    }
 }
 
 // ── Vercel Environment Variables Diagnostics ─────────────────────────────────
@@ -748,7 +782,7 @@ async function checkVercelEnvDiagnostics() {
 
             if (pinBadge) {
                 pinBadge.className = `diag-badge ${d.hasAdminPin ? 'ok' : 'missing'}`;
-                pinBadge.textContent = d.hasAdminPin ? '✓ Active (Vercel Env)' : '● Default Fallback (123456)';
+                pinBadge.textContent = d.hasAdminPin ? '✓ Active (Vercel Env)' : '✕ Not Configured in Vercel';
             }
             if (sbUrlBadge) {
                 sbUrlBadge.className = `diag-badge ${d.hasSupabaseUrl ? 'ok' : 'missing'}`;
@@ -1066,17 +1100,52 @@ async function deleteBookingRecord(id) {
     }
 }
 
-// ── Admin Tab 4: Save Settings & Manage Hero Button Text ─────────────────────
+// ── Admin Tab 4: Save Settings & Manage Hero Button Text & Slug ─────────────
+function previewShareableUrl() {
+    const slugInput = document.getElementById('adminSettingSlug');
+    const liveEl = document.getElementById('adminLiveShareableUrl');
+    let rawSlug = slugInput ? slugInput.value.trim().toLowerCase().replace(/^\/|\/$/g, '').replace(/[^a-z0-9_-]/g, '') : '';
+    if (!rawSlug) rawSlug = CalendarState.settings.sectionSlug || 'connect';
+    const cleanUrl = `${window.location.origin}/${rawSlug}`;
+    if (liveEl) {
+        liveEl.textContent = cleanUrl;
+    }
+    return cleanUrl;
+}
+
+function copyShareableLink() {
+    const url = previewShareableUrl();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert(`📋 Clean Link copied to clipboard:\n${url}`);
+        }).catch(() => {
+            prompt('Copy your clean appointment link:', url);
+        });
+    } else {
+        prompt('Copy your clean appointment link:', url);
+    }
+}
+
 async function saveAdminSettings(event) {
     event.preventDefault();
     const heroText = document.getElementById('adminSettingHeroText').value.trim();
     const heroSub = document.getElementById('adminSettingHeroSub').value.trim();
     const navTitle = document.getElementById('adminSettingNavTitle').value.trim();
     const sectionTitle = document.getElementById('adminSettingSectionTitle').value.trim();
+    const slugInput = document.getElementById('adminSettingSlug');
+    let slug = slugInput ? slugInput.value.trim().toLowerCase().replace(/^\/|\/$/g, '').replace(/[^a-z0-9_-]/g, '') : 'connect';
+    if (!slug) slug = 'connect';
 
     // 1. Immediately update DOM & localStorage for instant zero-lag reflection
     localStorage.setItem('yahya_hero_btn_text', heroText);
     localStorage.setItem('yahya_hero_btn_sub', heroSub);
+    localStorage.setItem('yahya_section_slug', slug);
+    localStorage.setItem('yahya_section_title', sectionTitle);
+
+    CalendarState.settings.heroText = heroText;
+    CalendarState.settings.heroSub = heroSub;
+    CalendarState.settings.sectionSlug = slug;
+    CalendarState.settings.sectionTitle = sectionTitle;
 
     const elTitle = document.getElementById('heroBtnTitle');
     const elSub = document.getElementById('heroBtnSub');
@@ -1092,6 +1161,12 @@ async function saveAdminSettings(event) {
     if (secTitle) secTitle.textContent = sectionTitle;
 
     previewHeroButton();
+    previewShareableUrl();
+
+    // Update browser URL without page reload if currently on appointment section
+    if (document.getElementById('connect')?.classList.contains('active')) {
+        history.replaceState({ sectionId: 'connect' }, '', `/${slug}`);
+    }
 
     // 2. Persist to Supabase backend
     try {
@@ -1117,13 +1192,13 @@ async function saveAdminSettings(event) {
             },
             body: JSON.stringify({
                 key: 'section_config',
-                value: { slug: 'connect', title: sectionTitle, nav_title: navTitle }
+                value: { slug: slug, title: sectionTitle, nav_title: navTitle }
             })
         });
 
-        alert('✅ Settings saved! The hero button and page titles are updated.');
+        alert(`✅ Settings saved!\nClean URL: ${window.location.origin}/${slug}\nHero button and titles updated.`);
     } catch (e) {
         console.warn('Backend sync note:', e);
-        alert('Settings saved locally in your browser.');
+        alert(`Settings saved locally in your browser!\nClean URL: ${window.location.origin}/${slug}`);
     }
 }
