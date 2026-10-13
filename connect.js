@@ -121,7 +121,7 @@ function applyCachedHeroSettings() {
 // ── Deep Linking & Hash / Clean Path Routing ─────────────────────────────────
 function checkInitialHashRoute() {
     const hash = window.location.hash.toLowerCase();
-    const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+    const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase().replace(/\.html$/, '');
     const currentSlug = (CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect').toLowerCase();
     const appointmentSlugs = ['connect', 'book', 'appointment', 'schedule', 'meetings', currentSlug];
 

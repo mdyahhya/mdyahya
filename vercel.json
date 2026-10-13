@@ -1,8 +1,7 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/((?!api/|sw.js|manifest.json|connect.css|connect.js|.*\\..*).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

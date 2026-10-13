@@ -20,13 +20,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link rel="icon" type="image/jpeg" href="favicon.jpg" />
-    <link rel="manifest" href="manifest.json" />
+    <base href="/" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1d4ed8" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="stylesheet" href="connect.css" />
+    <link rel="stylesheet" href="/connect.css" />
     <script>
         // Register Service Worker to enforce Network-First fresh fetching
         if ('serviceWorker' in navigator) {
@@ -4668,7 +4669,8 @@
 
         // Resolve clean path routes (e.g. /connect, /book, /appointment, /about)
         function resolveCurrentRoute() {
-            const path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+            let path = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+            path = path.replace(/\.html$/, '');
             const hash = window.location.hash.replace(/^#/, '').toLowerCase();
             const currentSlug = getAppointmentSlug().toLowerCase();
             const appointmentSlugs = ['connect', 'book', 'appointment', 'schedule', 'meetings', currentSlug];
@@ -5232,7 +5234,7 @@
     </div>
 
     <!-- Companion Appointment & Admin Logic -->
-    <script src="connect.js"></script>
+    <script src="/connect.js"></script>
 </body>
 
 </html>

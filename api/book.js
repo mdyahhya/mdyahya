@@ -55,46 +55,87 @@ module.exports = async (req, res) => {
 
     if (supabase) {
       // 1. Check if the slot or entire day is blocked by Yahya
-      const { data: blocked } = await supabase
-        .from('blocked_slots')
-        .select('*')
-        .eq('slot_date', booking_date)
-        .or(`time_slot.eq.${time_slot},time_slot.is.null`);
+      try {
+        const { data: blocked } = await supabase
+          .from('blocked_slots')
+          .select('*')
+          .eq('slot_date', booking_date)
+          .or(`time_slot.eq.${time_slot},time_slot.is.null`);
 
-      if (blocked && blocked.length > 0) {
-        return res.status(409).json({ error: 'This time slot is marked unavailable. Please select another slot.' });
+        if (blocked && blocked.length > 0) {
+          return res.status(409).json({ error: 'This time slot is marked unavailable. Please select another slot.' });
+        }
+      } catch (blockErr) {
+        console.warn('[Blocked slot check note]:', blockErr.message);
       }
 
       // 2. Check if already booked
-      const { data: existing } = await supabase
-        .from('bookings')
-        .select('id')
-        .eq('booking_date', booking_date)
-        .eq('time_slot', time_slot)
-        .neq('status', 'cancelled');
+      try {
+        const { data: existing } = await supabase
+          .from('bookings')
+          .select('id')
+          .eq('booking_date', booking_date)
+          .eq('time_slot', time_slot)
+          .neq('status', 'cancelled');
 
-      if (existing && existing.length > 0) {
-        return res.status(409).json({ error: 'This slot has already been booked. Please pick another time.' });
+        if (existing && existing.length > 0) {
+          return res.status(409).json({ error: 'This slot has already been booked. Please pick another time.' });
+        }
+      } catch (checkErr) {
+        console.warn('[Existing booking check note]:', checkErr.message);
       }
 
       // 3. Insert new booking
-      const { data: inserted, error: insertError } = await supabase
+      let insertPayload = {
+        name: savedBooking.name,
+        email: savedBooking.email,
+        phone: savedBooking.phone,
+        message: savedBooking.message,
+        booking_date,
+        time_slot,
+        status: 'pending'
+      };
+
+      let { data: inserted, error: insertError } = await supabase
         .from('bookings')
-        .insert([{
-          name: savedBooking.name,
-          email: savedBooking.email,
-          phone: savedBooking.phone,
-          message: savedBooking.message,
-          booking_date,
-          time_slot,
-          status: 'pending'
-        }])
+        .insert([insertPayload])
         .select()
         .single();
 
+      // If schema cache says booking_date is missing, attempt fallback with 'date' column
+      if (insertError && (insertError.message.includes('booking_date') || insertError.code === 'PGRST204')) {
+        console.warn('[Booking Insert Retry with date column]:', insertError.message);
+        try {
+          const fallbackPayload = {
+            name: savedBooking.name,
+            email: savedBooking.email,
+            phone: savedBooking.phone,
+            message: savedBooking.message,
+            date: booking_date,
+            time_slot,
+            status: 'pending'
+          };
+          const retryResult = await supabase
+            .from('bookings')
+            .insert([fallbackPayload])
+            .select()
+            .single();
+
+          if (!retryResult.error) {
+            inserted = retryResult.data;
+            insertError = null;
+          }
+        } catch (retryErr) {
+          console.error('[Retry error]:', retryErr);
+        }
+      }
+
       if (insertError) {
         console.error('[Booking Insert Error]:', insertError);
-        return res.status(500).json({ error: 'Failed to record booking. ' + insertError.message });
+        return res.status(500).json({ 
+          error: 'Failed to record booking. ' + insertError.message,
+          hint: 'Please run the fix migration in your Supabase SQL Editor to add the booking_date column and reload the schema cache.'
+        });
       }
 
       savedBooking = inserted || savedBooking;
