@@ -203,12 +203,20 @@ async function fetchSiteSettings() {
                 if (adminSecTitle) adminSecTitle.value = s.section_config.title;
             }
             if (s.section_config && s.section_config.nav_title) {
+                localStorage.setItem('yahya_nav_title', s.section_config.nav_title);
                 const navBtn = document.getElementById('navBtnConnect');
                 if (navBtn) navBtn.textContent = s.section_config.nav_title;
                 const mobBtn = document.getElementById('mobNavBtnConnect');
                 if (mobBtn) mobBtn.textContent = s.section_config.nav_title;
                 const adminNavTitle = document.getElementById('adminSettingNavTitle');
                 if (adminNavTitle) adminNavTitle.value = s.section_config.nav_title;
+            } else if (s.section_config && s.section_config.slug) {
+                const autoTitle = s.section_config.slug.charAt(0).toUpperCase() + s.section_config.slug.slice(1);
+                localStorage.setItem('yahya_nav_title', autoTitle);
+                const navBtn = document.getElementById('navBtnConnect');
+                if (navBtn) navBtn.textContent = autoTitle;
+                const mobBtn = document.getElementById('mobNavBtnConnect');
+                if (mobBtn) mobBtn.textContent = autoTitle;
             }
             if (s.section_config && s.section_config.slug) {
                 const cleanSlug = s.section_config.slug.replace(/^\/|\/$/g, '').trim().toLowerCase();
@@ -1141,6 +1149,7 @@ async function saveAdminSettings(event) {
     localStorage.setItem('yahya_hero_btn_sub', heroSub);
     localStorage.setItem('yahya_section_slug', slug);
     localStorage.setItem('yahya_section_title', sectionTitle);
+    localStorage.setItem('yahya_nav_title', navTitle);
 
     CalendarState.settings.heroText = heroText;
     CalendarState.settings.heroSub = heroSub;

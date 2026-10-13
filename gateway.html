@@ -121,6 +121,172 @@
             background: var(--bg3);
         }
 
+        .nav-hire {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: var(--accent);
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .nav-hire:hover {
+            opacity: 0.9;
+        }
+
+        /* ── MOBILE HAMBURGER & DRAWER ──────────────────────────────────── */
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--text2);
+            padding: 0.35rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-hire {
+                display: none;
+            }
+        }
+
+        .mobile-menu-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(320px, 80vw);
+            background: #ffffff;
+            border-left: 1px solid var(--border);
+            z-index: 10002;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -12px 0 35px rgba(0, 0, 0, 0.22);
+            transform: translateX(100%);
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .mobile-menu-drawer.open {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            padding: 1.15rem 1.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+            flex-shrink: 0;
+        }
+
+        .mobile-menu-logo {
+            font-family: var(--mono);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .mobile-menu-logo span {
+            color: var(--accent-light);
+        }
+
+        .mobile-menu-close {
+            background: transparent;
+            border: none;
+            color: var(--text3);
+            cursor: pointer;
+            padding: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu-close:hover {
+            color: var(--text);
+            background: var(--border);
+        }
+
+        .mobile-menu-links {
+            padding: 1rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1;
+        }
+
+        .mobile-menu-drawer .nav-btn {
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem 1.1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 12px;
+            color: var(--text2);
+            background: transparent;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: var(--sans);
+        }
+
+        .mobile-menu-drawer .nav-btn:hover {
+            background: var(--bg3);
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .mobile-menu-drawer .nav-btn.active {
+            background: var(--bg3);
+            color: var(--accent);
+            border-color: var(--accent3);
+            font-weight: 700;
+        }
+
+        .mobile-menu-footer {
+            padding: 1.25rem 1.35rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg2);
+            flex-shrink: 0;
+        }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -421,9 +587,51 @@
         </a>
         <div class="nav-links">
             <a href="index.html" class="nav-btn">Home</a>
+            <a href="/connect" class="nav-btn" id="navBtnConnectGateway">Connect</a>
             <a href="gateway.html" class="nav-btn active">Payment Gateway Demo</a>
         </div>
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+        </button>
+        <a href="mailto:yahyabuilds@gmail.com" class="nav-hire">Hire Me</a>
     </nav>
+
+    <!-- Mobile Menu Backdrop -->
+    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile Menu Drawer (Side half of screen) -->
+    <div class="mobile-menu-drawer" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo"><span>//</span> yahya.in</a>
+            <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu-links">
+            <a href="index.html" class="nav-btn" onclick="closeMobileMenu()">Profile</a>
+            <a href="/connect" class="nav-btn" id="mobNavBtnConnectGateway" onclick="closeMobileMenu()">Connect</a>
+            <a href="index.html#about" class="nav-btn" onclick="closeMobileMenu()">About</a>
+            <a href="index.html#skills" class="nav-btn" onclick="closeMobileMenu()">Skills</a>
+            <a href="index.html#projects" class="nav-btn" onclick="closeMobileMenu()">Projects</a>
+            <a href="index.html#clients" class="nav-btn" onclick="closeMobileMenu()">Clients</a>
+            <a href="index.html#achievements" class="nav-btn" onclick="closeMobileMenu()">Achievements</a>
+            <a href="index.html#blogs" class="nav-btn" onclick="closeMobileMenu()">Blog</a>
+            <a href="gateway.html" class="nav-btn active" onclick="closeMobileMenu()">
+                <span>Payment Gateway Demo</span>
+                <span style="font-size: 0.68rem; background: var(--accent3); color: var(--accent); padding: 0.15rem 0.45rem; border-radius: 4px; font-weight: 700;">ACTIVE</span>
+            </a>
+        </div>
+        <div class="mobile-menu-footer">
+            <a href="mailto:yahyabuilds@gmail.com" class="nav-hire" style="display: block; text-align: center; width: 100%;">Hire Me</a>
+        </div>
+    </div>
 
     <div class="container">
         <!-- ── HERO SECTION WITH DIRECT DEMO BUTTONS AT THE TOP ────────── -->
@@ -644,6 +852,48 @@
                 payBtn.disabled = false;
             }
         }
+
+        // ── Mobile Menu Drawer Logic ─────────────────────────────────────────
+        function openMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            if (menu) menu.classList.add('open');
+            if (backdrop) backdrop.classList.add('open');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            if (menu) menu.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('open');
+            document.body.classList.remove('modal-open');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu && menu.classList.contains('open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+                closePaymentModal();
+            }
+        });
+
+        // Sync custom nav title from local storage if available
+        (function() {
+            const title = localStorage.getItem('yahya_nav_title') || 'Connect';
+            const el1 = document.getElementById('navBtnConnectGateway');
+            const el2 = document.getElementById('mobNavBtnConnectGateway');
+            if (el1) el1.textContent = title;
+            if (el2) el2.textContent = title;
+        })();
     </script>
 </body>
 
