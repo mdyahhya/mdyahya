@@ -1,6 +1,7 @@
 // api/availability.js — Fetch Availability & Admin Block/Unblock Hourly Slots
 const { getSupabaseClient } = require('./supabase');
 const { isTokenValid, verifyPin } = require('./auth');
+const { parseBody } = require('./utils');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,38 +17,25 @@ module.exports = async (req, res) => {
   // ── GET: Public availability check ──────────────────────────────────────────
   if (req.method === 'GET') {
     try {
-      const { month, year } = req.query || {};
-
       if (!supabase) {
-        // Fallback for local demo or when env vars are still being configured
         return res.status(200).json({
           blocked: [],
           booked: [],
-          notice: 'Supabase credentials not yet configured in environment variables'
+          notice: 'Supabase credentials not yet configured'
         });
       }
 
-      // Fetch all blocked slots from today onwards (or for specific month)
       const todayStr = new Date().toISOString().split('T')[0];
-      const { data: blocked, error: blockedError } = await supabase
+      const { data: blocked } = await supabase
         .from('blocked_slots')
         .select('*')
         .gte('slot_date', todayStr);
 
-      if (blockedError) {
-        console.error('[Availability Blocked Error]:', blockedError);
-      }
-
-      // Fetch all booked slots
-      const { data: booked, error: bookedError } = await supabase
+      const { data: booked } = await supabase
         .from('bookings')
         .select('booking_date, time_slot')
         .gte('booking_date', todayStr)
         .neq('status', 'cancelled');
-
-      if (bookedError) {
-        console.error('[Availability Booked Error]:', bookedError);
-      }
 
       return res.status(200).json({
         blocked: blocked || [],
@@ -62,16 +50,17 @@ module.exports = async (req, res) => {
   // ── POST: Admin Toggle Block/Unblock ─────────────────────────────────────────
   if (req.method === 'POST') {
     try {
+      const body = parseBody(req);
       const authHeader = req.headers.authorization || '';
       const token = authHeader.replace(/^Bearer\s+/i, '');
-      const pinHeader = req.headers['x-admin-pin'] || (req.body && req.body.pin);
+      const pinHeader = req.headers['x-admin-pin'] || body.pin;
 
       const isAuthed = isTokenValid(token) || (pinHeader && verifyPin(pinHeader));
       if (!isAuthed) {
         return res.status(401).json({ error: 'Unauthorized. Admin PIN required.' });
       }
 
-      const { date, time_slot, blocked, reason } = req.body || {};
+      const { date, time_slot, blocked, reason } = body;
 
       if (!date) {
         return res.status(400).json({ error: 'Date is required.' });

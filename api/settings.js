@@ -1,11 +1,12 @@
 // api/settings.js — Dynamic Hero Button & Section Settings
 const { getSupabaseClient } = require('./supabase');
 const { isTokenValid, verifyPin } = require('./auth');
+const { parseBody } = require('./utils');
 
-function checkAuth(req) {
+function checkAuth(req, body = {}) {
   const authHeader = req.headers.authorization || '';
   const token = authHeader.replace(/^Bearer\s+/i, '');
-  const pinHeader = req.headers['x-admin-pin'] || (req.body && req.body.pin);
+  const pinHeader = req.headers['x-admin-pin'] || body.pin;
   return isTokenValid(token) || (pinHeader && verifyPin(pinHeader));
 }
 
@@ -28,7 +29,7 @@ module.exports = async (req, res) => {
           settings: {
             hero_button: {
               text: 'Book an Appointment',
-              subtext: 'Schedule a 1-on-1 strategy call or engineering discussion'
+              subtext: '1-on-1 Strategy & Engineering Call'
             },
             section_config: {
               slug: 'connect',
@@ -58,11 +59,12 @@ module.exports = async (req, res) => {
   // ── POST: Admin update settings ─────────────────────────────────────────────
   if (req.method === 'POST') {
     try {
-      if (!checkAuth(req)) {
+      const body = parseBody(req);
+      if (!checkAuth(req, body)) {
         return res.status(401).json({ error: 'Unauthorized: Admin authentication required' });
       }
 
-      const { key, value } = req.body || {};
+      const { key, value } = body;
       if (!key || value === undefined) {
         return res.status(400).json({ error: 'Missing key or value' });
       }

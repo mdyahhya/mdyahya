@@ -22,12 +22,13 @@ const CalendarState = {
     viewYear: new Date().getFullYear(),
     viewMonth: new Date().getMonth(), // 0-indexed
     selectedDate: null, // 'YYYY-MM-DD'
-    selectedSlot: null, // '10:00 AM'
+    selectedSlot: null, // '10:00 AM – 11:00 AM'
+    slotDuration: 60,   // default: 60 mins (1 hour)
     blockedSlots: [],   // from server
     bookedSlots: [],    // from server
     settings: {
-        heroText: 'Book an Appointment',
-        heroSub: '1-on-1 Strategy & Engineering Call',
+        heroText: localStorage.getItem('yahya_hero_btn_text') || 'Book an Appointment',
+        heroSub: localStorage.getItem('yahya_hero_btn_sub') || '1-on-1 Strategy & Engineering Call',
         sectionSlug: 'connect',
         sectionTitle: 'Book an Appointment with Yahya Mundewadi'
     },
@@ -35,15 +36,61 @@ const CalendarState = {
     adminPin: sessionStorage.getItem('yahya_admin_pin') || null
 };
 
-// Default hours to generate for each day
-const DEFAULT_HOURS = [
-    '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', 
-    '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
-    '06:00 PM', '07:00 PM', '08:00 PM'
-];
+// Base hours (24h format for clean math)
+const BASE_SLOT_HOURS = [10, 11, 12, 14, 15, 16, 17, 18, 19];
+
+// Format hour (10 -> '10:00 AM', 14 -> '02:00 PM')
+function formatHour(h, m = 0) {
+    const period = h >= 12 ? 'PM' : 'AM';
+    let hour12 = h % 12;
+    if (hour12 === 0) hour12 = 12;
+    const strH = String(hour12).padStart(2, '0');
+    const strM = String(m).padStart(2, '0');
+    return `${strH}:${strM} ${period}`;
+}
+
+// Generate slot ranges based on duration (30m, 60m, 120m)
+function generateSlotRanges(durationMins) {
+    const ranges = [];
+    if (durationMins === 30) {
+        BASE_SLOT_HOURS.forEach(h => {
+            ranges.push({
+                slotId: `${formatHour(h, 0)} – ${formatHour(h, 30)}`,
+                title: `${formatHour(h, 0)} – ${formatHour(h, 30)}`,
+                durationLabel: '30 Mins (Intro / Quick Discussion)'
+            });
+            ranges.push({
+                slotId: `${formatHour(h, 30)} – ${formatHour(h + 1, 0)}`,
+                title: `${formatHour(h, 30)} – ${formatHour(h + 1, 0)}`,
+                durationLabel: '30 Mins (Intro / Quick Discussion)'
+            });
+        });
+    } else if (durationMins === 120) {
+        // 2-hour blocks
+        const blocks = [10, 12, 14, 16, 18];
+        blocks.forEach(h => {
+            ranges.push({
+                slotId: `${formatHour(h, 0)} – ${formatHour(h + 2, 0)}`,
+                title: `${formatHour(h, 0)} – ${formatHour(h + 2, 0)}`,
+                durationLabel: '2 Hours (Deep Technical / Strategy Session)'
+            });
+        });
+    } else {
+        // 60-hour blocks (Default)
+        BASE_SLOT_HOURS.forEach(h => {
+            ranges.push({
+                slotId: `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`,
+                title: `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`,
+                durationLabel: '1 Hour (In-depth Discussion)'
+            });
+        });
+    }
+    return ranges;
+}
 
 // ── Initialization ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+    applyCachedHeroSettings();
     initCalendar();
     fetchSiteSettings();
     fetchAvailabilityData();
@@ -51,11 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPinInputs();
     checkInitialHashRoute();
 
-    // Re-check push status if admin
     if (CalendarState.adminToken || CalendarState.adminPin) {
         checkPushSubscriptionStatus();
+        checkVercelEnvDiagnostics();
     }
 });
+
+// Immediately render cached button text
+function applyCachedHeroSettings() {
+    const cachedTitle = localStorage.getItem('yahya_hero_btn_text');
+    const cachedSub = localStorage.getItem('yahya_hero_btn_sub');
+    if (cachedTitle) {
+        const el = document.getElementById('heroBtnTitle');
+        if (el) el.textContent = cachedTitle;
+    }
+    if (cachedSub) {
+        const el = document.getElementById('heroBtnSub');
+        if (el) el.textContent = cachedSub;
+    }
+}
 
 // ── Deep Linking & Hash Routing ──────────────────────────────────────────────
 function checkInitialHashRoute() {
@@ -84,6 +145,25 @@ window.addEventListener('hashchange', () => {
     }
 });
 
+// ── Duration Selector (30m, 60m, 120m) ───────────────────────────────────────
+function setSlotDuration(minutes) {
+    CalendarState.slotDuration = parseInt(minutes, 10);
+
+    // Update active pill styling
+    document.querySelectorAll('.duration-pill').forEach(btn => {
+        const d = parseInt(btn.getAttribute('data-duration'), 10);
+        if (d === CalendarState.slotDuration) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    if (CalendarState.selectedDate) {
+        renderTimeSlots(CalendarState.selectedDate);
+    }
+}
+
 // ── Settings Sync ────────────────────────────────────────────────────────────
 async function fetchSiteSettings() {
     try {
@@ -93,13 +173,19 @@ async function fetchSiteSettings() {
             const s = data.settings || {};
             if (s.hero_button && s.hero_button.text) {
                 CalendarState.settings.heroText = s.hero_button.text;
+                localStorage.setItem('yahya_hero_btn_text', s.hero_button.text);
                 const el = document.getElementById('heroBtnTitle');
                 if (el) el.textContent = s.hero_button.text;
+                const adminInput = document.getElementById('adminSettingHeroText');
+                if (adminInput) adminInput.value = s.hero_button.text;
             }
             if (s.hero_button && s.hero_button.subtext) {
                 CalendarState.settings.heroSub = s.hero_button.subtext;
+                localStorage.setItem('yahya_hero_btn_sub', s.hero_button.subtext);
                 const el = document.getElementById('heroBtnSub');
                 if (el) el.textContent = s.hero_button.subtext;
+                const adminInputSub = document.getElementById('adminSettingHeroSub');
+                if (adminInputSub) adminInputSub.value = s.hero_button.subtext;
             }
             if (s.section_config && s.section_config.title) {
                 CalendarState.settings.sectionTitle = s.section_config.title;
@@ -112,9 +198,25 @@ async function fetchSiteSettings() {
                 const mobBtn = document.getElementById('mobNavBtnConnect');
                 if (mobBtn) mobBtn.textContent = s.section_config.nav_title;
             }
+            previewHeroButton();
         }
     } catch (e) {
         console.log('[Settings notice]: Using local defaults');
+    }
+}
+
+// Live preview in Admin Tab 4
+function previewHeroButton() {
+    const inputTitle = document.getElementById('adminSettingHeroText');
+    const inputSub = document.getElementById('adminSettingHeroSub');
+    const prevTitle = document.getElementById('adminPreviewHeroTitle');
+    const prevSub = document.getElementById('adminPreviewHeroSub');
+
+    if (inputTitle && prevTitle) {
+        prevTitle.textContent = inputTitle.value.trim() || 'Book an Appointment';
+    }
+    if (inputSub && prevSub) {
+        prevSub.textContent = inputSub.value.trim() || '1-on-1 Strategy & Engineering Call';
     }
 }
 
@@ -138,12 +240,10 @@ async function fetchAvailabilityData() {
 
 // ── Calendar Rendering ───────────────────────────────────────────────────────
 function initCalendar() {
-    // Select today or tomorrow if late
     const today = new Date();
     CalendarState.viewYear = today.getFullYear();
     CalendarState.viewMonth = today.getMonth();
-    
-    // Default selection is today
+
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
@@ -152,14 +252,12 @@ function initCalendar() {
     renderCalendarMonth();
     renderTimeSlots(CalendarState.selectedDate);
 
-    // Month Navigation listeners
     const prevBtn = document.getElementById('calPrevMonth');
     const nextBtn = document.getElementById('calNextMonth');
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
             const now = new Date();
-            // Don't navigate before current month
             if (CalendarState.viewYear === now.getFullYear() && CalendarState.viewMonth === now.getMonth()) {
                 return;
             }
@@ -200,7 +298,6 @@ function renderCalendarMonth() {
         monthTitle.textContent = `${months[CalendarState.viewMonth]} ${CalendarState.viewYear}`;
     }
 
-    // Disable prev button if in current month
     const now = new Date();
     if (prevBtn) {
         prevBtn.disabled = (CalendarState.viewYear === now.getFullYear() && CalendarState.viewMonth === now.getMonth());
@@ -208,12 +305,9 @@ function renderCalendarMonth() {
 
     grid.innerHTML = '';
 
-    // First day of month (0 = Sun, 1 = Mon, ...)
     const firstDayIndex = new Date(CalendarState.viewYear, CalendarState.viewMonth, 1).getDay();
-    // Days in current month
     const daysInMonth = new Date(CalendarState.viewYear, CalendarState.viewMonth + 1, 0).getDate();
 
-    // Empty cells for preceding month
     for (let i = 0; i < firstDayIndex; i++) {
         const empty = document.createElement('div');
         empty.className = 'cal-day-cell empty';
@@ -229,7 +323,6 @@ function renderCalendarMonth() {
         dayCell.type = 'button';
         dayCell.textContent = day;
 
-        // Check if date is in past
         const cellDate = new Date(CalendarState.viewYear, CalendarState.viewMonth, day);
         const isPast = cellDate < new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -237,13 +330,11 @@ function renderCalendarMonth() {
             dayCell.classList.add('disabled');
             dayCell.disabled = true;
         } else {
-            // Check if entire day is blocked
             const isDayBlocked = CalendarState.blockedSlots.some(b => b.slot_date === dateStr && (!b.time_slot || b.time_slot === ''));
             if (isDayBlocked) {
                 dayCell.classList.add('blocked');
                 dayCell.title = 'Day Unavailable';
             } else {
-                // Add dot for available date
                 const dot = document.createElement('span');
                 dot.className = 'day-dot';
                 dayCell.appendChild(dot);
@@ -269,6 +360,7 @@ function renderCalendarMonth() {
     }
 }
 
+// ── Time Slots Rendering with From-To Ranges & Duration ──────────────────────
 function renderTimeSlots(dateStr) {
     const label = document.getElementById('slotsDateLabel');
     const container = document.getElementById('slotsList');
@@ -282,23 +374,33 @@ function renderTimeSlots(dateStr) {
 
     container.innerHTML = '';
 
-    // Check if entire day is blocked
     const isDayBlocked = CalendarState.blockedSlots.some(b => b.slot_date === dateStr && (!b.time_slot || b.time_slot === ''));
 
     if (isDayBlocked) {
         container.innerHTML = `
             <div style="text-align: center; padding: 2.5rem 1rem; color: #94a3b8;">
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:0.5rem; color:#ef4444;"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-                <div style="font-weight:600; color:var(--text); margin-bottom:0.25rem;">No Available Slots on this Date</div>
+                <div style="font-weight:600; color:var(--text); margin-bottom:0.25rem;">Date Unavailable</div>
                 <div style="font-size:0.85rem;">Yahya is unavailable on this day. Please select another date.</div>
             </div>
         `;
         return;
     }
 
-    DEFAULT_HOURS.forEach(slot => {
-        const isBlocked = CalendarState.blockedSlots.some(b => b.slot_date === dateStr && b.time_slot === slot);
-        const isBooked = CalendarState.bookedSlots.some(b => b.booking_date === dateStr && b.time_slot === slot);
+    const slotRanges = generateSlotRanges(CalendarState.slotDuration);
+
+    slotRanges.forEach(slotItem => {
+        // Check if matching slot is blocked or booked
+        const isBlocked = CalendarState.blockedSlots.some(b => {
+            if (b.slot_date !== dateStr) return false;
+            if (!b.time_slot) return true; // full day
+            return slotItem.slotId.includes(b.time_slot) || b.time_slot.includes(slotItem.slotId);
+        });
+
+        const isBooked = CalendarState.bookedSlots.some(b => {
+            if (b.booking_date !== dateStr) return false;
+            return slotItem.slotId.includes(b.time_slot) || b.time_slot.includes(slotItem.slotId);
+        });
 
         const btn = document.createElement('button');
         btn.className = 'slot-btn';
@@ -306,17 +408,35 @@ function renderTimeSlots(dateStr) {
 
         if (isBlocked) {
             btn.disabled = true;
-            btn.innerHTML = `<span>${slot}</span><span class="slot-status-tag" style="color:#ef4444; background:#fee2e2;">Busy</span>`;
+            btn.innerHTML = `
+                <div class="slot-time-range">
+                    <span class="slot-range-title">${slotItem.title}</span>
+                    <span class="slot-range-duration">${slotItem.durationLabel}</span>
+                </div>
+                <span class="slot-status-tag" style="color:#ef4444; background:#fee2e2;">Busy</span>
+            `;
         } else if (isBooked) {
             btn.disabled = true;
-            btn.innerHTML = `<span>${slot}</span><span class="slot-status-tag">Booked</span>`;
+            btn.innerHTML = `
+                <div class="slot-time-range">
+                    <span class="slot-range-title">${slotItem.title}</span>
+                    <span class="slot-range-duration">${slotItem.durationLabel}</span>
+                </div>
+                <span class="slot-status-tag">Booked</span>
+            `;
         } else {
-            btn.innerHTML = `<span>${slot}</span><span class="slot-status-tag" style="color:#059669; background:#ecfdf5;">Available</span>`;
+            btn.innerHTML = `
+                <div class="slot-time-range">
+                    <span class="slot-range-title">${slotItem.title}</span>
+                    <span class="slot-range-duration">${slotItem.durationLabel}</span>
+                </div>
+                <span class="slot-status-tag" style="color:#059669; background:#ecfdf5;">Available</span>
+            `;
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
-                CalendarState.selectedSlot = slot;
-                openBookingModal(dateStr, slot);
+                CalendarState.selectedSlot = slotItem.title;
+                openBookingModal(dateStr, slotItem.title);
             });
         }
 
@@ -324,20 +444,22 @@ function renderTimeSlots(dateStr) {
     });
 }
 
-// ── Booking Modal & Submission ───────────────────────────────────────────────
-function openBookingModal(dateStr, slot) {
+// ── Booking Modal & Submission (With Body Scroll Lock) ───────────────────────
+function openBookingModal(dateStr, slotRange) {
     const modal = document.getElementById('bookingModal');
     const subtitle = document.getElementById('bookingModalSlotSummary');
     if (!modal) return;
 
+    // Lock body scroll so scrolling only happens inside modal
+    document.body.classList.add('modal-open');
+
     const d = new Date(dateStr + 'T00:00:00');
     const formattedDate = d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-    
+
     if (subtitle) {
-        subtitle.textContent = `${formattedDate} at ${slot} (30 mins)`;
+        subtitle.textContent = `${formattedDate} · ${slotRange}`;
     }
 
-    // Reset view to form
     const formView = document.getElementById('bookingFormView');
     const successView = document.getElementById('bookingSuccessView');
     if (formView) formView.style.display = 'block';
@@ -349,6 +471,8 @@ function openBookingModal(dateStr, slot) {
 function closeBookingModal() {
     const modal = document.getElementById('bookingModal');
     if (modal) modal.classList.remove('active');
+    // Unlock body scroll
+    document.body.classList.remove('modal-open');
 }
 
 async function handleBookingSubmit(event) {
@@ -373,7 +497,7 @@ async function handleBookingSubmit(event) {
     if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin-icon" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
             Confirming Booking...
         `;
     }
@@ -397,7 +521,6 @@ async function handleBookingSubmit(event) {
         const data = await res.json();
 
         if (res.ok && data.success) {
-            // Show Success view
             const formView = document.getElementById('bookingFormView');
             const successView = document.getElementById('bookingSuccessView');
             if (formView) formView.style.display = 'none';
@@ -409,12 +532,13 @@ async function handleBookingSubmit(event) {
                         <strong>Date:</strong> ${CalendarState.selectedDate}<br/>
                         <strong>Time:</strong> ${CalendarState.selectedSlot}<br/>
                         <strong>Name:</strong> ${name}<br/>
-                        <strong>Email:</strong> ${email}
+                        <strong>Email:</strong> ${email}<br/>
+                        <span style="display:inline-block; margin-top:0.5rem; color:#059669; font-weight:600;">
+                            ✓ Flexible timing: You will receive meeting link and details from our team.
+                        </span>
                     `;
                 }
             }
-
-            // Refresh availability
             fetchAvailabilityData();
         } else {
             alert(data.error || 'Unable to book slot. Please try another time.');
@@ -436,13 +560,11 @@ function setupDoubleTapOnAboutPhoto() {
     const photo = document.getElementById('aboutSecretPhoto');
     if (!photo) return;
 
-    // Desktop: Double Click
     photo.addEventListener('dblclick', (e) => {
         e.preventDefault();
         openPinModal();
     });
 
-    // Mobile: Double Tap
     photo.addEventListener('touchend', (e) => {
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastPhotoTap;
@@ -460,11 +582,11 @@ function openPinModal() {
     const errText = document.getElementById('pinErrorText');
     if (!modal) return;
 
+    document.body.classList.add('modal-open');
     if (errText) errText.textContent = '';
     clearPinBoxes();
     modal.classList.add('active');
 
-    // Auto focus first digit
     setTimeout(() => {
         const first = document.getElementById('pinDigit_0');
         if (first) first.focus();
@@ -474,6 +596,7 @@ function openPinModal() {
 function closePinModal() {
     const modal = document.getElementById('pinModal');
     if (modal) modal.classList.remove('active');
+    document.body.classList.remove('modal-open');
     clearPinBoxes();
 }
 
@@ -498,7 +621,6 @@ function setupPinInputs() {
                 if (next) next.focus();
             }
 
-            // Check if all 6 digits entered
             checkAndSubmitPin();
         });
 
@@ -559,7 +681,9 @@ async function checkAndSubmitPin() {
             closePinModal();
             openAdminPanel();
         } else {
-            if (errText) errText.textContent = data.error || 'Incorrect 6-digit PIN';
+            if (errText) {
+                errText.innerHTML = `${data.error || 'Incorrect 6-digit PIN'}<br/><span style="font-size:0.75rem; color:#64748b;">(Check Vercel env var ADMIN_PIN & redeploy if updated)</span>`;
+            }
             clearPinBoxes();
             const first = document.getElementById('pinDigit_0');
             if (first) first.focus();
@@ -575,18 +699,21 @@ function openAdminPanel() {
     const overlay = document.getElementById('adminPanelOverlay');
     if (!overlay) return;
 
+    document.body.classList.add('modal-open');
     overlay.classList.add('active');
     history.pushState({ admin: true }, '', '#admin');
 
-    // Load initial admin data
     loadAdminBookings();
     initAdminAvailabilityPicker();
     checkPushSubscriptionStatus();
+    checkVercelEnvDiagnostics();
+    previewHeroButton();
 }
 
 function closeAdminPanel() {
     const overlay = document.getElementById('adminPanelOverlay');
     if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('modal-open');
     history.pushState({}, '', '#connect');
 }
 
@@ -602,6 +729,43 @@ function switchAdminTab(tabName) {
 
     if (tabName === 'bookings') loadAdminBookings();
     if (tabName === 'availability') renderAdminHourlyGrid();
+    if (tabName === 'push') checkVercelEnvDiagnostics();
+    if (tabName === 'settings') previewHeroButton();
+}
+
+// ── Vercel Environment Variables Diagnostics ─────────────────────────────────
+async function checkVercelEnvDiagnostics() {
+    const pinBadge = document.getElementById('diag_pin');
+    const sbUrlBadge = document.getElementById('diag_sb_url');
+    const sbKeyBadge = document.getElementById('diag_sb_key');
+    const vapidBadge = document.getElementById('diag_vapid');
+
+    try {
+        const res = await fetch('/api/auth');
+        if (res.ok) {
+            const data = await res.json();
+            const d = data.diagnostics || {};
+
+            if (pinBadge) {
+                pinBadge.className = `diag-badge ${d.hasAdminPin ? 'ok' : 'missing'}`;
+                pinBadge.textContent = d.hasAdminPin ? '✓ Active (Vercel Env)' : '● Default Fallback (123456)';
+            }
+            if (sbUrlBadge) {
+                sbUrlBadge.className = `diag-badge ${d.hasSupabaseUrl ? 'ok' : 'missing'}`;
+                sbUrlBadge.textContent = d.hasSupabaseUrl ? '✓ Connected' : '✕ Missing in Vercel';
+            }
+            if (sbKeyBadge) {
+                sbKeyBadge.className = `diag-badge ${d.hasSupabaseKey ? 'ok' : 'missing'}`;
+                sbKeyBadge.textContent = d.hasSupabaseKey ? '✓ Connected' : '✕ Missing in Vercel';
+            }
+            if (vapidBadge) {
+                vapidBadge.className = `diag-badge ${d.hasVapidPublic ? 'ok' : 'missing'}`;
+                vapidBadge.textContent = d.hasVapidPublic ? '✓ Configured' : '✓ Default Ready';
+            }
+        }
+    } catch (e) {
+        console.warn('Diagnostics fetch error:', e);
+    }
 }
 
 // ── Admin Tab 1: Web Push Notifications ──────────────────────────────────────
@@ -634,7 +798,6 @@ async function checkPushSubscriptionStatus() {
 
 async function requestAndEnablePushNotifications() {
     const btn = document.getElementById('enablePushBtn');
-    const statusText = document.getElementById('pushStatusBadge');
 
     try {
         if (btn) btn.disabled = true;
@@ -656,7 +819,6 @@ async function requestAndEnablePushNotifications() {
             });
         }
 
-        // Send subscription to serverless API
         const res = await fetch('/api/push-subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -734,13 +896,18 @@ function renderAdminHourlyGrid() {
     const selectedDate = dateInput.value;
     container.innerHTML = '';
 
-    DEFAULT_HOURS.forEach(hour => {
-        const isBlocked = CalendarState.blockedSlots.some(b => b.slot_date === selectedDate && b.time_slot === hour);
+    BASE_SLOT_HOURS.forEach(h => {
+        const hourStr = `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`;
+        const isBlocked = CalendarState.blockedSlots.some(b => {
+            if (b.slot_date !== selectedDate) return false;
+            if (!b.time_slot) return true;
+            return b.time_slot.includes(formatHour(h, 0)) || hourStr.includes(b.time_slot);
+        });
 
         const card = document.createElement('div');
         card.className = `admin-hour-card ${isBlocked ? 'blocked' : ''}`;
         card.innerHTML = `
-            <div class="admin-hour-time">${hour}</div>
+            <div class="admin-hour-time">${formatHour(h, 0)}</div>
             <button class="admin-hour-toggle ${isBlocked ? 'btn-busy' : 'btn-avail'}" type="button">
                 ${isBlocked ? 'Busy (Blocked)' : 'Available'}
             </button>
@@ -748,7 +915,7 @@ function renderAdminHourlyGrid() {
 
         const btn = card.querySelector('.admin-hour-toggle');
         btn.addEventListener('click', async () => {
-            await toggleSlotBlockStatus(selectedDate, hour, !isBlocked);
+            await toggleSlotBlockStatus(selectedDate, formatHour(h, 0), !isBlocked);
         });
 
         container.appendChild(card);
@@ -899,16 +1066,35 @@ async function deleteBookingRecord(id) {
     }
 }
 
-// ── Admin Tab 4: Save Settings ───────────────────────────────────────────────
+// ── Admin Tab 4: Save Settings & Manage Hero Button Text ─────────────────────
 async function saveAdminSettings(event) {
     event.preventDefault();
-    const heroText = document.getElementById('adminSettingHeroText').value;
-    const heroSub = document.getElementById('adminSettingHeroSub').value;
-    const navTitle = document.getElementById('adminSettingNavTitle').value;
-    const sectionTitle = document.getElementById('adminSettingSectionTitle').value;
+    const heroText = document.getElementById('adminSettingHeroText').value.trim();
+    const heroSub = document.getElementById('adminSettingHeroSub').value.trim();
+    const navTitle = document.getElementById('adminSettingNavTitle').value.trim();
+    const sectionTitle = document.getElementById('adminSettingSectionTitle').value.trim();
 
+    // 1. Immediately update DOM & localStorage for instant zero-lag reflection
+    localStorage.setItem('yahya_hero_btn_text', heroText);
+    localStorage.setItem('yahya_hero_btn_sub', heroSub);
+
+    const elTitle = document.getElementById('heroBtnTitle');
+    const elSub = document.getElementById('heroBtnSub');
+    if (elTitle) elTitle.textContent = heroText;
+    if (elSub) elSub.textContent = heroSub;
+
+    const navBtn = document.getElementById('navBtnConnect');
+    const mobBtn = document.getElementById('mobNavBtnConnect');
+    if (navBtn) navBtn.textContent = navTitle;
+    if (mobBtn) mobBtn.textContent = navTitle;
+
+    const secTitle = document.getElementById('connectSectionTitle');
+    if (secTitle) secTitle.textContent = sectionTitle;
+
+    previewHeroButton();
+
+    // 2. Persist to Supabase backend
     try {
-        // Save hero button
         await fetch('/api/settings', {
             method: 'POST',
             headers: {
@@ -922,7 +1108,6 @@ async function saveAdminSettings(event) {
             })
         });
 
-        // Save section title
         await fetch('/api/settings', {
             method: 'POST',
             headers: {
@@ -936,9 +1121,9 @@ async function saveAdminSettings(event) {
             })
         });
 
-        alert('Settings saved successfully!');
-        fetchSiteSettings();
+        alert('✅ Settings saved! The hero button and page titles are updated.');
     } catch (e) {
-        alert('Failed to save settings: ' + e.message);
+        console.warn('Backend sync note:', e);
+        alert('Settings saved locally in your browser.');
     }
 }

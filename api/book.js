@@ -1,12 +1,17 @@
 // api/book.js — Public Booking Submission with Instant Push Notification
 const webpush = require('web-push');
 const { getSupabaseClient } = require('./supabase');
+const { parseBody, cleanEnv } = require('./utils');
 
-const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY || 'BPN3I4uXoHfIr8rR9BirQFsp21iZ3bLOTv6V4mSsUV3LYOO0WuQ76yETVCWMjv3PyxmQvBGtAz2F8ZY3MrwM4Vs';
-const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || 'NZPiBwvWtTqNYa83eh9CfuDaJvNg5ywlZfXPOAksAmQ';
-const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:yahyabuilds@gmail.com';
+const VAPID_PUBLIC_KEY = cleanEnv(process.env.VAPID_PUBLIC_KEY, 'BPN3I4uXoHfIr8rR9BirQFsp21iZ3bLOTv6V4mSsUV3LYOO0WuQ76yETVCWMjv3PyxmQvBGtAz2F8ZY3MrwM4Vs');
+const VAPID_PRIVATE_KEY = cleanEnv(process.env.VAPID_PRIVATE_KEY, 'NZPiBwvWtTqNYa83eh9CfuDaJvNg5ywlZfXPOAksAmQ');
+const VAPID_SUBJECT = cleanEnv(process.env.VAPID_SUBJECT, 'mailto:yahyabuilds@gmail.com');
 
-webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+try {
+  webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+} catch (e) {
+  console.warn('[VAPID Setup Warning]:', e.message);
+}
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +27,8 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { name, email, phone, message, booking_date, time_slot } = req.body || {};
+    const body = parseBody(req);
+    const { name, email, phone, message, booking_date, time_slot } = body;
 
     if (!name || !email || !booking_date || !time_slot) {
       return res.status(400).json({ error: 'Name, email, date, and time slot are required.' });
@@ -37,10 +43,10 @@ module.exports = async (req, res) => {
     const supabase = getSupabaseClient();
     let savedBooking = {
       id: `local_${Date.now()}`,
-      name,
-      email,
-      phone: phone || null,
-      message: message || null,
+      name: String(name).trim(),
+      email: String(email).trim(),
+      phone: phone ? String(phone).trim() : null,
+      message: message ? String(message).trim() : null,
       booking_date,
       time_slot,
       status: 'pending',
@@ -48,7 +54,7 @@ module.exports = async (req, res) => {
     };
 
     if (supabase) {
-      // 1. Check if the slot is blocked by Yahya
+      // 1. Check if the slot or entire day is blocked by Yahya
       const { data: blocked } = await supabase
         .from('blocked_slots')
         .select('*')
@@ -56,7 +62,7 @@ module.exports = async (req, res) => {
         .or(`time_slot.eq.${time_slot},time_slot.is.null`);
 
       if (blocked && blocked.length > 0) {
-        return res.status(409).json({ error: 'This time slot is marked unavailable by Yahya. Please pick another slot.' });
+        return res.status(409).json({ error: 'This time slot is marked unavailable. Please select another slot.' });
       }
 
       // 2. Check if already booked
@@ -68,17 +74,17 @@ module.exports = async (req, res) => {
         .neq('status', 'cancelled');
 
       if (existing && existing.length > 0) {
-        return res.status(409).json({ error: 'This slot has already been booked. Please select another time.' });
+        return res.status(409).json({ error: 'This slot has already been booked. Please pick another time.' });
       }
 
       // 3. Insert new booking
       const { data: inserted, error: insertError } = await supabase
         .from('bookings')
         .insert([{
-          name,
-          email,
-          phone: phone || null,
-          message: message || null,
+          name: savedBooking.name,
+          email: savedBooking.email,
+          phone: savedBooking.phone,
+          message: savedBooking.message,
           booking_date,
           time_slot,
           status: 'pending'
@@ -101,8 +107,8 @@ module.exports = async (req, res) => {
 
         if (!subsError && subs && subs.length > 0) {
           const pushPayload = JSON.stringify({
-            title: `📅 New Booking: ${name}`,
-            body: `${booking_date} at ${time_slot}\nEmail: ${email}${phone ? '\nPhone: ' + phone : ''}${message ? '\nNote: ' + message : ''}`,
+            title: `📅 New Booking: ${savedBooking.name}`,
+            body: `${booking_date} at ${time_slot}\nEmail: ${savedBooking.email}${savedBooking.phone ? '\nPhone: ' + savedBooking.phone : ''}${savedBooking.message ? '\nNote: ' + savedBooking.message : ''}`,
             url: '/#admin'
           });
 
@@ -114,10 +120,8 @@ module.exports = async (req, res) => {
               }, pushPayload);
             } catch (err) {
               if (err.statusCode === 410 || err.statusCode === 404) {
-                // Subscription has expired or unsubscribed, remove from DB
+                // Subscription has expired, remove from DB
                 await supabase.from('push_subscriptions').delete().eq('id', sub.id);
-              } else {
-                console.warn('[Push Dispatch Warning]:', err.message);
               }
             }
           });
@@ -126,7 +130,6 @@ module.exports = async (req, res) => {
         }
       } catch (pushErr) {
         console.error('[Push Dispatch Error]:', pushErr);
-        // Continue even if push fails; booking is already recorded!
       }
     }
 

@@ -2831,8 +2831,28 @@
                     <div class="calendly-slots-box">
                         <div class="slots-header">
                             <h4 class="slots-date-label" id="slotsDateLabel">Select a Date</h4>
-                            <p class="slots-sub-label">Select your preferred time slot below</p>
+                            <p class="slots-sub-label">Choose duration and preferred time slot</p>
                         </div>
+
+                        <!-- Duration Selector (30 Mins, 1 Hour, 2 Hours) -->
+                        <div class="duration-selector-wrap">
+                            <span style="font-size:0.8rem; font-weight:700; color:var(--text2); margin-right:0.35rem;">Duration:</span>
+                            <button type="button" class="duration-pill" data-duration="30" onclick="setSlotDuration(30)">30 Mins</button>
+                            <button type="button" class="duration-pill active" data-duration="60" onclick="setSlotDuration(60)">1 Hour</button>
+                            <button type="button" class="duration-pill" data-duration="120" onclick="setSlotDuration(120)">2 Hours</button>
+                        </div>
+
+                        <!-- Flexible Timing Banner -->
+                        <div class="flexible-timing-banner">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <div>
+                                <strong>Flexible Timing:</strong> Need more time? No worries — meetings can be adjusted or extended as needed. It's not compulsory to end strictly on time!
+                            </div>
+                        </div>
+
                         <div class="slots-list" id="slotsList">
                             <div style="text-align:center; padding:2rem; color:var(--text3);">Select an available date on the calendar</div>
                         </div>
@@ -5059,6 +5079,23 @@
                         <li>Once installed, open the app, go to About, double-tap your photo, and enable notifications.</li>
                     </ol>
                 </div>
+
+                <!-- Vercel Environment Variables Status Card -->
+                <div style="margin-top:1.5rem; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.25rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                        <h4 style="margin:0; font-size:1rem; color:var(--text);">Vercel Environment Variables Diagnostics</h4>
+                        <button type="button" class="booking-action-btn" onclick="checkVercelEnvDiagnostics()" style="padding:0.35rem 0.75rem;">Check Status</button>
+                    </div>
+                    <div id="envDiagStatusList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem; font-size:0.85rem;">
+                        <div style="padding:0.5rem; background:#ffffff; border-radius:8px; border:1px solid var(--border);">ADMIN_PIN: <span id="diag_pin" class="diag-badge">Checking...</span></div>
+                        <div style="padding:0.5rem; background:#ffffff; border-radius:8px; border:1px solid var(--border);">SUPABASE_URL: <span id="diag_sb_url" class="diag-badge">Checking...</span></div>
+                        <div style="padding:0.5rem; background:#ffffff; border-radius:8px; border:1px solid var(--border);">SUPABASE_KEY: <span id="diag_sb_key" class="diag-badge">Checking...</span></div>
+                        <div style="padding:0.5rem; background:#ffffff; border-radius:8px; border:1px solid var(--border);">VAPID_PUBLIC_KEY: <span id="diag_vapid" class="diag-badge">Checking...</span></div>
+                    </div>
+                    <p style="font-size:0.78rem; color:var(--text3); margin:0.85rem 0 0 0; line-height:1.45;">
+                        💡 <strong>Vercel Tip:</strong> When you add or change variables in Vercel Project Settings, you must trigger a <em>Redeploy</em> (or push a new commit) for Vercel functions to load them.
+                    </p>
+                </div>
             </div>
 
             <!-- Tab 2 Content: Hourly Availability -->
@@ -5111,11 +5148,11 @@
                 <form onsubmit="saveAdminSettings(event)" style="max-width:600px;">
                     <div class="booking-form-group">
                         <label for="adminSettingHeroText">Main Page Hero Button Text</label>
-                        <input type="text" id="adminSettingHeroText" class="booking-input" value="Book an Appointment" required />
+                        <input type="text" id="adminSettingHeroText" class="booking-input" value="Book an Appointment" required oninput="previewHeroButton()" />
                     </div>
                     <div class="booking-form-group">
                         <label for="adminSettingHeroSub">Main Page Hero Button Subtitle</label>
-                        <input type="text" id="adminSettingHeroSub" class="booking-input" value="1-on-1 Strategy &amp; Engineering Call" required />
+                        <input type="text" id="adminSettingHeroSub" class="booking-input" value="1-on-1 Strategy &amp; Engineering Call" required oninput="previewHeroButton()" />
                     </div>
                     <div class="booking-form-group">
                         <label for="adminSettingNavTitle">Menu Section Name</label>
@@ -5124,6 +5161,25 @@
                     <div class="booking-form-group">
                         <label for="adminSettingSectionTitle">Connect Page Heading</label>
                         <input type="text" id="adminSettingSectionTitle" class="booking-input" value="Book an Appointment with Yahya Mundewadi" required />
+                    </div>
+
+                    <!-- Live Button Preview -->
+                    <div style="margin:1.25rem 0; padding:1.25rem; background:var(--bg2); border:1px solid var(--border); border-radius:12px;">
+                        <span style="font-size:0.8rem; font-weight:700; color:var(--text3); display:block; margin-bottom:0.75rem;">LIVE BUTTON PREVIEW ON MAIN PAGE:</span>
+                        <div class="hero-connect-btn" style="pointer-events:none;">
+                            <span class="connect-icon-pulse">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <div class="connect-btn-content">
+                                <span class="connect-btn-title" id="adminPreviewHeroTitle">Book an Appointment</span>
+                                <span class="connect-btn-sub" id="adminPreviewHeroSub">1-on-1 Strategy &amp; Engineering Call</span>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="booking-submit-btn" style="width:auto; padding:0.75rem 2rem;">

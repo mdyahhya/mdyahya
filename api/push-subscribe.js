@@ -1,12 +1,17 @@
 // api/push-subscribe.js — Register Web Push Subscriptions & Send Test Alert
 const webpush = require('web-push');
 const { getSupabaseClient } = require('./supabase');
+const { parseBody, cleanEnv } = require('./utils');
 
-const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY || 'BPN3I4uXoHfIr8rR9BirQFsp21iZ3bLOTv6V4mSsUV3LYOO0WuQ76yETVCWMjv3PyxmQvBGtAz2F8ZY3MrwM4Vs';
-const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || 'NZPiBwvWtTqNYa83eh9CfuDaJvNg5ywlZfXPOAksAmQ';
-const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:yahyabuilds@gmail.com';
+const VAPID_PUBLIC_KEY = cleanEnv(process.env.VAPID_PUBLIC_KEY, 'BPN3I4uXoHfIr8rR9BirQFsp21iZ3bLOTv6V4mSsUV3LYOO0WuQ76yETVCWMjv3PyxmQvBGtAz2F8ZY3MrwM4Vs');
+const VAPID_PRIVATE_KEY = cleanEnv(process.env.VAPID_PRIVATE_KEY, 'NZPiBwvWtTqNYa83eh9CfuDaJvNg5ywlZfXPOAksAmQ');
+const VAPID_SUBJECT = cleanEnv(process.env.VAPID_SUBJECT, 'mailto:yahyabuilds@gmail.com');
 
-webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+try {
+  webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
+} catch (e) {
+  console.warn('[VAPID Setup Warning]:', e.message);
+}
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +27,8 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { subscription, test } = req.body || {};
+    const body = parseBody(req);
+    const { subscription, test } = body;
 
     if (!subscription || !subscription.endpoint) {
       return res.status(400).json({ error: 'Missing push subscription object' });
@@ -30,7 +36,6 @@ module.exports = async (req, res) => {
 
     const supabase = getSupabaseClient();
     if (supabase) {
-      // Upsert subscription into Supabase
       const { error } = await supabase
         .from('push_subscriptions')
         .upsert(
@@ -47,11 +52,10 @@ module.exports = async (req, res) => {
       }
     }
 
-    // If test is requested, immediately trigger a test push alert
     if (test) {
       const payload = JSON.stringify({
-        title: '🔔 Test Notification Successful!',
-        body: 'Yahya, your mobile push alerts are active and ready to receive real-time bookings.',
+        title: '🔔 Push Alert Test Successful!',
+        body: 'Yahya, mobile push notifications are working perfectly on your device!',
         url: '/#admin'
       });
 
@@ -62,7 +66,7 @@ module.exports = async (req, res) => {
         console.error('[Push Test Error]:', pushErr);
         return res.status(200).json({
           success: true,
-          warning: 'Subscription saved, but test push encountered an issue: ' + pushErr.message
+          warning: 'Subscription saved, test push returned: ' + pushErr.message
         });
       }
     }

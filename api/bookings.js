@@ -1,11 +1,12 @@
 // api/bookings.js — Admin Management of Inquiries & Appointments
 const { getSupabaseClient } = require('./supabase');
 const { isTokenValid, verifyPin } = require('./auth');
+const { parseBody } = require('./utils');
 
-function checkAuth(req) {
+function checkAuth(req, body = {}) {
   const authHeader = req.headers.authorization || '';
   const token = authHeader.replace(/^Bearer\s+/i, '');
-  const pinHeader = req.headers['x-admin-pin'] || (req.body && req.body.pin);
+  const pinHeader = req.headers['x-admin-pin'] || body.pin;
   return isTokenValid(token) || (pinHeader && verifyPin(pinHeader));
 }
 
@@ -18,13 +19,15 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  if (!checkAuth(req)) {
+  const body = parseBody(req);
+
+  if (!checkAuth(req, body)) {
     return res.status(401).json({ error: 'Unauthorized: Admin authentication required' });
   }
 
   const supabase = getSupabaseClient();
   if (!supabase) {
-    return res.status(500).json({ error: 'Supabase credentials not set in environment.' });
+    return res.status(500).json({ error: 'Supabase credentials not configured in environment.' });
   }
 
   try {
@@ -42,7 +45,7 @@ module.exports = async (req, res) => {
 
     // ── PATCH: Update booking status ──────────────────────────────────────────
     if (req.method === 'PATCH') {
-      const { id, status } = req.body || {};
+      const { id, status } = body;
       if (!id || !status) {
         return res.status(400).json({ error: 'Missing booking id or status' });
       }
@@ -60,7 +63,7 @@ module.exports = async (req, res) => {
 
     // ── DELETE: Delete booking ────────────────────────────────────────────────
     if (req.method === 'DELETE') {
-      const { id } = req.query.id ? req.query : (req.body || {});
+      const id = req.query.id || body.id;
       if (!id) {
         return res.status(400).json({ error: 'Missing booking id' });
       }
@@ -76,7 +79,7 @@ module.exports = async (req, res) => {
 
     // ── POST: Add manual booking ──────────────────────────────────────────────
     if (req.method === 'POST') {
-      const { name, email, phone, message, booking_date, time_slot, status } = req.body || {};
+      const { name, email, phone, message, booking_date, time_slot, status } = body;
       if (!name || !email || !booking_date || !time_slot) {
         return res.status(400).json({ error: 'Name, email, date, and slot are required' });
       }
