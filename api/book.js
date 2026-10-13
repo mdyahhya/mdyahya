@@ -85,7 +85,7 @@ module.exports = async (req, res) => {
         console.warn('[Existing booking check note]:', checkErr.message);
       }
 
-      // 3. Insert new booking
+      // 3. Insert new booking with resilient constraint handling
       let insertPayload = {
         name: savedBooking.name,
         email: savedBooking.email,
@@ -96,45 +96,63 @@ module.exports = async (req, res) => {
         status: 'pending'
       };
 
-      let { data: inserted, error: insertError } = await supabase
-        .from('bookings')
-        .insert([insertPayload])
-        .select()
-        .single();
+      let inserted = null;
+      let insertError = null;
 
-      // If schema cache says booking_date is missing, attempt fallback with 'date' column
-      if (insertError && (insertError.message.includes('booking_date') || insertError.code === 'PGRST204')) {
-        console.warn('[Booking Insert Retry with date column]:', insertError.message);
-        try {
-          const fallbackPayload = {
-            name: savedBooking.name,
-            email: savedBooking.email,
-            phone: savedBooking.phone,
-            message: savedBooking.message,
-            date: booking_date,
-            time_slot,
-            status: 'pending'
-          };
-          const retryResult = await supabase
-            .from('bookings')
-            .insert([fallbackPayload])
-            .select()
-            .single();
+      // Dynamically satisfy any legacy NOT NULL columns (customer_name, customer_email, date, etc.)
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const result = await supabase
+          .from('bookings')
+          .insert([insertPayload])
+          .select()
+          .single();
 
-          if (!retryResult.error) {
-            inserted = retryResult.data;
-            insertError = null;
-          }
-        } catch (retryErr) {
-          console.error('[Retry error]:', retryErr);
+        if (!result.error) {
+          inserted = result.data;
+          insertError = null;
+          break;
         }
+
+        insertError = result.error;
+        const msg = insertError.message || '';
+
+        // 1. Check for NOT-NULL constraint violations on legacy columns (e.g. customer_name, customer_phone, etc.)
+        const notNullMatch = msg.match(/null value in column "([^"]+)"/i);
+        if (notNullMatch) {
+          const col = notNullMatch[1];
+          console.warn(`[Auto-resolving NOT NULL constraint on legacy column: '${col}']`);
+          if (col.includes('name')) insertPayload[col] = savedBooking.name;
+          else if (col.includes('email')) insertPayload[col] = savedBooking.email;
+          else if (col.includes('phone')) insertPayload[col] = savedBooking.phone || 'N/A';
+          else if (col.includes('date')) insertPayload[col] = booking_date;
+          else if (col.includes('message') || col.includes('note')) insertPayload[col] = savedBooking.message || '';
+          else if (col.includes('amount') || col.includes('price') || col.includes('total')) insertPayload[col] = 0;
+          else if (col.includes('status')) insertPayload[col] = 'pending';
+          else insertPayload[col] = 'N/A';
+          continue;
+        }
+
+        // 2. Check for missing columns in schema cache (PGRST204)
+        const unknownColMatch = msg.match(/Could not find the ([^\s]+) column/i);
+        if (unknownColMatch) {
+          const col = unknownColMatch[1];
+          if (insertPayload[col]) {
+            console.warn(`[Removing unknown column from payload: '${col}']`);
+            delete insertPayload[col];
+            // If booking_date was rejected by cache, try 'date' instead
+            if (col === 'booking_date') insertPayload['date'] = booking_date;
+            continue;
+          }
+        }
+
+        break;
       }
 
       if (insertError) {
         console.error('[Booking Insert Error]:', insertError);
         return res.status(500).json({ 
           error: 'Failed to record booking. ' + insertError.message,
-          hint: 'Please run the fix migration in your Supabase SQL Editor to add the booking_date column and reload the schema cache.'
+          hint: 'Please run the fix migration in your Supabase SQL Editor to drop NOT NULL on legacy columns and reload the schema cache.'
         });
       }
 

@@ -20,13 +20,37 @@ ALTER TABLE public.bookings ADD COLUMN IF NOT EXISTS time_slot TEXT;
 ALTER TABLE public.bookings ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
 ALTER TABLE public.bookings ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
 
--- If an existing table had a 'date' column instead of 'booking_date', copy data across
+-- Safely handle legacy columns (e.g. customer_name, customer_email, date) by dropping NOT NULL constraints
 DO $$
 BEGIN
     IF EXISTS (
         SELECT 1 FROM information_schema.columns 
+        WHERE table_schema = 'public' AND table_name = 'bookings' AND column_name = 'customer_name'
+    ) THEN
+        ALTER TABLE public.bookings ALTER COLUMN customer_name DROP NOT NULL;
+        UPDATE public.bookings SET customer_name = name WHERE customer_name IS NULL AND name IS NOT NULL;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_schema = 'public' AND table_name = 'bookings' AND column_name = 'customer_email'
+    ) THEN
+        ALTER TABLE public.bookings ALTER COLUMN customer_email DROP NOT NULL;
+        UPDATE public.bookings SET customer_email = email WHERE customer_email IS NULL AND email IS NOT NULL;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_schema = 'public' AND table_name = 'bookings' AND column_name = 'customer_phone'
+    ) THEN
+        ALTER TABLE public.bookings ALTER COLUMN customer_phone DROP NOT NULL;
+    END IF;
+
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns 
         WHERE table_schema = 'public' AND table_name = 'bookings' AND column_name = 'date'
     ) THEN
+        ALTER TABLE public.bookings ALTER COLUMN "date" DROP NOT NULL;
         UPDATE public.bookings 
         SET booking_date = "date"::DATE 
         WHERE booking_date IS NULL AND "date" IS NOT NULL;

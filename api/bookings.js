@@ -36,11 +36,22 @@ module.exports = async (req, res) => {
       const { data, error } = await supabase
         .from('bookings')
         .select('*')
-        .order('booking_date', { ascending: false })
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return res.status(200).json({ bookings: data || [] });
+
+      // Normalize row fields so legacy column names (customer_name, date, etc.) display cleanly
+      const normalized = (data || []).map(b => ({
+        ...b,
+        name: b.name || b.customer_name || 'Anonymous',
+        email: b.email || b.customer_email || '—',
+        phone: b.phone || b.customer_phone || null,
+        message: b.message || b.notes || null,
+        booking_date: b.booking_date || b.date || b.appointment_date || '—',
+        time_slot: b.time_slot || b.slot || '—'
+      }));
+
+      return res.status(200).json({ bookings: normalized });
     }
 
     // ── PATCH: Update booking status ──────────────────────────────────────────
