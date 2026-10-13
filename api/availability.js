@@ -1,7 +1,7 @@
 // api/availability.js — Fetch Availability & Admin Block/Unblock Hourly Slots
 const { getSupabaseClient } = require('./supabase');
 const { isTokenValid, verifyPin } = require('./auth');
-const { parseBody } = require('./utils');
+const { parseBody, parseSlotInterval, intervalsOverlap } = require('./utils');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -72,24 +72,61 @@ module.exports = async (req, res) => {
 
       if (blocked === false) {
         // Unblock slot or day
-        let query = supabase.from('blocked_slots').delete().eq('slot_date', date);
         if (time_slot) {
-          query = query.eq('time_slot', time_slot);
+          const { data: allBlocked } = await supabase
+            .from('blocked_slots')
+            .select('id, time_slot')
+            .eq('slot_date', date);
+
+          const targetRange = parseSlotInterval(time_slot);
+          const toDelete = (allBlocked || []).filter(b => {
+            if (b.time_slot === time_slot) return true;
+            if (targetRange && b.time_slot) {
+              const bRange = parseSlotInterval(b.time_slot);
+              return intervalsOverlap(targetRange, bRange);
+            }
+            return false;
+          }).map(b => b.id);
+
+          if (toDelete.length > 0) {
+            await supabase.from('blocked_slots').delete().in('id', toDelete);
+          }
         } else {
-          query = query.is('time_slot', null);
+          await supabase.from('blocked_slots').delete().eq('slot_date', date).is('time_slot', null);
         }
-        const { error } = await query;
-        if (error) throw error;
         return res.status(200).json({ success: true, message: 'Slot unblocked successfully.' });
       } else {
-        // Block slot or entire day
+        // Block slot or entire day: clean up overlapping or exact matches first, then insert
+        if (time_slot) {
+          const { data: allBlocked } = await supabase
+            .from('blocked_slots')
+            .select('id, time_slot')
+            .eq('slot_date', date);
+
+          const targetRange = parseSlotInterval(time_slot);
+          const toDelete = (allBlocked || []).filter(b => {
+            if (b.time_slot === time_slot) return true;
+            if (targetRange && b.time_slot) {
+              const bRange = parseSlotInterval(b.time_slot);
+              return intervalsOverlap(targetRange, bRange);
+            }
+            return false;
+          }).map(b => b.id);
+
+          if (toDelete.length > 0) {
+            await supabase.from('blocked_slots').delete().in('id', toDelete);
+          }
+        } else {
+          await supabase.from('blocked_slots').delete().eq('slot_date', date).is('time_slot', null);
+        }
+
         const { error } = await supabase
           .from('blocked_slots')
-          .upsert({
+          .insert([{
             slot_date: date,
             time_slot: time_slot || null,
             reason: reason || 'Blocked by Admin'
-          }, { onConflict: 'slot_date,time_slot' });
+          }]);
 
         if (error) throw error;
         return res.status(200).json({ success: true, message: 'Slot marked unavailable.' });

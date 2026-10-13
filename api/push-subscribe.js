@@ -36,19 +36,38 @@ module.exports = async (req, res) => {
 
     const supabase = getSupabaseClient();
     if (supabase) {
-      const { error } = await supabase
-        .from('push_subscriptions')
-        .upsert(
-          {
-            endpoint: subscription.endpoint,
-            keys: subscription.keys,
-            user_agent: req.headers['user-agent'] || 'Unknown'
-          },
-          { onConflict: 'endpoint' }
-        );
+      try {
+        let keysPayload = subscription.keys;
+        if (typeof keysPayload === 'string') {
+          try { keysPayload = JSON.parse(keysPayload); } catch (_) {}
+        }
 
-      if (error) {
-        console.warn('[Push] Supabase upsert notice:', error.message);
+        const { data: existing } = await supabase
+          .from('push_subscriptions')
+          .select('id')
+          .eq('endpoint', subscription.endpoint)
+          .maybeSingle();
+
+        if (existing && existing.id) {
+          await supabase
+            .from('push_subscriptions')
+            .update({
+              keys: keysPayload,
+              user_agent: req.headers['user-agent'] || 'Unknown',
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', existing.id);
+        } else {
+          await supabase
+            .from('push_subscriptions')
+            .insert([{
+              endpoint: subscription.endpoint,
+              keys: keysPayload,
+              user_agent: req.headers['user-agent'] || 'Unknown'
+            }]);
+        }
+      } catch (dbErr) {
+        console.warn('[Push DB save notice]:', dbErr.message);
       }
     }
 

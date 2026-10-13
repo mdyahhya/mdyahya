@@ -336,8 +336,9 @@ body.modal-open {
 }
 
 .cal-day-cell.blocked {
-    color: #cbd5e1;
-    text-decoration: line-through;
+    color: #94a3b8;
+    background: #f8fafc;
+    text-decoration: none !important;
     cursor: not-allowed;
 }
 
@@ -506,15 +507,6 @@ body.modal-open {
     border-color: var(--accent);
 }
 
-.slot-btn:disabled {
-    background: #f8fafc;
-    border-color: #f1f5f9;
-    color: #94a3b8;
-    cursor: not-allowed;
-    text-decoration: line-through;
-    opacity: 0.7;
-}
-
 .slot-time-range {
     display: flex;
     flex-direction: column;
@@ -531,6 +523,24 @@ body.modal-open {
     font-size: 0.74rem;
     color: var(--text3);
     font-weight: 500;
+}
+
+.slot-btn:disabled {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+    text-decoration: none !important;
+    opacity: 0.8;
+}
+
+.slot-btn:disabled .slot-range-title {
+    color: #94a3b8 !important;
+    text-decoration: none !important;
+}
+
+.slot-btn:disabled .slot-range-duration {
+    color: #cbd5e1;
 }
 
 .slot-btn.selected .slot-range-title,
@@ -1184,6 +1194,22 @@ body.modal-open {
 .admin-hour-toggle.btn-busy {
     background: #fee2e2;
     color: #991b1b;
+}
+
+.admin-hour-card.booked {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.admin-hour-card.booked .admin-hour-time {
+    color: #64748b;
+}
+
+.admin-hour-toggle.btn-booked {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    cursor: default;
 }
 
 /* Tab 3: Appointments List */

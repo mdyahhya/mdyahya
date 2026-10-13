@@ -1,7 +1,7 @@
 // api/book.js — Public Booking Submission with Instant Push Notification
 const webpush = require('web-push');
 const { getSupabaseClient } = require('./supabase');
-const { parseBody, cleanEnv } = require('./utils');
+const { parseBody, cleanEnv, parseSlotInterval, intervalsOverlap } = require('./utils');
 
 const VAPID_PUBLIC_KEY = cleanEnv(process.env.VAPID_PUBLIC_KEY, 'BPN3I4uXoHfIr8rR9BirQFsp21iZ3bLOTv6V4mSsUV3LYOO0WuQ76yETVCWMjv3PyxmQvBGtAz2F8ZY3MrwM4Vs');
 const VAPID_PRIVATE_KEY = cleanEnv(process.env.VAPID_PRIVATE_KEY, 'NZPiBwvWtTqNYa83eh9CfuDaJvNg5ywlZfXPOAksAmQ');
@@ -54,32 +54,45 @@ module.exports = async (req, res) => {
     };
 
     if (supabase) {
-      // 1. Check if the slot or entire day is blocked by Yahya
+      // 1. Check if the slot or entire day is blocked by Yahya (with interval overlap check)
       try {
         const { data: blocked } = await supabase
           .from('blocked_slots')
           .select('*')
-          .eq('slot_date', booking_date)
-          .or(`time_slot.eq.${time_slot},time_slot.is.null`);
+          .eq('slot_date', booking_date);
 
         if (blocked && blocked.length > 0) {
-          return res.status(409).json({ error: 'This time slot is marked unavailable. Please select another slot.' });
+          const reqRange = parseSlotInterval(time_slot);
+          const isBlocked = blocked.some(b => {
+            if (!b.time_slot) return true; // full day block
+            const bRange = parseSlotInterval(b.time_slot);
+            return intervalsOverlap(reqRange, bRange);
+          });
+          if (isBlocked) {
+            return res.status(409).json({ error: 'This time slot is marked unavailable. Please select another slot.' });
+          }
         }
       } catch (blockErr) {
         console.warn('[Blocked slot check note]:', blockErr.message);
       }
 
-      // 2. Check if already booked
+      // 2. Check if already booked (with interval overlap check)
       try {
         const { data: existing } = await supabase
           .from('bookings')
-          .select('id')
+          .select('id, time_slot, status')
           .eq('booking_date', booking_date)
-          .eq('time_slot', time_slot)
           .neq('status', 'cancelled');
 
         if (existing && existing.length > 0) {
-          return res.status(409).json({ error: 'This slot has already been booked. Please pick another time.' });
+          const reqRange = parseSlotInterval(time_slot);
+          const hasConflict = existing.some(e => {
+            const eRange = parseSlotInterval(e.time_slot);
+            return intervalsOverlap(reqRange, eRange);
+          });
+          if (hasConflict) {
+            return res.status(409).json({ error: 'This time slot is already booked or overlaps with an existing appointment. Please pick another time.' });
+          }
         }
       } catch (checkErr) {
         console.warn('[Existing booking check note]:', checkErr.message);
@@ -171,21 +184,29 @@ module.exports = async (req, res) => {
             url: '/#admin'
           });
 
-          const sendPromises = subs.map(async (sub) => {
+          for (const sub of subs) {
             try {
+              let keys = sub.keys;
+              if (typeof keys === 'string') {
+                try { keys = JSON.parse(keys); } catch (_) {}
+              }
+              if (!sub.endpoint || !keys || !keys.p256dh || !keys.auth) {
+                console.warn('[Push skip] Invalid subscription structure:', sub.id);
+                continue;
+              }
               await webpush.sendNotification({
                 endpoint: sub.endpoint,
-                keys: sub.keys
+                keys: keys
               }, pushPayload);
+              console.log('[Push sent successfully to device]:', sub.endpoint.slice(0, 35));
             } catch (err) {
+              console.warn('[Push send note for device]:', err.message);
               if (err.statusCode === 410 || err.statusCode === 404) {
                 // Subscription has expired, remove from DB
                 await supabase.from('push_subscriptions').delete().eq('id', sub.id);
               }
             }
-          });
-
-          await Promise.allSettled(sendPromises);
+          }
         }
       } catch (pushErr) {
         console.error('[Push Dispatch Error]:', pushErr);

@@ -24,23 +24,56 @@ const CalendarState = {
     selectedDate: null, // 'YYYY-MM-DD'
     selectedSlot: null, // '10:00 AM – 11:00 AM'
     slotDuration: 60,   // default: 60 mins (1 hour)
+    adminSlotDuration: 60, // default: 60 mins for Admin Tab 2
     blockedSlots: [],   // from server
     bookedSlots: [],    // from server
     settings: {
         heroText: localStorage.getItem('yahya_hero_btn_text') || 'Book an Appointment',
         heroSub: localStorage.getItem('yahya_hero_btn_sub') || '1-on-1 Strategy & Engineering Call',
         sectionSlug: localStorage.getItem('yahya_section_slug') || 'connect',
-        sectionTitle: localStorage.getItem('yahya_section_title') || 'Book an Appointment with Yahya Mundewadi'
+        sectionTitle: localStorage.getItem('yahya_section_title') || 'Book an Appointment with Yahya Mundewadi',
+        startHour: parseInt(localStorage.getItem('yahya_start_hour') || '10', 10),
+        endHour: parseInt(localStorage.getItem('yahya_end_hour') || '22', 10) // 10:00 PM default!
     },
     adminToken: sessionStorage.getItem('yahya_admin_token') || null,
     adminPin: sessionStorage.getItem('yahya_admin_pin') || null
 };
 
-// Base hours (24h format for clean math)
-const BASE_SLOT_HOURS = [10, 11, 12, 14, 15, 16, 17, 18, 19];
+// ── Time & Interval Collision Math ───────────────────────────────────────────
+function timeStringToMinutes(str) {
+    if (!str) return null;
+    str = String(str).trim();
+    const match = str.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+    if (!match) return null;
+    let h = parseInt(match[1], 10);
+    const m = parseInt(match[2], 10);
+    const meridiem = match[3] ? match[3].toUpperCase() : null;
+    if (meridiem === 'PM' && h < 12) h += 12;
+    if (meridiem === 'AM' && h === 12) h = 0;
+    return h * 60 + m;
+}
 
-// Format hour (10 -> '10:00 AM', 14 -> '02:00 PM')
-function formatHour(h, m = 0) {
+function parseSlotInterval(slotStr) {
+    if (!slotStr) return null;
+    const parts = String(slotStr).split(/–|-/);
+    if (parts.length >= 2) {
+        const start = timeStringToMinutes(parts[0]);
+        const end = timeStringToMinutes(parts[1]);
+        if (start !== null && end !== null) return [start, end];
+    }
+    const single = timeStringToMinutes(slotStr);
+    if (single !== null) return [single, single + 60];
+    return null;
+}
+
+function intervalsOverlap(rangeA, rangeB) {
+    if (!rangeA || !rangeB) return false;
+    return rangeA[0] < rangeB[1] && rangeA[1] > rangeB[0];
+}
+
+function formatMinutesTo12Hour(totalMinutes) {
+    let h = Math.floor(totalMinutes / 60);
+    const m = totalMinutes % 60;
     const period = h >= 12 ? 'PM' : 'AM';
     let hour12 = h % 12;
     if (hour12 === 0) hour12 = 12;
@@ -49,43 +82,68 @@ function formatHour(h, m = 0) {
     return `${strH}:${strM} ${period}`;
 }
 
-// Generate slot ranges based on duration (30m, 60m, 120m)
+function formatHour(h, m = 0) {
+    return formatMinutesTo12Hour(h * 60 + m);
+}
+
+function escapeHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Generate slot ranges dynamically up to endHour (default 10:00 PM / 22:00)
 function generateSlotRanges(durationMins) {
+    const startH = (CalendarState.settings && CalendarState.settings.startHour !== undefined) ? parseInt(CalendarState.settings.startHour, 10) : 10;
+    const endH = (CalendarState.settings && CalendarState.settings.endHour !== undefined) ? parseInt(CalendarState.settings.endHour, 10) : 22;
+    const startM = startH * 60;
+    const endM = endH * 60;
+    const duration = parseInt(durationMins, 10) || 60;
+
+    let label = '1 Hour (In-depth Discussion)';
+    if (duration === 30) label = '30 Mins (Intro / Quick Discussion)';
+    else if (duration === 120) label = '2 Hours (Deep Technical / Strategy Session)';
+
     const ranges = [];
-    if (durationMins === 30) {
-        BASE_SLOT_HOURS.forEach(h => {
-            ranges.push({
-                slotId: `${formatHour(h, 0)} – ${formatHour(h, 30)}`,
-                title: `${formatHour(h, 0)} – ${formatHour(h, 30)}`,
-                durationLabel: '30 Mins (Intro / Quick Discussion)'
-            });
-            ranges.push({
-                slotId: `${formatHour(h, 30)} – ${formatHour(h + 1, 0)}`,
-                title: `${formatHour(h, 30)} – ${formatHour(h + 1, 0)}`,
-                durationLabel: '30 Mins (Intro / Quick Discussion)'
-            });
-        });
-    } else if (durationMins === 120) {
-        // 2-hour blocks
-        const blocks = [10, 12, 14, 16, 18];
-        blocks.forEach(h => {
-            ranges.push({
-                slotId: `${formatHour(h, 0)} – ${formatHour(h + 2, 0)}`,
-                title: `${formatHour(h, 0)} – ${formatHour(h + 2, 0)}`,
-                durationLabel: '2 Hours (Deep Technical / Strategy Session)'
-            });
-        });
-    } else {
-        // 60-hour blocks (Default)
-        BASE_SLOT_HOURS.forEach(h => {
-            ranges.push({
-                slotId: `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`,
-                title: `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`,
-                durationLabel: '1 Hour (In-depth Discussion)'
-            });
+    for (let current = startM; current + duration <= endM; current += duration) {
+        const startStr = formatMinutesTo12Hour(current);
+        const endStr = formatMinutesTo12Hour(current + duration);
+        const title = `${startStr} – ${endStr}`;
+        ranges.push({
+            slotId: title,
+            title: title,
+            startMinutes: current,
+            endMinutes: current + duration,
+            durationLabel: label
         });
     }
     return ranges;
+}
+
+// Robust collision check: matches exact or overlapping intervals
+function isSlotUnavailable(slotItem, dateStr) {
+    const slotRange = [slotItem.startMinutes, slotItem.endMinutes];
+
+    const dayBlocked = CalendarState.blockedSlots.some(b => 
+        b.slot_date === dateStr && (!b.time_slot || b.time_slot === '')
+    );
+    if (dayBlocked) return { unavailable: true, reason: 'blocked', label: 'Not Available' };
+
+    const isBlocked = CalendarState.blockedSlots.some(b => {
+        if (b.slot_date !== dateStr) return false;
+        if (!b.time_slot) return true;
+        const bRange = parseSlotInterval(b.time_slot);
+        return intervalsOverlap(slotRange, bRange);
+    });
+    if (isBlocked) return { unavailable: true, reason: 'blocked', label: 'Not Available' };
+
+    const isBooked = CalendarState.bookedSlots.some(b => {
+        if (b.booking_date !== dateStr) return false;
+        if (b.status === 'cancelled') return false;
+        const bRange = parseSlotInterval(b.time_slot);
+        return intervalsOverlap(slotRange, bRange);
+    });
+    if (isBooked) return { unavailable: true, reason: 'booked', label: 'Not Available' };
+
+    return { unavailable: false };
 }
 
 // ── Initialization ──────────────────────────────────────────────────────────
@@ -224,6 +282,20 @@ async function fetchSiteSettings() {
                 localStorage.setItem('yahya_section_slug', cleanSlug);
                 const adminSlug = document.getElementById('adminSettingSlug');
                 if (adminSlug) adminSlug.value = cleanSlug;
+            }
+            if (s.working_hours) {
+                if (s.working_hours.start_hour !== undefined) {
+                    CalendarState.settings.startHour = parseInt(s.working_hours.start_hour, 10);
+                    localStorage.setItem('yahya_start_hour', s.working_hours.start_hour);
+                }
+                if (s.working_hours.end_hour !== undefined) {
+                    CalendarState.settings.endHour = parseInt(s.working_hours.end_hour, 10);
+                    localStorage.setItem('yahya_end_hour', s.working_hours.end_hour);
+                }
+                const adminStart = document.getElementById('adminSettingStartHour');
+                if (adminStart) adminStart.value = CalendarState.settings.startHour;
+                const adminEnd = document.getElementById('adminSettingEndHour');
+                if (adminEnd) adminEnd.value = CalendarState.settings.endHour;
             }
             previewHeroButton();
             previewShareableUrl();
@@ -418,39 +490,20 @@ function renderTimeSlots(dateStr) {
     const slotRanges = generateSlotRanges(CalendarState.slotDuration);
 
     slotRanges.forEach(slotItem => {
-        // Check if matching slot is blocked or booked
-        const isBlocked = CalendarState.blockedSlots.some(b => {
-            if (b.slot_date !== dateStr) return false;
-            if (!b.time_slot) return true; // full day
-            return slotItem.slotId.includes(b.time_slot) || b.time_slot.includes(slotItem.slotId);
-        });
-
-        const isBooked = CalendarState.bookedSlots.some(b => {
-            if (b.booking_date !== dateStr) return false;
-            return slotItem.slotId.includes(b.time_slot) || b.time_slot.includes(slotItem.slotId);
-        });
+        const status = isSlotUnavailable(slotItem, dateStr);
 
         const btn = document.createElement('button');
         btn.className = 'slot-btn';
         btn.type = 'button';
 
-        if (isBlocked) {
+        if (status.unavailable) {
             btn.disabled = true;
             btn.innerHTML = `
                 <div class="slot-time-range">
                     <span class="slot-range-title">${slotItem.title}</span>
                     <span class="slot-range-duration">${slotItem.durationLabel}</span>
                 </div>
-                <span class="slot-status-tag" style="color:#ef4444; background:#fee2e2;">Busy</span>
-            `;
-        } else if (isBooked) {
-            btn.disabled = true;
-            btn.innerHTML = `
-                <div class="slot-time-range">
-                    <span class="slot-range-title">${slotItem.title}</span>
-                    <span class="slot-range-duration">${slotItem.durationLabel}</span>
-                </div>
-                <span class="slot-status-tag">Booked</span>
+                <span class="slot-status-tag" style="color:#64748b; background:#f1f5f9; font-weight:600;">Not Available</span>
             `;
         } else {
             btn.innerHTML = `
@@ -458,7 +511,7 @@ function renderTimeSlots(dateStr) {
                     <span class="slot-range-title">${slotItem.title}</span>
                     <span class="slot-range-duration">${slotItem.durationLabel}</span>
                 </div>
-                <span class="slot-status-tag" style="color:#059669; background:#ecfdf5;">Available</span>
+                <span class="slot-status-tag" style="color:#059669; background:#ecfdf5; font-weight:600;">Available</span>
             `;
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
@@ -736,6 +789,11 @@ function openAdminPanel() {
         slugInput.value = CalendarState.settings.sectionSlug || localStorage.getItem('yahya_section_slug') || 'connect';
     }
 
+    const adminStart = document.getElementById('adminSettingStartHour');
+    if (adminStart) adminStart.value = CalendarState.settings.startHour || 10;
+    const adminEnd = document.getElementById('adminSettingEndHour');
+    if (adminEnd) adminEnd.value = CalendarState.settings.endHour || 22;
+
     loadAdminBookings();
     initAdminAvailabilityPicker();
     checkPushSubscriptionStatus();
@@ -930,6 +988,18 @@ function initAdminAvailabilityPicker() {
     renderAdminHourlyGrid();
 }
 
+function setAdminSlotDuration(minutes) {
+    CalendarState.adminSlotDuration = parseInt(minutes, 10);
+    [30, 60, 120].forEach(m => {
+        const pill = document.getElementById(`adminDurPill${m}`);
+        if (pill) {
+            if (m === CalendarState.adminSlotDuration) pill.classList.add('active');
+            else pill.classList.remove('active');
+        }
+    });
+    renderAdminHourlyGrid();
+}
+
 function renderAdminHourlyGrid() {
     const dateInput = document.getElementById('adminAvailDatePicker');
     const container = document.getElementById('adminHoursGrid');
@@ -938,33 +1008,70 @@ function renderAdminHourlyGrid() {
     const selectedDate = dateInput.value;
     container.innerHTML = '';
 
-    BASE_SLOT_HOURS.forEach(h => {
-        const hourStr = `${formatHour(h, 0)} – ${formatHour(h + 1, 0)}`;
+    const duration = CalendarState.adminSlotDuration || 60;
+    const slotRanges = generateSlotRanges(duration);
+
+    slotRanges.forEach(slotItem => {
+        const slotRange = [slotItem.startMinutes, slotItem.endMinutes];
+
+        // Check if booked by client
+        const booking = CalendarState.bookedSlots.find(b => {
+            if (b.booking_date !== selectedDate) return false;
+            if (b.status === 'cancelled') return false;
+            const bRange = parseSlotInterval(b.time_slot);
+            return intervalsOverlap(slotRange, bRange);
+        });
+
+        // Check if blocked by admin
         const isBlocked = CalendarState.blockedSlots.some(b => {
             if (b.slot_date !== selectedDate) return false;
             if (!b.time_slot) return true;
-            return b.time_slot.includes(formatHour(h, 0)) || hourStr.includes(b.time_slot);
+            const bRange = parseSlotInterval(b.time_slot);
+            return intervalsOverlap(slotRange, bRange);
         });
 
         const card = document.createElement('div');
-        card.className = `admin-hour-card ${isBlocked ? 'blocked' : ''}`;
-        card.innerHTML = `
-            <div class="admin-hour-time">${formatHour(h, 0)}</div>
-            <button class="admin-hour-toggle ${isBlocked ? 'btn-busy' : 'btn-avail'}" type="button">
-                ${isBlocked ? 'Busy (Blocked)' : 'Available'}
-            </button>
-        `;
 
-        const btn = card.querySelector('.admin-hour-toggle');
-        btn.addEventListener('click', async () => {
-            await toggleSlotBlockStatus(selectedDate, formatHour(h, 0), !isBlocked);
-        });
+        if (booking) {
+            card.className = 'admin-hour-card booked';
+            card.innerHTML = `
+                <div class="admin-hour-time">${slotItem.title}</div>
+                <div style="display:flex; align-items:center; gap:0.4rem;">
+                    <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Booked (${escapeHtml(booking.name || 'Client')})</span>
+                    <button class="admin-hour-toggle btn-booked" type="button" disabled>Booked</button>
+                </div>
+            `;
+        } else if (isBlocked) {
+            card.className = 'admin-hour-card blocked';
+            card.innerHTML = `
+                <div class="admin-hour-time">${slotItem.title}</div>
+                <button class="admin-hour-toggle btn-busy" type="button">
+                    Busy (Blocked)
+                </button>
+            `;
+            const btn = card.querySelector('.admin-hour-toggle');
+            btn.addEventListener('click', async () => {
+                await toggleSlotBlockStatus(selectedDate, slotItem.title, false);
+            });
+        } else {
+            card.className = 'admin-hour-card';
+            card.innerHTML = `
+                <div class="admin-hour-time">${slotItem.title}</div>
+                <button class="admin-hour-toggle btn-avail" type="button">
+                    Available
+                </button>
+            `;
+            const btn = card.querySelector('.admin-hour-toggle');
+            btn.addEventListener('click', async () => {
+                await toggleSlotBlockStatus(selectedDate, slotItem.title, true);
+            });
+        }
 
         container.appendChild(card);
     });
 }
 
-async function toggleSlotBlockStatus(date, hour, shouldBlock) {
+async function toggleSlotBlockStatus(date, slotTitle, shouldBlock) {
     try {
         const res = await fetch('/api/availability', {
             method: 'POST',
@@ -975,7 +1082,7 @@ async function toggleSlotBlockStatus(date, hour, shouldBlock) {
             },
             body: JSON.stringify({
                 date,
-                time_slot: hour,
+                time_slot: slotTitle,
                 blocked: shouldBlock
             })
         });
@@ -983,6 +1090,9 @@ async function toggleSlotBlockStatus(date, hour, shouldBlock) {
         if (res.ok) {
             await fetchAvailabilityData();
             renderAdminHourlyGrid();
+            if (CalendarState.selectedDate === date) {
+                renderTimeSlots(date);
+            }
         } else {
             const data = await res.json();
             alert(data.error || 'Failed to update slot availability.');
@@ -1144,17 +1254,24 @@ async function saveAdminSettings(event) {
     let slug = slugInput ? slugInput.value.trim().toLowerCase().replace(/^\/|\/$/g, '').replace(/[^a-z0-9_-]/g, '') : 'connect';
     if (!slug) slug = 'connect';
 
+    const startHour = parseInt(document.getElementById('adminSettingStartHour')?.value || '10', 10);
+    const endHour = parseInt(document.getElementById('adminSettingEndHour')?.value || '22', 10);
+
     // 1. Immediately update DOM & localStorage for instant zero-lag reflection
     localStorage.setItem('yahya_hero_btn_text', heroText);
     localStorage.setItem('yahya_hero_btn_sub', heroSub);
     localStorage.setItem('yahya_section_slug', slug);
     localStorage.setItem('yahya_section_title', sectionTitle);
     localStorage.setItem('yahya_nav_title', navTitle);
+    localStorage.setItem('yahya_start_hour', startHour);
+    localStorage.setItem('yahya_end_hour', endHour);
 
     CalendarState.settings.heroText = heroText;
     CalendarState.settings.heroSub = heroSub;
     CalendarState.settings.sectionSlug = slug;
     CalendarState.settings.sectionTitle = sectionTitle;
+    CalendarState.settings.startHour = startHour;
+    CalendarState.settings.endHour = endHour;
 
     const elTitle = document.getElementById('heroBtnTitle');
     const elSub = document.getElementById('heroBtnSub');
@@ -1171,6 +1288,11 @@ async function saveAdminSettings(event) {
 
     previewHeroButton();
     previewShareableUrl();
+
+    if (CalendarState.selectedDate) {
+        renderTimeSlots(CalendarState.selectedDate);
+    }
+    renderAdminHourlyGrid();
 
     // Update browser URL without page reload if currently on appointment section
     if (document.getElementById('connect')?.classList.contains('active')) {
@@ -1205,7 +1327,20 @@ async function saveAdminSettings(event) {
             })
         });
 
-        alert(`✅ Settings saved!\nClean URL: ${window.location.origin}/${slug}\nHero button and titles updated.`);
+        await fetch('/api/settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${CalendarState.adminToken || ''}`,
+                'x-admin-pin': CalendarState.adminPin || ''
+            },
+            body: JSON.stringify({
+                key: 'working_hours',
+                value: { start_hour: startHour, end_hour: endHour }
+            })
+        });
+
+        alert(`✅ Settings saved!\nClean URL: ${window.location.origin}/${slug}\nWorking Hours: ${formatHour(startHour)} – ${formatHour(endHour)}`);
     } catch (e) {
         console.warn('Backend sync note:', e);
         alert(`Settings saved locally in your browser!\nClean URL: ${window.location.origin}/${slug}`);
