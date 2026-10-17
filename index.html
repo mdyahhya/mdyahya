@@ -1664,28 +1664,29 @@
 
         /* ── AI PRESENCE SECTION ───────────────────────────────────── */
         #ai-presence {
-            padding: 100px 0;
-            background: #ffffff;
-            color: #111111;
+            padding: 24px 0 10px;
+            margin-bottom: 2.25rem;
+            background: transparent;
+            color: var(--text);
             overflow: hidden;
             font-family: var(--sans);
         }
 
         .ai-container {
-            max-width: 1100px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
         }
 
         .ai-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .ai-header h2 {
-            font-size: clamp(1.8rem, 4vw, 2.2rem);
-            font-weight: 500;
-            color: #111111;
+            font-size: clamp(1.35rem, 3.5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--text);
             border: none;
             padding: 0;
             margin: 0;
@@ -1694,11 +1695,11 @@
         /* AI Card Animation */
         .ai-cards-wrapper {
             position: relative;
-            height: 310px;
+            height: 280px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-bottom: 100px;
+            margin-bottom: 2.25rem;
             overflow: visible;
         }
 
@@ -1789,14 +1790,14 @@
         /* Google Search Animation */
         .google-search-section {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 2.25rem;
         }
 
         .google-search-section h3 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: #555555;
-            margin-bottom: 40px;
+            font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+            font-weight: 500;
+            color: var(--text2);
+            margin-bottom: 1.25rem;
             border: none;
         }
 
@@ -1904,13 +1905,13 @@
         /* Image Showcase */
         .image-showcase {
             text-align: center;
-            margin-bottom: 120px;
+            margin-bottom: 2.25rem;
         }
 
         .image-showcase p {
-            font-size: 1.1rem;
-            color: #555555;
-            margin-bottom: 40px;
+            font-size: 1.05rem;
+            color: var(--text2);
+            margin-bottom: 1.25rem;
         }
 
         .showcase-container {
@@ -2030,7 +2031,13 @@
 
         @media (max-width: 768px) {
             #ai-presence {
-                padding: 40px 0;
+                padding: 10px 0 5px;
+                margin-bottom: 1.75rem;
+            }
+
+            .ai-cards-wrapper {
+                height: 195px;
+                margin-bottom: 1.75rem;
             }
 
             .ai-card {
@@ -2493,160 +2500,6 @@
                 </div>
             </div>
 
-            <!-- ── AI PRESENCE SECTION ───────────────────────────────────── -->
-            <section id="ai-presence">
-                <div class="ai-container">
-                    <!-- Section 1: Title -->
-                    <div class="ai-header ai-reveal">
-                        <h2>You can search About Yahya Mundewadi on:-</h2>
-                    </div>
-
-                    <!-- Section 2: AI Card Animation -->
-                    <div class="ai-cards-wrapper ai-reveal">
-                        <div class="ai-cards-slider" id="aiCardSlider">
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="chatgpt.jpg" alt="ChatGPT">
-                                </div>
-                                <span>ChatGPT</span>
-                            </div>
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="google.jpg" alt="Google">
-                                </div>
-                                <span>Google</span>
-                            </div>
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="claude.jpg" alt="Claude">
-                                </div>
-                                <span>Claude</span>
-                            </div>
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="gemini.jpg" alt="Gemini">
-                                </div>
-                                <span>Gemini</span>
-                            </div>
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="perplexity.jpg" alt="Perplexity">
-                                </div>
-                                <span>Perplexity</span>
-                            </div>
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="grok.jpg" alt="Grok">
-                                </div>
-                                <span>Grok</span>
-                            </div>
-                            <!-- Clone for Circular Loop -->
-                            <div class="ai-card">
-                                <div class="ai-icon-box">
-                                    <img src="chatgpt.jpg" alt="ChatGPT">
-                                </div>
-                                <span>ChatGPT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Section 3: Google Search Animation (Temporarily Commented Out)
-                    <div class="google-search-section ai-reveal" id="googleSearchTrigger">
-                        <h3>I can influence all these AI LLMs & <span class="highlight-text">help AI find and suggest
-                                your brand.</span></h3>
-                        <div class="search-box-outer">
-                            <svg class="search-icon-google" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <div class="typing-wrapper">
-                                <span id="google-typing"></span><span class="cursor-google" id="google-cursor"></span>
-                            </div>
-                            <button class="search-btn-google">Search</button>
-                        </div>
-                        <div class="search-result-reveal" id="googleResult">
-                            <h4>Yahya Mundewadi</h4>
-                        </div>
-                    </div>
-                    -->
-
-                    <!-- Section 4: AI Showcase Slider (Temporarily Commented Out)
-                    <div class="image-showcase ai-reveal">
-                        <p>Search on Google or any AI tool: Best Software Developer in Solapur</p>
-                        <div class="proof-slider-container">
-                            <div class="proof-track" id="showcaseTrack">
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="googless.jpg" alt="Google Search">
-                                        <div class="proof-caption">Google</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="claudeproof.jpg" alt="Claude AI">
-                                        <div class="proof-caption">Claude AI</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="gemini.jpeg" alt="Gemini AI">
-                                        <div class="proof-caption">Gemini AI</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="perp.jpeg" alt="Perplexity AI">
-                                        <div class="proof-caption">Perplexity AI</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="proof-pagination" id="showcaseDots"></div>
-                    </div>
-                    -->
-
-                    <!-- Section 5: AI Proof 
-                    <div class="ai-proof-section ai-reveal">
-                        <p>Ask any AI: Who is the best developer in Solapur?</p>
-                        <div class="proof-slider-container">
-                            <div class="proof-track" id="proofTrack">
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 1">
-                                        <div class="proof-caption">ChatGPT</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 2">
-                                        <div class="proof-caption">Claude</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 3">
-                                        <div class="proof-caption">Perplexity</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 4">
-                                        <div class="proof-caption">Gemini</div>
-                                    </div>
-                                </div>
-                                <div class="proof-slide">
-                                    <div class="proof-slide-content">
-                                        <img src="ai_proof_montage_1777373510577.png" alt="AI Proof 5">
-                                        <div class="proof-caption">Grok</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="proof-pagination" id="proofDots"></div>
-                    </div>
-                    -->
-                </div>
-            </section>
 
             <!-- Stats -->
             <div class="stats-strip">
@@ -2997,6 +2850,117 @@
                     <p>Full-Stack Developer, Android &amp; AI Engineer · Solapur / Pune, India</p>
                     <div style="font-size:0.78rem; color:var(--accent); margin-top:0.35rem; font-weight:600;">
                         Founder @ Dominal Technology (dominal.in) · 10 SGPA (93%) Final Semester BTech CSE
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── AI SEARCH & IMAGE SLIDERS PROOFS ──────────────────────── -->
+            <div id="ai-presence">
+                <div class="ai-container">
+                    <!-- Section 1: Title -->
+                    <div class="ai-header ai-reveal active">
+                        <h2>You can search About Yahya Mundewadi on:-</h2>
+                    </div>
+
+                    <!-- Section 2: AI Card Animation -->
+                    <div class="ai-cards-wrapper ai-reveal active">
+                        <div class="ai-cards-slider" id="aiCardSlider">
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="chatgpt.jpg" alt="ChatGPT">
+                                </div>
+                                <span>ChatGPT</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="google.jpg" alt="Google">
+                                </div>
+                                <span>Google</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="claude.jpg" alt="Claude">
+                                </div>
+                                <span>Claude</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="gemini.jpg" alt="Gemini">
+                                </div>
+                                <span>Gemini</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="perplexity.jpg" alt="Perplexity">
+                                </div>
+                                <span>Perplexity</span>
+                            </div>
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="grok.jpg" alt="Grok">
+                                </div>
+                                <span>Grok</span>
+                            </div>
+                            <!-- Clone for Circular Loop -->
+                            <div class="ai-card">
+                                <div class="ai-icon-box">
+                                    <img src="chatgpt.jpg" alt="ChatGPT">
+                                </div>
+                                <span>ChatGPT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Google Search Animation -->
+                    <div class="google-search-section ai-reveal active" id="googleSearchTrigger">
+                        <h3>I can influence all these AI LLMs &amp; <span class="highlight-text">help AI find and suggest your brand.</span></h3>
+                        <div class="search-box-outer">
+                            <svg class="search-icon-google" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <div class="typing-wrapper">
+                                <span id="google-typing"></span><span class="cursor-google" id="google-cursor"></span>
+                            </div>
+                            <button class="search-btn-google" type="button">Search</button>
+                        </div>
+                        <div class="search-result-reveal active" id="googleResult">
+                            <h4>Yahya Mundewadi</h4>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: AI Showcase Slider with Proof Images -->
+                    <div class="image-showcase ai-reveal active">
+                        <p style="font-weight: 500; font-size: 1.05rem; margin-bottom: 1.25rem;">Search on Google or any AI tool: <span class="highlight-text">"Best Software Developer in Solapur"</span></p>
+                        <div class="proof-slider-container">
+                            <div class="proof-track" id="showcaseTrack">
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="googless.jpg" alt="Google Search">
+                                        <div class="proof-caption">Google Search Result</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="claudeproof.jpg" alt="Claude AI">
+                                        <div class="proof-caption">Claude AI Response</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="gemini.jpeg" alt="Gemini AI">
+                                        <div class="proof-caption">Gemini AI Response</div>
+                                    </div>
+                                </div>
+                                <div class="proof-slide">
+                                    <div class="proof-slide-content">
+                                        <img src="perp.jpeg" alt="Perplexity AI">
+                                        <div class="proof-caption">Perplexity AI Response</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="proof-pagination" id="showcaseDots"></div>
                     </div>
                 </div>
             </div>
@@ -4787,6 +4751,15 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             observeCards();
+
+            if (id === 'about') {
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('resize'));
+                    if (typeof window.updateAICards === 'function') window.updateAICards(false);
+                    document.querySelectorAll('#ai-presence .ai-reveal').forEach(el => el.classList.add('active'));
+                    if (typeof window.startGoogleTyping === 'function') window.startGoogleTyping();
+                }, 80);
+            }
         }
 
         // Resolve clean path routes (e.g. /connect, /book, /appointment, /about)
@@ -4827,6 +4800,14 @@
             showSection(initialRoute, false);
             const targetUrl = (initialRoute === 'connect') ? `/${getAppointmentSlug()}` : (initialRoute === 'profile' ? '/' : `/${initialRoute}`);
             history.replaceState({ sectionId: initialRoute }, "", targetUrl);
+            if (initialRoute === 'about') {
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('resize'));
+                    if (typeof window.updateAICards === 'function') window.updateAICards(false);
+                    document.querySelectorAll('#ai-presence .ai-reveal').forEach(el => el.classList.add('active'));
+                    if (typeof window.startGoogleTyping === 'function') window.startGoogleTyping();
+                }, 120);
+            }
         }
 
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -4929,7 +4910,8 @@
                 const wrapper = document.querySelector('.ai-cards-wrapper');
                 if (!wrapper || !cards.length) return;
                 const containerWidth = wrapper.offsetWidth;
-                const cardWidth = cards[0].offsetWidth + 30; // card width + gap
+                if (!containerWidth) return;
+                const cardWidth = (cards[0].offsetWidth || 180) + 30; // card width + gap
 
                 cardSlider.style.transition = smooth ? 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
                 const offset = (containerWidth / 2) - (cardWidth / 2) - (currentCardIndex * cardWidth) + 15; // +15 for half of the gap
@@ -4959,12 +4941,13 @@
             }
 
             function startCardRotation() {
+                if (cardRotationInterval) clearInterval(cardRotationInterval);
                 const interval = window.innerWidth < 768 ? 1800 : 2500;
                 cardRotationInterval = setInterval(nextCard, interval);
             }
 
             function stopCardRotation() {
-                clearInterval(cardRotationInterval);
+                if (cardRotationInterval) clearInterval(cardRotationInterval);
             }
 
             cards.forEach((card, index) => {
@@ -4999,13 +4982,17 @@
                         setTimeout(type, Math.random() * 40 + 80);
                     } else {
                         setTimeout(() => {
-                            cursor.style.display = 'none';
-                            document.getElementById('googleResult').classList.add('active');
+                            if (cursor) cursor.style.display = 'none';
+                            const res = document.getElementById('googleResult');
+                            if (res) res.classList.add('active');
                         }, 800);
                     }
                 }
                 type();
             }
+
+            window.startGoogleTyping = startGoogleTyping;
+            window.updateAICards = updateCards;
 
             // 3. Touch-Movable Showcase Slider
             const sTrack = document.getElementById('showcaseTrack');
@@ -5019,7 +5006,7 @@
                 let sIsDragging = false;
                 let sAutoInterval;
 
-                if (sDots) {
+                if (sDots && sSlides.length && sDots.children.length === 0) {
                     sSlides.forEach((_, i) => {
                         const dot = document.createElement('div');
                         dot.classList.add('proof-dot');
